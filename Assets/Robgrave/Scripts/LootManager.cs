@@ -22,7 +22,7 @@ public class LootManager : MonoBehaviour
     //public LootPosition[] lootPositions = new LootPosition[_gridAmount];
     public List<LootPosition> lootPositions = new List<LootPosition>();
 
-    public List<Vector3> selectedPositions = new List<Vector3>();
+    public List<LootPosition> selectedPositions = new List<LootPosition>();
 
     
     private void Awake()
@@ -46,7 +46,7 @@ public class LootManager : MonoBehaviour
             // DEBUG FUNCTION
             Debug.Log("DEBUG: Running function");
 
-            CreateSpawnPoints(6);
+            CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
 
             Debug.Log(selectedPositions.Count);
             SpawnDebugObjects();
@@ -90,14 +90,11 @@ public class LootManager : MonoBehaviour
     }
 
     
-    public void CreateSpawnPoints(int amount)
+    public void CreateSpawnPoints(int _amount, float _innerRadius, float _outerRadius)
     {
         selectedPositions.Clear();
 
         Vector3 playerPos = PlayerController.Instance.transform.position;
-
-        float _innerRadius = lootSpawnInnerRadius;
-        float _outerRadius = lootSpawnOuterRadius;
 
         // loop through spawn points and add everything within the radius to the selectpoints list, then randomly remove the amount of indexes you don't need
 
@@ -108,7 +105,13 @@ public class LootManager : MonoBehaviour
 
             if (CheckDistance(_outerRadius, _innerRadius, playerPos, lootPositions[i].GridPosition))
             {
-                selectedPositions.Add(lootPositions[i].GridPosition);
+                var _newLootPos = new LootPosition();
+
+                _newLootPos.Id = lootPositions[i].Id;
+                _newLootPos.GridPosition = lootPositions[i].GridPosition;
+                _newLootPos.Empty = lootPositions[i].Empty;
+
+                selectedPositions.Add(_newLootPos);
             }
         }
     }
@@ -117,7 +120,7 @@ public class LootManager : MonoBehaviour
     {
         for (int i = 0; i < selectedPositions.Count; i++)
         {
-            var SpawnObject = Instantiate(debugObject, selectedPositions[i], debugObject.transform.rotation);
+            var SpawnObject = Instantiate(debugObject, selectedPositions[i].GridPosition, debugObject.transform.rotation);
             SpawnObject.name = "lootPos-" + i;
 
         }
