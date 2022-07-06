@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+
     [Header("Debug")]
     [FormerlySerializedAs("Debug mode")] [SerializeField] public bool debugMode;
     [SerializeField] public bool showAIpath;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     public Color GhostType4;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -34,8 +35,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+    }
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
 

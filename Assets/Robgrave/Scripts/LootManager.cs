@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class LootManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static LootManager Instance;
+
 
     public GameObject debugObject;
 
@@ -16,7 +17,7 @@ public class LootManager : MonoBehaviour
     public float lootSpawnOuterRadius = 10f;
     public float lootSpawnInnerRadius = 0f;
 
-    public float debugTime = 5f;
+    public float debugTime = 10f;
     private float debugTimer = 0f;
 
     //public LootPosition[] lootPositions = new LootPosition[_gridAmount];
@@ -24,10 +25,112 @@ public class LootManager : MonoBehaviour
 
     public List<LootPosition> selectedPositions = new List<LootPosition>();
 
-    
+    [SerializeField]
+    public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
+
+
+    // Function that spawns loot around the player position
+    // the amount is the loot value, it will create a loot pool that has a minimum and max amount of drops. If it doesn't fit the slots it needs to extend its radius and fill the SelectionList once again.
+    // It randomly chooses an index in the Selection List and then set the bool of the LootPosition List to the correct state (by saved ID)
+    // Selection List needs to save ID 
+    //
+    //
+    //  
+    //
+    // 
+    //
+    //
+    //
+    //
+    //
+    //
+    public void SpawnLoot(int value, int spawns)
+    {
+        ValuableTemplate randomValuable = new ValuableTemplate();
+
+        for (int i = 0; i < spawns; i++)
+        {
+            float avg = value / (spawns-i);
+
+            if (avg > 100f && value > 375)
+            {
+                randomValuable = GetRandomValuable(5);
+            }
+            else if (avg > 40f && value > 175)
+            {
+                randomValuable = GetRandomValuable(4);
+            }
+            else if (avg > 20f && value > 75)
+            {
+                randomValuable = GetRandomValuable(3);
+            }
+            else if (avg > 10f && value > 35)
+            {
+                randomValuable = GetRandomValuable(2);
+            }
+            else if (avg > 5f && value > 15)
+            {
+                randomValuable = GetRandomValuable(1);
+            }
+            else if (value > 5)
+            {
+                randomValuable = GetRandomValuable(0);
+            }
+            else
+            {
+                Debug.Log("STOP");
+                randomValuable = null;
+            }
+
+            if (randomValuable != null)
+            {
+                // add loot to new List and Spawn Object
+                value -= randomValuable.value;
+                Debug.Log(randomValuable.name + " - value left: " + value + " - AVG: " + avg);
+            }
+        }
+    }
+
+    private ValuableTemplate GetRandomValuable(int n)
+    {
+        int randomIndex = 0;
+
+        switch (n)
+        {
+            case 0:
+                randomIndex = Random.Range(0, 0);
+                break;
+            case 1:
+                randomIndex = Random.Range(0, 2);
+                break;
+            case 2:
+                randomIndex = Random.Range(0, 3);
+                break;
+            case 3:
+                randomIndex = Random.Range(1, 4);
+                break;
+            case 4:
+                randomIndex = Random.Range(2, 5);
+                break;
+            case 5:
+                randomIndex = Random.Range(3, 6);
+                break;
+
+        }
+
+        Debug.Log(n + " - " + randomIndex);
+
+        return valuables[randomIndex];
+
+    }
+
+
     private void Awake()
     {
-        CreateLootGrid();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         
     }
 
@@ -46,10 +149,14 @@ public class LootManager : MonoBehaviour
             // DEBUG FUNCTION
             Debug.Log("DEBUG: Running function");
 
-            CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
+            //CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
+            //Debug.Log(selectedPositions.Count);
+            //SpawnDebugObjects();
 
-            Debug.Log(selectedPositions.Count);
-            SpawnDebugObjects();
+            SpawnLoot(350, 15);
+
+
+
 
             debugTimer = 0f;
         }
