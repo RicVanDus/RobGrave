@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Diamond
   value: 200
-  mesh: {fileID: 0}
+  mesh: {fileID: 108559777460172316, guid: 6ec51dcb069f4bc48ac57fcb1a2629bb, type: 3}
   mass: 0

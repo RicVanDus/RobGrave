@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Goldbar
   value: 100
-  mesh: {fileID: 0}
+  mesh: {fileID: 4146573278956117808, guid: cf315b1d14db1df49bafb25d60534505, type: 3}
   mass: 0

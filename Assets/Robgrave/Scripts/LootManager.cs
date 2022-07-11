@@ -17,6 +17,9 @@ public class LootManager : MonoBehaviour
     public float lootSpawnOuterRadius = 10f;
     public float lootSpawnInnerRadius = 0f;
 
+    public bool Debug_Lootmanager = false;
+
+
     public float debugTime = 10f;
     private float debugTimer = 0f;
 
@@ -29,6 +32,58 @@ public class LootManager : MonoBehaviour
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
 
 
+
+
+
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+    }
+
+    void Start()
+    {
+        CreateLootGrid();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        debugTimer += Time.deltaTime;
+
+        if (debugTimer > debugTime)
+        {
+            // DEBUG FUNCTION
+            Debug.Log("DEBUG: Running function");
+
+            //CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
+            //Debug.Log(selectedPositions.Count);
+            //SpawnDebugObjects();
+
+            SpawnLoot(200, 25);
+
+
+
+
+            debugTimer = 0f;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
     // Function that spawns loot around the player position
     // the amount is the loot value, it will create a loot pool that has a minimum and max amount of drops. If it doesn't fit the slots it needs to extend its radius and fill the SelectionList once again.
     // It randomly chooses an index in the Selection List and then set the bool of the LootPosition List to the correct state (by saved ID)
@@ -36,7 +91,7 @@ public class LootManager : MonoBehaviour
     //
     //
     //  
-    //
+    // CreateSpawnPoints - check for bool, add to radius if not big enough, assign loot to random index (spawn in and remove from list?), clear list
     // 
     //
     //
@@ -48,19 +103,47 @@ public class LootManager : MonoBehaviour
     {
         ValuableTemplate randomValuable = new ValuableTemplate();
 
+        float _newInnerRadius = lootSpawnInnerRadius;
+        float _newOuterRadius = lootSpawnOuterRadius;
+        bool _createdSpawnPoints = false;
+
+
+        CreateSpawnPoints(spawns, _newInnerRadius, _newOuterRadius);
+
+        do
+        {
+            if (selectedPositions.Count >= spawns)
+            {
+                _createdSpawnPoints = true;
+            }
+            else
+            {
+                _newOuterRadius += 2f;
+                CreateSpawnPoints(spawns, _newInnerRadius, _newOuterRadius);
+            }
+        } while (_createdSpawnPoints == false);
+
+
+        // **** DEBUG ****
+        if (Debug_Lootmanager)
+        {
+            Debug.Log(spawns + " / " + selectedPositions.Count + " Radius: " + _newInnerRadius + "/" + _newOuterRadius);
+            //SpawnDebugObjects();
+        }
+
         for (int i = 0; i < spawns; i++)
         {
             float avg = value / (spawns-i);
 
-            if (avg > 100f && value > 375)
+            if (avg > 20f && value > 375)
             {
                 randomValuable = GetRandomValuable(5);
             }
-            else if (avg > 40f && value > 175)
+            else if (avg > 15f && value > 175)
             {
                 randomValuable = GetRandomValuable(4);
             }
-            else if (avg > 20f && value > 75)
+            else if (avg > 12f && value > 75)
             {
                 randomValuable = GetRandomValuable(3);
             }
@@ -86,9 +169,27 @@ public class LootManager : MonoBehaviour
             {
                 // add loot to new List and Spawn Object
                 value -= randomValuable.value;
+
+                int _randomIndex = Random.Range(1, selectedPositions.Count);
+                int _id = selectedPositions[_randomIndex].Id;
+
+                LootPosition _newLP = lootPositions[_id];
+                _newLP.Empty = false;
+                lootPositions[_id] = _newLP;
+
+                // Here comes the loot
+                SpawnLootMesh(randomValuable, selectedPositions[_randomIndex].GridPosition);
+
+                selectedPositions.RemoveAt(_randomIndex);
+
                 Debug.Log(randomValuable.name + " - value left: " + value + " - AVG: " + avg);
             }
         }
+
+
+        // loop through new list of spawned objects, assign to 
+
+
     }
 
     private ValuableTemplate GetRandomValuable(int n)
@@ -125,43 +226,6 @@ public class LootManager : MonoBehaviour
     }
 
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        debugTimer += Time.deltaTime;
-
-        if (debugTimer > debugTime)
-        {
-            // DEBUG FUNCTION
-            Debug.Log("DEBUG: Running function");
-
-            //CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
-            //Debug.Log(selectedPositions.Count);
-            //SpawnDebugObjects();
-
-            SpawnLoot(350, 15);
-
-
-
-
-            debugTimer = 0f;
-        }
-    }
-
 
     private void CreateLootGrid()
     {
@@ -196,27 +260,29 @@ public class LootManager : MonoBehaviour
 
     }
 
-    
     public void CreateSpawnPoints(int _amount, float _innerRadius, float _outerRadius)
     {
         selectedPositions.Clear();
 
         Vector3 playerPos = PlayerController.Instance.transform.position;
 
-        // loop through spawn points and add everything within the radius to the selectpoints list, then randomly remove the amount of indexes you don't need
+        // loop through spawn points and add everything within the radius to the selectpoints list
 
         for (int i = 0; i < lootPositions.Count; i++)
         {
-
-            //Debug.Log(CheckDistance(_outerRadius, _innerRadius, playerPos, lootPositions[i].GridPosition));
-
-            if (CheckDistance(_outerRadius, _innerRadius, playerPos, lootPositions[i].GridPosition))
+            if (CheckDistance(_outerRadius, _innerRadius, playerPos, lootPositions[i].GridPosition) && lootPositions[i].Empty)
             {
                 var _newLootPos = new LootPosition();
 
                 _newLootPos.Id = lootPositions[i].Id;
                 _newLootPos.GridPosition = lootPositions[i].GridPosition;
                 _newLootPos.Empty = lootPositions[i].Empty;
+
+
+                // I should've used an array
+                LootPosition tmp = lootPositions[i];
+                tmp.Empty = false;
+                lootPositions[i] = tmp;
 
                 selectedPositions.Add(_newLootPos);
             }
@@ -233,6 +299,11 @@ public class LootManager : MonoBehaviour
         }
     }
 
+    private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position)
+    {
+        var SpawnObject = Instantiate(valuable.mesh, position, valuable.mesh.transform.rotation);
+        SpawnObject.name = valuable.name;
+    }
 
     // Check if position is on navmesh
     private bool CheckNavMesh(Vector3 targetDestination)
@@ -243,7 +314,6 @@ public class LootManager : MonoBehaviour
             return true;
         }
         return false;
-
     }
 
     // Check distance between 2 positions

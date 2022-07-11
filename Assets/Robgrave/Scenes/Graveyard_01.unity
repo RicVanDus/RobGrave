@@ -512,6 +512,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8946106995322637267, guid: bd4bd9c70c19ac148881a419ba7788ae,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd4bd9c70c19ac148881a419ba7788ae, type: 3}
 --- !u!4 &40549341 stripped
@@ -25147,6 +25152,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1099810509}
     m_Modifications:
+    - target: {fileID: 7335009464879045129, guid: 7371f45a8e835244fb387a5203e01ea5,
+        type: 3}
+      propertyPath: Debug_Lootmanager
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7335009464879045238, guid: 7371f45a8e835244fb387a5203e01ea5,
         type: 3}
       propertyPath: m_RootOrder

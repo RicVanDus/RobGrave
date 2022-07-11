@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Golden Tooth
   value: 10
-  mesh: {fileID: 0}
+  mesh: {fileID: 6664506193805393581, guid: 136923651b82eb3428b5d96d81a55e48, type: 3}
   mass: 0
