@@ -58,30 +58,18 @@ public class LootManager : MonoBehaviour
 
         if (debugTimer > debugTime)
         {
-            // DEBUG FUNCTION
-            Debug.Log("DEBUG: Running function");
+            // *** DEBUG FUNCTION ***
+            //Debug.Log("DEBUG: Running LootManager function");
 
             //CreateSpawnPoints(6, lootSpawnInnerRadius, lootSpawnOuterRadius);
             //Debug.Log(selectedPositions.Count);
             //SpawnDebugObjects();
 
-            SpawnLoot(200, 25);
-
-
-
+            //SpawnLoot(322, 20);
 
             debugTimer = 0f;
         }
     }
-
-
-
-
-
-
-
-
-
 
 
     // Function that spawns loot around the player position
@@ -182,7 +170,10 @@ public class LootManager : MonoBehaviour
 
                 selectedPositions.RemoveAt(_randomIndex);
 
-                Debug.Log(randomValuable.name + " - value left: " + value + " - AVG: " + avg);
+                if (Debug_Lootmanager)
+                {
+                    Debug.Log(randomValuable.name + " - value left: " + value + " - AVG: " + avg);
+                }
             }
         }
 
@@ -219,7 +210,11 @@ public class LootManager : MonoBehaviour
 
         }
 
-        Debug.Log(n + " - " + randomIndex);
+        if (Debug_Lootmanager)
+        {
+            Debug.Log(n + " - " + randomIndex);
+        }
+        
 
         return valuables[randomIndex];
 
@@ -277,12 +272,6 @@ public class LootManager : MonoBehaviour
                 _newLootPos.Id = lootPositions[i].Id;
                 _newLootPos.GridPosition = lootPositions[i].GridPosition;
                 _newLootPos.Empty = lootPositions[i].Empty;
-
-
-                // I should've used an array
-                LootPosition tmp = lootPositions[i];
-                tmp.Empty = false;
-                lootPositions[i] = tmp;
 
                 selectedPositions.Add(_newLootPos);
             }

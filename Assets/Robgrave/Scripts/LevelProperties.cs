@@ -10,7 +10,9 @@ public class LevelProperties : ScriptableObject
     public int ghostSpawnType1;
     public int ghostSpawnType2;
     public int valuablesRequired;
+    public int valuablesTotall;
     public float timeToMidnight;
+
 
     public Enum_Weather weather;
 
