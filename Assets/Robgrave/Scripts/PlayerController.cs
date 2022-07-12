@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
 
     public int hitPoints;
-    public float score;
+    public int score;
 
     private MeshRenderer playerMesh;
     private Material playerMeshMaterial;
@@ -179,5 +179,11 @@ public class PlayerController : MonoBehaviour
 
         yield break;
     }
+
+    public void AddScore(int value)
+    {
+        score += value;
+    }
+
 
 }

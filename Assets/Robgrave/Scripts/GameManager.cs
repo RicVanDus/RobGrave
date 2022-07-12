@@ -58,14 +58,14 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("GRAVES: " + graves.Length);
 
+
         foreach (GameObject grave in graves)
         {
             Grave _grave = grave.GetComponent<Grave>();
-
+            
             int rnd = Random.Range(0, 3);
             _grave.graveType = rnd;
 
-            //Debug.Log(_grave.valuables);
         }
     }
 

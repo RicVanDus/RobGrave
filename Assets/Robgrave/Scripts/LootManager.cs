@@ -32,11 +32,6 @@ public class LootManager : MonoBehaviour
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
 
 
-
-
-
-
-
     private void Awake()
     {
         if (Instance == null)
@@ -81,8 +76,6 @@ public class LootManager : MonoBehaviour
     //  
     // CreateSpawnPoints - check for bool, add to radius if not big enough, assign loot to random index (spawn in and remove from list?), clear list
     // 
-    //
-    //
     //
     //
     //
@@ -166,7 +159,7 @@ public class LootManager : MonoBehaviour
                 lootPositions[_id] = _newLP;
 
                 // Here comes the loot
-                SpawnLootMesh(randomValuable, selectedPositions[_randomIndex].GridPosition);
+                SpawnLootMesh(randomValuable, selectedPositions[_randomIndex].GridPosition, selectedPositions[_randomIndex].Id);
 
                 selectedPositions.RemoveAt(_randomIndex);
 
@@ -288,10 +281,14 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position)
+    private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position, int id)
     {
         var SpawnObject = Instantiate(valuable.mesh, position, valuable.mesh.transform.rotation);
         SpawnObject.name = valuable.name;
+
+        Pickup SpawnObjectPU = SpawnObject.GetComponent<Pickup>();
+        SpawnObjectPU.value = valuable.value;
+        SpawnObjectPU.id = id;
     }
 
     // Check if position is on navmesh
@@ -316,5 +313,15 @@ public class LootManager : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    public void ClearLootSpot(int id)
+    {
+        LootPosition tmpPos = new LootPosition();
+        tmpPos = lootPositions[id];
+        tmpPos.Empty = true;
+
+        lootPositions[id] = tmpPos;
     }
 }
