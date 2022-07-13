@@ -2195,6 +2195,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6266188055521508084, guid: e391c9a63dbef9249918411cfb271ba7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2092523819, guid: e391c9a63dbef9249918411cfb271ba7, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -10035,6 +10040,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6266188055521508084, guid: e391c9a63dbef9249918411cfb271ba7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2092523819, guid: e391c9a63dbef9249918411cfb271ba7, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -10072,7 +10082,7 @@ PrefabInstance:
     - target: {fileID: 6602541996157569261, guid: e391c9a63dbef9249918411cfb271ba7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6602541996157569261, guid: e391c9a63dbef9249918411cfb271ba7,
         type: 3}
@@ -12245,7 +12255,7 @@ Transform:
   - {fileID: 2015257663}
   - {fileID: 353484894}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1100913671
 PrefabInstance:
@@ -12828,7 +12838,7 @@ Transform:
   - {fileID: 169288310}
   - {fileID: 40230867}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1121916625
 PrefabInstance:
@@ -14634,6 +14644,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6266188055521508084, guid: e391c9a63dbef9249918411cfb271ba7,
         type: 3}
+      propertyPath: m_Size.y
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -6266188055521508084, guid: e391c9a63dbef9249918411cfb271ba7,
+        type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -14674,7 +14689,7 @@ PrefabInstance:
     - target: {fileID: 6602541996157569261, guid: e391c9a63dbef9249918411cfb271ba7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6602541996157569261, guid: e391c9a63dbef9249918411cfb271ba7,
         type: 3}
@@ -15485,6 +15500,7 @@ GameObject:
   - component: {fileID: 1334787017}
   - component: {fileID: 1334787016}
   - component: {fileID: 1334787015}
+  - component: {fileID: 1334787018}
   m_Layer: 3
   m_Name: Groundplane_10x10
   m_TagString: Untagged
@@ -15571,6 +15587,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334787013}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1334787018
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334787013}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1338945999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18565,6 +18594,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6266188055521508084, guid: e391c9a63dbef9249918411cfb271ba7,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2092523819, guid: e391c9a63dbef9249918411cfb271ba7, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -19929,6 +19963,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946106995322637267, guid: bd4bd9c70c19ac148881a419ba7788ae,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd4bd9c70c19ac148881a419ba7788ae, type: 3}

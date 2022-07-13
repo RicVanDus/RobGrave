@@ -12,13 +12,17 @@ public class Pickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (this.gameObject.transform.position.y < 2f)
+        {
+            this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,8 +30,15 @@ public class Pickup : MonoBehaviour
         if (other.tag == "Player")
         {
             PlayerController.Instance.AddScore(value);
+            LootManager.Instance.ClearLootSpot(id);
+            Destroy(this.gameObject);
         }
-        LootManager.Instance.ClearLootSpot(id);
-        Destroy(this.gameObject);
+        else if (other.tag == "Enemy")
+        {
+            LootManager.Instance.ClearLootSpot(id);
+            Destroy(this.gameObject);
+        }
+            
+        
     }
 }

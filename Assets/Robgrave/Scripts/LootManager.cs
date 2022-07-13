@@ -283,7 +283,19 @@ public class LootManager : MonoBehaviour
 
     private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position, int id)
     {
-        var SpawnObject = Instantiate(valuable.mesh, position, valuable.mesh.transform.rotation);
+        Vector3 _newPosition = position;
+        _newPosition.y = Random.Range(1f, 4f);
+
+        Vector3 _newRotationEuler = new Vector3();
+
+        _newRotationEuler.y = Random.Range(0f, 360f);
+        _newRotationEuler.x = Random.Range(0f, 360f);
+
+
+        Quaternion _newRotation = Quaternion.Euler(valuable.mesh.transform.rotation.eulerAngles + _newRotationEuler);
+
+        
+        var SpawnObject = Instantiate(valuable.mesh, _newPosition, _newRotation);
         SpawnObject.name = valuable.name;
 
         Pickup SpawnObjectPU = SpawnObject.GetComponent<Pickup>();

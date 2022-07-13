@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 438145528153807483}
   - component: {fileID: 4491075338131656087}
   - component: {fileID: 100638533458488441}
+  - component: {fileID: 857619418906899986}
+  - component: {fileID: 1775021461128136389}
   m_Layer: 0
   m_Name: Necklace
   m_TagString: Untagged
@@ -96,7 +98,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &100638533458488441
 MonoBehaviour:
@@ -113,3 +115,33 @@ MonoBehaviour:
   id: 0
   AutoPickup: 1
   value: 0
+  objectName: 
+--- !u!54 &857619418906899986
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4146573278956117808}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0.001
+  m_AngularDrag: 0.03
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1775021461128136389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4146573278956117808}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
