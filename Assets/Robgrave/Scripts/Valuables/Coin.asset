@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Coin
   value: 5
-  mesh: {fileID: 6310546784115632718, guid: 597b9d684907d7549a603ecc41015102, type: 3}
+  mesh: {fileID: 211543183827278080, guid: a25ac0fdab722d34bbba60efcaded8ba, type: 3}
   mass: 0

@@ -169,11 +169,6 @@ public class LootManager : MonoBehaviour
                 }
             }
         }
-
-
-        // loop through new list of spawned objects, assign to 
-
-
     }
 
     private ValuableTemplate GetRandomValuable(int n)
@@ -208,9 +203,7 @@ public class LootManager : MonoBehaviour
             Debug.Log(n + " - " + randomIndex);
         }
         
-
         return valuables[randomIndex];
-
     }
 
 
@@ -241,11 +234,8 @@ public class LootManager : MonoBehaviour
 
                     id++;
                 }
-                
             }
-
         }
-
     }
 
     public void CreateSpawnPoints(int _amount, float _innerRadius, float _outerRadius)
@@ -291,9 +281,7 @@ public class LootManager : MonoBehaviour
         _newRotationEuler.y = Random.Range(0f, 360f);
         _newRotationEuler.x = Random.Range(0f, 360f);
 
-
         Quaternion _newRotation = Quaternion.Euler(valuable.mesh.transform.rotation.eulerAngles + _newRotationEuler);
-
         
         var SpawnObject = Instantiate(valuable.mesh, _newPosition, _newRotation);
         SpawnObject.name = valuable.name;
