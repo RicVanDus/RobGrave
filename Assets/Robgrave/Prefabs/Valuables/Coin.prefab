@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 211543183827278080}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -4.51606, y: -0.4643, z: 2.8223753}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 66.30846, y: 66.30846, z: 66.30846}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,7 +131,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8439154037202754427
 BoxCollider:
   m_ObjectHideFlags: 0

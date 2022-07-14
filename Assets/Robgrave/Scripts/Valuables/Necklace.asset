@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Necklace
   value: 40
-  mesh: {fileID: 4146573278956117808, guid: 5c59a50444d680445a0b522285d7b48f, type: 3}
+  mesh: {fileID: 6506280200462496018, guid: 4ec2629f736f32645ad13bb68f078f1e, type: 3}
   mass: 0
