@@ -25,7 +25,7 @@ Material:
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -47,11 +47,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Buldge_Height: -70
+    - _Buldge_Height: 29.3
     - _Dirt_Noise_Scale: 29.56
-    - _Dirt_Noise_Strength: 0.0019
+    - _Dirt_Noise_Strength: 0.00287
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.4716981, g: 0.2538944, b: 0.07342471, a: 0}
+    - _Color: {r: 0.3962264, g: 0.26128516, b: 0.1476504, a: 0}
   m_BuildTextureStacks: []

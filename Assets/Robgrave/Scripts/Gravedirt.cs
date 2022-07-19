@@ -35,15 +35,18 @@ public class Gravedirt : MonoBehaviour
                 _buldgeHeight = -20f;
                 break;
             case 3:
-                _buldgeHeight = -45f;
+                _buldgeHeight = -40f;
                 break;
             case 4:
-                _buldgeHeight = -70f;
+                _buldgeHeight = -60f;
+                break;
+            case 5:
+                _buldgeHeight = -80f;
                 break;
 
         }
 
-
+        graveDirt.SetFloat("_Buldge_Height", _buldgeHeight);
     }
 
 }

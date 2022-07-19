@@ -13,7 +13,8 @@ public class Grave : Interactable
     public int valuables;
 
     [SerializeField] private Text _depthNumber;
-    
+
+    Gravedirt _gravedirt;
 
     public bool playerIsDigging = false;
     private bool graveIsDug = false;
@@ -28,6 +29,8 @@ public class Grave : Interactable
     {
         SetGraveType(graveType);
         SetDepthText();
+
+        _gravedirt = GetComponentInChildren<Gravedirt>();
     }
 
     protected override void Update()
@@ -93,6 +96,7 @@ public class Grave : Interactable
                 currentDepth += 1;
                 diggingProgress = 0f;
                 SetDepthText();
+                _gravedirt.DirtHeight(currentDepth);
                 if (currentDepth >= maxDepth)
                 {
                     graveIsDug = true;
