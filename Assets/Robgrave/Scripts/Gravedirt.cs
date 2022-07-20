@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gravedirt : MonoBehaviour
 {
 
-    Material graveDirt;
+    private Material graveDirt;
     private float _buldgeHeight;
     private float _oldBuldgeHeight;
     private float _dirtChangeSpeed = 0.5f;

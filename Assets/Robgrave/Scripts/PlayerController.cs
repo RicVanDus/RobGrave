@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private float vMovement;
     public bool interact1;
 
-
     public int hitPoints;
     public int score;
 
