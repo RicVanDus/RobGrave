@@ -6,7 +6,11 @@ public class Gravedirt : MonoBehaviour
 {
 
     Material graveDirt;
-    float _buldgeHeight;
+    private float _buldgeHeight;
+    private float _oldBuldgeHeight;
+    private float _dirtChangeSpeed = 0.5f;
+    private float _dirtTimer = 0f;
+    private bool _changeDirt = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +22,10 @@ public class Gravedirt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (_changeDirt)
+        {
+            ChangeDirtHeight(Time.deltaTime);
+        }
         
     }
 
@@ -29,24 +36,44 @@ public class Gravedirt : MonoBehaviour
             case 0:
                 break;
             case 1:
-                _buldgeHeight = 0f;
+                _buldgeHeight = 5f;
                 break;
             case 2:
-                _buldgeHeight = -20f;
+                _buldgeHeight = -15f;
                 break;
             case 3:
-                _buldgeHeight = -40f;
+                _buldgeHeight = -25f;
                 break;
             case 4:
-                _buldgeHeight = -60f;
+                _buldgeHeight = -40f;
                 break;
             case 5:
-                _buldgeHeight = -80f;
+                _buldgeHeight = -60f;
                 break;
 
         }
 
-        graveDirt.SetFloat("_Buldge_Height", _buldgeHeight);
+        _oldBuldgeHeight = graveDirt.GetFloat("_Buldge_Height");
+        _changeDirt = true;
+    }
+
+    private void ChangeDirtHeight(float deltaTime)
+    {
+        float newBuldgeHeight;
+
+        _dirtTimer += deltaTime / _dirtChangeSpeed;
+        newBuldgeHeight = Mathf.Lerp(_oldBuldgeHeight, _buldgeHeight, _dirtTimer);
+
+        if (_dirtTimer >= 1f)
+        {
+            _changeDirt = false;
+            _dirtTimer = 0f;
+        }
+
+        
+        //Debug.Log(_changeDirt + " [ old: " + _oldBuldgeHeight + " new:  " + _buldgeHeight + " ] - " + speed + " - " + newBuldgeHeight);
+
+        graveDirt.SetFloat("_Buldge_Height", newBuldgeHeight);
     }
 
 }
