@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private InputAction move;
     private InputAction interact;
+    private InputAction use;
 
     public static PlayerController Instance { get; private set; }
 
@@ -53,6 +54,10 @@ public class PlayerController : MonoBehaviour
     {
         move = playerInputs.Player.Move;
         move.Enable();
+
+        use = playerInputs.Player.Use;
+
+        interact = playerInputs.Player.Interact;
     }
 
     private void OnDisable()
@@ -204,5 +209,15 @@ public class PlayerController : MonoBehaviour
         score += value;
     }
 
+    private void OnInteract()
+    {
+
+    }
+
+
+    private void OnUse()
+    {
+
+    }
 
 }
