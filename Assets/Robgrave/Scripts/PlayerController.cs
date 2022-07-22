@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,10 +39,25 @@ public class PlayerController : MonoBehaviour
     public delegate void Interact();
     public event Interact Interacting;
 
+    public RGInputs playerInputs;
+
+    private InputAction move;
+    private InputAction interact;
 
     public static PlayerController Instance { get; private set; }
 
 
+
+    private void OnEnable()
+    {
+        move = playerInputs.Player.Move();
+        move.Enable();
+    }
+
+    private void OnDisable()
+    {
+        move.Disable();
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -51,6 +67,8 @@ public class PlayerController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        playerInputs = new RGInputs();
 
         GettingCaught += EnemyCatchesPlayer;
         Respawned += Respawn;
