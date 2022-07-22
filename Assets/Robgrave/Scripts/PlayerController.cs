@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public Camera cam;
 
+    private Vector2 moveDirection;
     private float hMovement;
     private float vMovement;
     public bool interact1;
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        move = playerInputs.Player.Move();
+        move = playerInputs.Player.Move;
         move.Enable();
     }
 
@@ -85,9 +86,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        hMovement = Input.GetAxis("Horizontal");
-        vMovement = Input.GetAxis("Vertical");
-        interact1 = Input.GetButton("Interact1");
+        moveDirection = move.ReadValue<Vector2>();
+        hMovement = moveDirection.x;
+        vMovement = moveDirection.y;
+        
 
         if (interact1)
         {

@@ -60,3 +60,7 @@ crashlytics-build.properties
 
 UserSettings/Layouts/default-2021.dwlt
 UserSettings/Layouts/CurrentMaximizeLayout.dwlt
+ProjectSettings/TimelineSettings.asset
+ProjectSettings/ProjectVersion.txt
+Packages/manifest.json
+Packages/packages-lock.json
