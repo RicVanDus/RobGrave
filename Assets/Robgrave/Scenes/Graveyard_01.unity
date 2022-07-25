@@ -24220,30 +24220,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1143005389, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e, type: 3}
-      propertyPath: m_Height
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 593913444055999789, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
         type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 92049284}
-    - target: {fileID: 593913444055999789, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 593913444055999789, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 593913444055999789, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: invulnerableTime
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 593913444055999790, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
         type: 3}
       propertyPath: m_RootOrder
@@ -24303,36 +24284,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main_character
-      objectReference: {fileID: 0}
-    - target: {fileID: 593913444055999795, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 84
-      objectReference: {fileID: 0}
-    - target: {fileID: 5550287334212096846, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 5550287334212096846, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 7986339890099042093, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 1.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 7986339890099042093, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8483343167224859635, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e,
-        type: 3}
-      propertyPath: m_AdditionalLightsShadowResolutionTier
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79e0bc4f2ab8c2442a41202f36dbbd1e, type: 3}

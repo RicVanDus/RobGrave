@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class PlayerController : MonoBehaviour
 
     public Camera cam;
 
+    private Vector2 moveDirection;
     private float hMovement;
     private float vMovement;
-    public bool interact1;
+    public bool _interacting = false;
+    public bool _using = false;
 
     public int hitPoints;
     public int score;
@@ -38,10 +41,38 @@ public class PlayerController : MonoBehaviour
     public delegate void Interact();
     public event Interact Interacting;
 
+    public RGInputs playerInputs;
+
+    private InputAction move;
+    private InputAction interact;
+    private InputAction use;
 
     public static PlayerController Instance { get; private set; }
 
 
+
+    private void OnEnable()
+    {
+        move = playerInputs.Player.Move;
+        move.Enable();
+
+        use = playerInputs.Player.Use;
+        use.Enable();
+        use.performed += OnUse;
+        use.canceled += OnUse;
+
+        interact = playerInputs.Player.Interact;
+        interact.Enable();
+        interact.performed += OnInteract;
+        interact.canceled += OnInteract;
+    }
+
+    private void OnDisable()
+    {
+        move.Disable();
+        use.Disable();
+        interact.Disable();
+    }
 
     // Start is called before the first frame update
     void Awake()
@@ -51,6 +82,8 @@ public class PlayerController : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        playerInputs = new RGInputs();
 
         GettingCaught += EnemyCatchesPlayer;
         Respawned += Respawn;
@@ -67,18 +100,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        hMovement = Input.GetAxis("Horizontal");
-        vMovement = Input.GetAxis("Vertical");
-        interact1 = Input.GetButton("Interact1");
-
-        if (interact1)
-        {
-            playerInteracting = true;
-        }
-        else
-        {
-            playerInteracting = false;
-        }
+        moveDirection = move.ReadValue<Vector2>();
+        hMovement = moveDirection.x;
+        vMovement = moveDirection.y;
+        
 
         PlayerMovement();
         blinkingTimer += Time.deltaTime;
@@ -172,7 +197,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
 
-
         playerMesh.enabled = true;
         isInvulnerable = false;
 
@@ -184,5 +208,28 @@ public class PlayerController : MonoBehaviour
         score += value;
     }
 
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _interacting = true;
+        }
+        else if (context.canceled)
+        {
+            _interacting = false;
+        }
+    }
 
+
+    private void OnUse(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _using = true;
+        }
+        else if (context.canceled)
+        {
+            _using = false;
+        }
+    }
 }
