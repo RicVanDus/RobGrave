@@ -324,4 +324,22 @@ public class LootManager : MonoBehaviour
 
         lootPositions[id] = tmpPos;
     }
+
+
+
+    //DEbug function to check if positions are cleared by picking up loot
+    public int CheckValidLootPositions()
+    {
+        int validLootPos = 0;
+
+        for (int i = 0; i < lootPositions.Count ; i++)
+        {
+            if (lootPositions[i].Empty)
+            {
+                validLootPos++;
+            }
+        }
+
+        return validLootPos;
+    }
 }

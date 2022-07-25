@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     private float hMovement;
     private float vMovement;
-    public bool interact1;
+    public bool _interacting = false;
+    public bool _using = false;
 
     public int hitPoints;
     public int score;
@@ -56,13 +57,21 @@ public class PlayerController : MonoBehaviour
         move.Enable();
 
         use = playerInputs.Player.Use;
+        use.Enable();
+        use.performed += OnUse;
+        use.canceled += OnUse;
 
         interact = playerInputs.Player.Interact;
+        interact.Enable();
+        interact.performed += OnInteract;
+        interact.canceled += OnInteract;
     }
 
     private void OnDisable()
     {
         move.Disable();
+        use.Disable();
+        interact.Disable();
     }
 
     // Start is called before the first frame update
@@ -95,15 +104,6 @@ public class PlayerController : MonoBehaviour
         hMovement = moveDirection.x;
         vMovement = moveDirection.y;
         
-
-        if (interact1)
-        {
-            playerInteracting = true;
-        }
-        else
-        {
-            playerInteracting = false;
-        }
 
         PlayerMovement();
         blinkingTimer += Time.deltaTime;
@@ -197,7 +197,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
 
-
         playerMesh.enabled = true;
         isInvulnerable = false;
 
@@ -209,15 +208,28 @@ public class PlayerController : MonoBehaviour
         score += value;
     }
 
-    private void OnInteract()
+    private void OnInteract(InputAction.CallbackContext context)
     {
-
+        if (context.performed)
+        {
+            _interacting = true;
+        }
+        else if (context.canceled)
+        {
+            _interacting = false;
+        }
     }
 
 
-    private void OnUse()
+    private void OnUse(InputAction.CallbackContext context)
     {
-
+        if (context.performed)
+        {
+            _using = true;
+        }
+        else if (context.canceled)
+        {
+            _using = false;
+        }
     }
-
 }

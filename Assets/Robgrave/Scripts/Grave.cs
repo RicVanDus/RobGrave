@@ -38,6 +38,7 @@ public class Grave : Interactable
         if (PlayerCanInteract && !graveIsDug)
         {
             CheckPlayerInteract();
+
         }
         else
         {
@@ -49,7 +50,7 @@ public class Grave : Interactable
 
     private void CheckPlayerInteract()
     {
-        if (PlayerController.Instance.interact1)
+        if (PlayerController.Instance._interacting)
         {
             playerIsDigging = true;
         }
