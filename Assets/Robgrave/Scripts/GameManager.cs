@@ -18,13 +18,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Player attributes")]
     public Transform PlayerSpawn;
-    
-    [Header("Ghost attributes")]
-    public Transform EnemySpawn;
-    public Color GhostType1;
-    public Color GhostType2;
-    public Color GhostType3;
-    public Color GhostType4;
 
     public GameObject[] graves;
 
@@ -40,8 +33,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // call function to assign graves
-
         AssignGraves();
+
+        // spawn all enemies
+        EnemyManager.Instance.CreateEnemyList();
+        EnemyManager.Instance.SpawnAllEnemies();
 
     }
 

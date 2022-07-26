@@ -17,8 +17,9 @@ public class Enemy : MonoBehaviour
     private LineRenderer pathLine;
 
     [Header("AI attributes")]
-    [SerializeField] private int ghostType = 0;
+    [SerializeField] public int ghostType = 0;
     [SerializeField] private float searchAreaSize = 5f;
+    private int currentGhostType;
     public int EnemyId;
 
     private float _oldSearchAreaSize;
@@ -39,8 +40,11 @@ public class Enemy : MonoBehaviour
 
     private float _searchPrecision = 0.5f;
 
-
     private bool _searchingNewDestination = false;
+
+    
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -72,6 +76,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         DistanceToPlayer();
+
+        if (currentGhostType != ghostType)
+        {
+            SetGhostType(ghostType);
+        }
 
         if (_distanceToPlayer > 7.0f)
         {
@@ -146,32 +155,34 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void SetGhostType(int ghostType)
+    private void SetGhostType(int _ghostType)
     {
-        switch (ghostType)
+        currentGhostType = _ghostType;
+
+        switch (_ghostType)
         {
             case 0:
                 huntTime = 10f;
                 moveSpeed = 3.5f;
-                myMaterial.SetColor("_Color", GameManager.Instance.GhostType1);
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType1);
                 break;
 
             case 1:
                 huntTime= 20f;
                 moveSpeed = 4.0f;
-                myMaterial.SetColor("_Color", GameManager.Instance.GhostType2);
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType2);
                 break;
 
             case 2:
                 huntTime = 30f;
                 moveSpeed = 4.5f;
-                myMaterial.SetColor("_Color", GameManager.Instance.GhostType3);
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
                 break;
 
             case 3:
                 huntTime = 30f;
                 moveSpeed = 5.0f;
-                myMaterial.SetColor("_Color", GameManager.Instance.GhostType4);
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
                 break;
 
             default:
