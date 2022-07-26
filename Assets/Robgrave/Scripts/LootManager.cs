@@ -9,6 +9,7 @@ public class LootManager : MonoBehaviour
 
 
     public GameObject debugObject;
+    public GameObject debugObject2;
 
     static public int _rows = 117;
     static public int _columns = 69;
@@ -20,13 +21,14 @@ public class LootManager : MonoBehaviour
     public bool Debug_Lootmanager = false;
 
 
-    public float debugTime = 10f;
+    public float debugTime = 5f;
     private float debugTimer = 0f;
 
     //public LootPosition[] lootPositions = new LootPosition[_gridAmount];
     public List<LootPosition> lootPositions = new List<LootPosition>();
-
     public List<LootPosition> selectedPositions = new List<LootPosition>();
+
+    private List<GameObject> debugObjects = new List<GameObject>();
 
     [SerializeField]
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
@@ -61,6 +63,8 @@ public class LootManager : MonoBehaviour
             //SpawnDebugObjects();
 
             //SpawnLoot(322, 20);
+
+            //ShowDebugLootGrid();
 
             debugTimer = 0f;
         }
@@ -341,5 +345,40 @@ public class LootManager : MonoBehaviour
         }
 
         return validLootPos;
+    }
+
+    public void ShowDebugLootGrid()
+    {
+        GameObject _debugObject;
+
+
+        if (debugObjects.Count > 0)
+        {
+            ClearDebugObjects();
+        }
+
+        for (int i = 0; i < lootPositions.Count; i++)
+        {
+            if (lootPositions[i].Empty)
+            {
+                _debugObject = Instantiate(debugObject2, lootPositions[i].GridPosition, Quaternion.identity);
+            }
+            else
+            {
+                _debugObject = Instantiate(debugObject, lootPositions[i].GridPosition, Quaternion.identity);
+            }
+
+            debugObjects.Add(_debugObject);
+        }
+    }
+
+    public void ClearDebugObjects()
+    {
+        for (int i = 0; i < debugObjects.Count; i++)
+        {
+            Destroy(debugObjects[i]);
+        }
+
+        debugObjects.Clear();
     }
 }

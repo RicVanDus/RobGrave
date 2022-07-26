@@ -52,6 +52,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderSize: 0.00085
+    - _NoiseSize: 10000
     - _QueueControl: 0
     - _QueueOffset: -4
     m_Colors:
