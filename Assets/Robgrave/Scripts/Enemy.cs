@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     [Header("AI attributes")]
     [SerializeField] private int ghostType = 0;
     [SerializeField] private float searchAreaSize = 5f;
+    public int EnemyId;
+
     private float _oldSearchAreaSize;
     private float _oldMoveSpeed;
 

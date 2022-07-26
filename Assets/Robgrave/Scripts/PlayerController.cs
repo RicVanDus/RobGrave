@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     public event OnRespawn Respawned;
 
     public delegate void Interact();
-    public event Interact Interacting;
 
     public RGInputs playerInputs;
 
