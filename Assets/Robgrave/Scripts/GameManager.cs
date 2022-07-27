@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Player attributes")]
     public Transform PlayerSpawn;
-
     public GameObject[] graves;
 
     // Start is called before the first frame update
@@ -48,12 +47,20 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+    // Assign more purple and blue graves if the score threshold calls for it (total nr of graves / threshold value)
+    // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
+    // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
+    // When purple is assigned, you assign blue, rest is filled with green
+
+
+
+
     private void AssignGraves()
     {
         graves = GameObject.FindGameObjectsWithTag("Grave");
 
         Debug.Log("GRAVES: " + graves.Length);
-
 
         foreach (GameObject grave in graves)
         {
@@ -64,7 +71,4 @@ public class GameManager : MonoBehaviour
 
         }
     }
-
-
-
 }

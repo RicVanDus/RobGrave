@@ -64,7 +64,7 @@ public class LootManager : MonoBehaviour
 
             //SpawnLoot(322, 20);
 
-            //ShowDebugLootGrid();
+            ShowDebugLootGrid();
 
             debugTimer = 0f;
         }
@@ -79,9 +79,8 @@ public class LootManager : MonoBehaviour
     //
     //  
     // CreateSpawnPoints - check for bool, add to radius if not big enough, assign loot to random index (spawn in and remove from list?), clear list
-    // 
     //
-    //
+    //  
     //
     //
     public void SpawnLoot(int value, int spawns)

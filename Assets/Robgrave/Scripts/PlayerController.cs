@@ -141,8 +141,6 @@ public class PlayerController : MonoBehaviour
         rigidB.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed));
     }
 
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy" && isInvulnerable == false)
@@ -152,7 +150,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void EnemyCatchesPlayer()
     {
         isInvulnerable = true;
@@ -160,14 +157,12 @@ public class PlayerController : MonoBehaviour
         hitPoints -= 1;
 
         Invoke("Respawning", 3f);
-
     }
 
     private void Respawning()
     {
         Respawned?.Invoke();
     }
-
 
     private void Respawn()
     {
