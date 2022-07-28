@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Gravedirt : MonoBehaviour
 {
-
     private Material graveDirt;
     private float _buldgeHeight;
     private float _oldBuldgeHeight;
@@ -26,7 +25,6 @@ public class Gravedirt : MonoBehaviour
         {
             ChangeDirtHeight(Time.deltaTime);
         }
-        
     }
 
     public void DirtHeight(int height)
@@ -42,13 +40,13 @@ public class Gravedirt : MonoBehaviour
                 _buldgeHeight = -15f;
                 break;
             case 3:
-                _buldgeHeight = -25f;
+                _buldgeHeight = -35f;
                 break;
             case 4:
-                _buldgeHeight = -40f;
+                _buldgeHeight = -70f;
                 break;
             case 5:
-                _buldgeHeight = -60f;
+                _buldgeHeight = -90f;
                 break;
 
         }
@@ -69,11 +67,9 @@ public class Gravedirt : MonoBehaviour
             _changeDirt = false;
             _dirtTimer = 0f;
         }
-
         
         //Debug.Log(_changeDirt + " [ old: " + _oldBuldgeHeight + " new:  " + _buldgeHeight + " ] - " + speed + " - " + newBuldgeHeight);
 
         graveDirt.SetFloat("_Buldge_Height", newBuldgeHeight);
     }
-
 }

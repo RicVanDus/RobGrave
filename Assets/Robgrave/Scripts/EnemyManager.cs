@@ -39,8 +39,7 @@ public class EnemyManager : MonoBehaviour
 
     public void CreateEnemyList()
     {
-        int _currentLevelIndex = GameManager.Instance.currentLevel - 1;
-        LevelProperties _levelProps = GameManager.Instance.levels[_currentLevelIndex];
+        LevelProperties _levelProps = GameManager.Instance.thisLevel;
 
         int _ghostTypes0 = _levelProps.ghostSpawnType0;
         int _ghostTypes1 = _levelProps.ghostSpawnType1;

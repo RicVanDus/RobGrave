@@ -16,7 +16,8 @@ MonoBehaviour:
   ghostSpawnType0: 4
   ghostSpawnType1: 0
   ghostSpawnType2: 0
-  valuablesRequired: 1000
-  valuablesTotall: 10000
+  valuablesRequired: 1500
+  graveType1: 2
+  graveType2: 1
   timeToMidnight: 10
   weather: 0

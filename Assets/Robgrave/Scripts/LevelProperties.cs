@@ -10,7 +10,9 @@ public class LevelProperties : ScriptableObject
     public int ghostSpawnType1;
     public int ghostSpawnType2;
     public int valuablesRequired;
-    public int valuablesTotall;
+
+    public int graveType1;
+    public int graveType2;
     public float timeToMidnight;
 
 

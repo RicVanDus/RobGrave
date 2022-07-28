@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("Level attributes")]
     public int currentLevel;
     public LevelProperties[] levels;
+    public LevelProperties thisLevel;
 
     [Header("Player attributes")]
     public Transform PlayerSpawn;
@@ -26,7 +27,9 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-        } 
+        }
+
+        thisLevel = levels[currentLevel - 1];
     }
 
     private void Start()
@@ -37,7 +40,6 @@ public class GameManager : MonoBehaviour
         // spawn all enemies
         EnemyManager.Instance.CreateEnemyList();
         EnemyManager.Instance.SpawnAllEnemies();
-
     }
 
     // Update is called once per frame
@@ -54,21 +56,103 @@ public class GameManager : MonoBehaviour
     // When purple is assigned, you assign blue, rest is filled with green
 
 
-
-
     private void AssignGraves()
     {
+        int _scoreReq = thisLevel.valuablesRequired;
+
         graves = GameObject.FindGameObjectsWithTag("Grave");
 
-        Debug.Log("GRAVES: " + graves.Length);
+        int[] indexDone = new int[graves.Length];
+        int[] gravesType1 = new int[thisLevel.graveType1];
+        int[] gravesType2 = new int[thisLevel.graveType2];
 
-        foreach (GameObject grave in graves)
+
+        for (int i = 0; i < gravesType2.Length; i++)
         {
-            Grave _grave = grave.GetComponent<Grave>();
-            
-            int rnd = Random.Range(0, 3);
-            _grave.graveType = rnd;
+            bool _gotcha = false;
 
+            do
+            {
+                int _rnd = Random.Range(0, graves.Length);
+                bool _check = true;
+
+                for (int c = 0; c < indexDone.Length; c++)
+                {
+                    if (indexDone[c] == _rnd)
+                    {
+                        _check = false;
+                    }
+                }
+
+                if (_check)
+                {
+                    Grave _grave = graves[_rnd].GetComponent<Grave>();
+
+                    float _disToSpawn = Vector3.Distance(_grave.transform.position, PlayerSpawn.transform.position);
+                    int _chance = (int)_disToSpawn;
+                    int _random = Random.Range(1, 100);
+
+                    Debug.Log(_rnd);
+
+                    if (_chance > _random)
+                    {
+                        _grave.graveType = 2;
+                        _gotcha = true;
+
+                        Debug.Log("YES! PRUPLE");
+                    }
+
+                    indexDone[i] = _rnd;
+                }
+
+
+
+            } while (!_gotcha);
         }
+
+        for (int i = 0; i < gravesType1.Length; i++)
+        {
+            bool _gotcha = false;
+
+            do
+            {
+                int _rnd = Random.Range(0, graves.Length);
+                bool _check = true;
+
+                for (int c = 0; c < indexDone.Length; c++)
+                {
+                    if (indexDone[c] == _rnd)
+                    {
+                        _check = false;
+                    }
+                }
+
+                if (_check)
+                {
+                    Grave _grave = graves[_rnd].GetComponent<Grave>();
+
+                    float _disToSpawn = Vector3.Distance(_grave.transform.position, PlayerSpawn.transform.position);
+                    int _chance = (int)_disToSpawn;
+                    int _random = Random.Range(1, 100);
+
+                    Debug.Log(_rnd);
+
+                    if (_chance > _random)
+                    {
+                        _grave.graveType = 1;
+                        _gotcha = true;
+
+                        Debug.Log("YES!");
+                    }
+
+                    indexDone[i] = _rnd;
+                }
+
+                
+
+            } while (!_gotcha);
+        }
+
+
     }
 }

@@ -64,7 +64,7 @@ public class LootManager : MonoBehaviour
 
             //SpawnLoot(322, 20);
 
-            ShowDebugLootGrid();
+            //ShowDebugLootGrid();
 
             debugTimer = 0f;
         }

@@ -15,7 +15,7 @@ MonoBehaviour:
   version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -23,7 +23,8 @@ Material:
   m_Name: M_Gravedirt
   m_Shader: {fileID: -6465566751694194690, guid: 88ac5fa1921e9584cb513dae08ddccec,
     type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -47,7 +48,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Buldge_Height: 30.1
+    - _Buldge_Height: 30
     - _Dirt_Noise_Scale: 29.56
     - _Dirt_Noise_Strength: 0.00287
     - _QueueControl: 0

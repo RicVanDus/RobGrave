@@ -18,7 +18,7 @@ public class Grave : Interactable
 
     public bool playerIsDigging = false;
     private bool graveIsDug = false;
-
+    private bool graveTouched = false;
 
     private void Awake()
     {
@@ -38,7 +38,6 @@ public class Grave : Interactable
         if (PlayerCanInteract && !graveIsDug)
         {
             CheckPlayerInteract();
-
         }
         else
         {
@@ -120,3 +119,6 @@ public class Grave : Interactable
         LootManager.Instance.SpawnLoot(valuables, spawnNr);
     }
 }
+
+
+/*   TODO: Make functionality when diggingProces reaches 0 and is touched. It will tick down each segment and each segment has a 10% chance of spawning the ghost  */
