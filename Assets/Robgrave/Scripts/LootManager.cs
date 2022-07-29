@@ -66,21 +66,33 @@ public class LootManager : MonoBehaviour
 
             //ShowDebugLootGrid();
 
+            //CheckChance();
+            
             debugTimer = 0f;
         }
     }
 
+    private void CheckChance()
+    {
+        int check = 0;
 
-    // Function that spawns loot around the player position
-    // the amount is the loot value, it will create a loot pool that has a minimum and max amount of drops. If it doesn't fit the slots it needs to extend its radius and fill the SelectionList once again.
-    // It randomly chooses an index in the Selection List and then set the bool of the LootPosition List to the correct state (by saved ID)
-    // Selection List needs to save ID 
-    //
-    //
-    //  
-    // CreateSpawnPoints - check for bool, add to radius if not big enough, assign loot to random index (spawn in and remove from list?), clear list
-    //
-    //  
+        for (int i = 0; i < 10; i++)
+        {
+            int _rnd1 = Random.Range(0, 5);
+            int _rnd2 = Random.Range(0, 5);
+
+            if (_rnd1 == _rnd2)
+            {
+                check++;
+            }
+
+        }
+
+        Debug.Log(check);
+    }
+
+
+ 
     //
     //
     public void SpawnLoot(int value, int spawns)

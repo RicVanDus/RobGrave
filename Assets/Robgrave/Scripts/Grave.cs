@@ -7,9 +7,12 @@ public class Grave : Interactable
 {
     public int graveType = 0;
     private int maxDepth;
-    private int currentDepth;
+    private int currentDepth = 0;
     private float diggingProgress = 0f;
+    private int defiledDepth = 0;
     private float diggingtTime = 3.0f;
+    private float defileTime = 5.0f;
+    private float defileProgress = 0f;
     public int valuables;
 
     [SerializeField] private Text _depthNumber;
@@ -90,6 +93,7 @@ public class Grave : Interactable
         if (playerIsDigging)
         {
             diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMultiplier);
+            graveTouched = true;
 
             if (diggingProgress >= diggingtTime)
             {
@@ -108,6 +112,10 @@ public class Grave : Interactable
         else
         {
             diggingProgress -= Time.deltaTime;
+            if (diggingProgress <= 0f && graveTouched)
+            {
+                DefiledGrave();
+            }
         }
         diggingProgress = Mathf.Clamp(diggingProgress, 0.0f, diggingtTime);
     }
@@ -117,6 +125,35 @@ public class Grave : Interactable
     {
         int spawnNr = Random.Range(17, 26);
         LootManager.Instance.SpawnLoot(valuables, spawnNr);
+    }
+
+    private void DefiledGrave()
+    {
+        int _defDepth = currentDepth - defiledDepth;
+
+        if (_defDepth > 0)
+        {
+            defileProgress += Time.deltaTime;
+
+            if (defileProgress >= defileTime)
+            {
+                int _rnd1 = Random.Range(0, 5);
+                int _rnd2 = Random.Range(0, 5);
+
+                if (_rnd1 == _rnd2)
+                {
+                    Debug.Log("DEFILEMENT: You are haunted!");
+                    EnemyManager.Instance.AddNewEnemy(graveType);
+                }
+                else
+                {
+                    Debug.Log("DEFILEMENT: You are lucky...");
+                }
+
+                defiledDepth++;
+                defileProgress = 0f;
+            }
+        }
     }
 }
 

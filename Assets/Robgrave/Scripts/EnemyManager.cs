@@ -97,7 +97,7 @@ public class EnemyManager : MonoBehaviour
     public void AddNewEnemy(int type)
     {
         Enemy _newEnemy = new Enemy();
-        int _newId = enemies.Count + 1;
+        int _newId = enemies.Count;
 
         _newEnemy.ghostType = type;
         _newEnemy.EnemyId = _newId;

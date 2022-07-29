@@ -92,14 +92,11 @@ public class GameManager : MonoBehaviour
                     int _chance = (int)_disToSpawn;
                     int _random = Random.Range(1, 100);
 
-                    Debug.Log(_rnd);
-
                     if (_chance > _random)
                     {
                         _grave.graveType = 2;
                         _gotcha = true;
 
-                        Debug.Log("YES! PRUPLE");
                     }
 
                     indexDone[i] = _rnd;
@@ -135,14 +132,11 @@ public class GameManager : MonoBehaviour
                     int _chance = (int)_disToSpawn;
                     int _random = Random.Range(1, 100);
 
-                    Debug.Log(_rnd);
-
                     if (_chance > _random)
                     {
                         _grave.graveType = 1;
                         _gotcha = true;
 
-                        Debug.Log("YES!");
                     }
 
                     indexDone[i] = _rnd;
