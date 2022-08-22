@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private MeshRenderer playerMesh;
     private Material playerMeshMaterial;
     private Rigidbody rigidB;
+    private Animator RGAnimator;
 
     public bool movementDisabled = false;
     public bool playerInteracting = false;
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     public float invulnerableTime = 3f;
     private float blinkingTimer;
+
+    private float idleTimer;
 
     public delegate void OnGettingCaught();
     public event OnGettingCaught GettingCaught;
@@ -88,8 +91,12 @@ public class PlayerController : MonoBehaviour
         Respawned += Respawn;
 
         rigidB = GetComponent<Rigidbody>();
-        playerMesh = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
-        playerMeshMaterial = playerMesh.GetComponent<Renderer>().material;
+
+        RGAnimator = GetComponentInChildren<Animator>();
+
+        // This needs to be fixed
+        //playerMesh = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
+        //playerMeshMaterial = playerMesh.GetComponent<Renderer>().material;
 
         gameObject.tag = "Player";
 
@@ -102,8 +109,8 @@ public class PlayerController : MonoBehaviour
         moveDirection = move.ReadValue<Vector2>();
         hMovement = moveDirection.x;
         vMovement = moveDirection.y;
-        
 
+        CheckIdleTime(Time.deltaTime);
         PlayerMovement();
         blinkingTimer += Time.deltaTime;
     }
@@ -178,6 +185,7 @@ public class PlayerController : MonoBehaviour
         //Blinking player mesh while invulnerable
         while (invulnerableTime > blinkingTimer)
         {
+            /* 
             if (playerMesh.enabled)
             {
                 playerMesh.enabled = false;
@@ -186,12 +194,12 @@ public class PlayerController : MonoBehaviour
             {
                 playerMesh.enabled = true;
             }
-
+            */
 
             yield return new WaitForSeconds(.2f);
         }
 
-        playerMesh.enabled = true;
+        //playerMesh.enabled = true;
         isInvulnerable = false;
 
         yield break;
@@ -225,5 +233,21 @@ public class PlayerController : MonoBehaviour
         {
             _using = false;
         }
+    }
+
+
+    private void CheckIdleTime(float dT)
+    {
+        if (moveDirection.magnitude == 0)
+        {
+            idleTimer += dT;
+        }
+        else
+        {
+            idleTimer = 0f;
+        }
+
+        RGAnimator.SetFloat("IdleTime", idleTimer);
+        Debug.Log(idleTimer);
     }
 }
