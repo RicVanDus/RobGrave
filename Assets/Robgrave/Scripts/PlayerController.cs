@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public int hitPoints;
     public int score;
 
-    private MeshRenderer playerMesh;
+    public MeshRenderer playerMesh;
     private Material playerMeshMaterial;
     private Rigidbody rigidB;
     private Animator RGAnimator;
@@ -111,15 +111,20 @@ public class PlayerController : MonoBehaviour
         vMovement = moveDirection.y;
 
         CheckIdleTime(Time.deltaTime);
-        PlayerMovement();
+        
         blinkingTimer += Time.deltaTime;
+    }
+
+    private void FixedUpdate()
+    {
+        PlayerMovement();
     }
 
     private void PlayerMovement()
     {
         if (movementDisabled || playerInteracting)
         {
-            return;
+            rigidB.velocity = new Vector3(0, 0, 0);
         }
 
         if (!(hMovement == 0 && vMovement == 0))
@@ -127,13 +132,17 @@ public class PlayerController : MonoBehaviour
             Vector3 newPosition = new Vector3(hMovement, 0f, vMovement);
             newPosition.Normalize();
 
-            rigidB.MovePosition(rigidB.position + (newPosition * moveSpeed * Time.deltaTime));
-            PlayerRotation(hMovement, vMovement);
+            rigidB.velocity = (newPosition * moveSpeed);
         }
         else
         {
-            rigidB.MovePosition(rigidB.position);
+            rigidB.velocity = new Vector3(0, 0, 0);
         }
+
+        PlayerRotation(hMovement, vMovement);
+
+        RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
+        
     }
 
     private void PlayerRotation(float h, float v)
@@ -145,7 +154,15 @@ public class PlayerController : MonoBehaviour
 
         var rotation = Quaternion.LookRotation(direction);
 
-        rigidB.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed));
+        if (rigidB.velocity.magnitude > 0)
+        {
+            rigidB.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed));
+        }
+        else
+        {
+            rigidB.MoveRotation(Quaternion.RotateTowards(transform.rotation, transform.rotation, rotationSpeed));
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -248,6 +265,5 @@ public class PlayerController : MonoBehaviour
         }
 
         RGAnimator.SetFloat("IdleTime", idleTimer);
-        Debug.Log(idleTimer);
     }
 }

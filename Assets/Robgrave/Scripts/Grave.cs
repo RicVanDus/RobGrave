@@ -131,9 +131,10 @@ public class Grave : Interactable
     {
         int _defDepth = currentDepth - defiledDepth;
 
-        if (_defDepth > 0)
+        if (_defDepth > 0 && currentDepth != maxDepth)
         {
             defileProgress += Time.deltaTime;
+            Debug.Log(" Defiling grave! ");
 
             if (defileProgress >= defileTime)
             {

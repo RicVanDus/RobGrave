@@ -114,7 +114,7 @@ public class EnemyManager : MonoBehaviour
         Enemy _newEnemy = Instantiate(enemy, SelectedSpawnPosition(), randomRotation);
         _newEnemy.name = "Ghost type" + type;
         _newEnemy.ghostType = type;
-        _newEnemy.EnemyId= id;
+        _newEnemy.EnemyId= id;     
 
         //replace EnemyObject with spawned enemy
         enemies[id] = _newEnemy;

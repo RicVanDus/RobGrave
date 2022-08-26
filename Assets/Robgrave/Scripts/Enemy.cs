@@ -42,9 +42,6 @@ public class Enemy : MonoBehaviour
 
     private bool _searchingNewDestination = false;
 
-    
-
-
 
     // Start is called before the first frame update
     void Awake()
@@ -53,7 +50,6 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         pathLine = GetComponent<LineRenderer>();
         
-
         myMaterial = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().GetComponent<Renderer>().material;
     }
 
@@ -189,6 +185,8 @@ public class Enemy : MonoBehaviour
                 Debug.LogError("No valid Ghost Type");
                 break;
         }
+
+        navAgent.speed = moveSpeed;
     }
 
     private void DistanceToPlayer()
