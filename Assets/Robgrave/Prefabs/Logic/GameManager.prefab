@@ -110,9 +110,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 0
   showAIpath: 1
+  currentLevel: 1
+  levels: []
+  thisLevel: {fileID: 0}
+  graveType0Color: {r: 0.3332973, g: 0.49056602, b: 0.33043787, a: 0}
+  graveType1Color: {r: 0.27981487, g: 0.43822756, b: 0.5660378, a: 0}
+  graveType2Color: {r: 0.5377358, g: 0.34699178, b: 0.53326523, a: 0}
+  graveDefaultColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 0}
+  graveWarningColor: {r: 0.5377358, g: 0.23031326, b: 0.23031326, a: 0}
+  graveStones:
+  - {fileID: 919132149155446097, guid: 5d91640c61dedbb40b9cbdd7a5994b79, type: 3}
+  - {fileID: 919132149155446097, guid: 5e5835c0f07082b429361f3c76cf7b5c, type: 3}
   PlayerSpawn: {fileID: 6543004079648792358}
-  EnemySpawn: {fileID: 6543004079782243037}
-  GhostType1: {r: 0.28449082, g: 1, b: 0, a: 0}
-  GhostType2: {r: 0, g: 0.26651955, b: 1, a: 0}
-  GhostType3: {r: 1, g: 0, b: 0.95554924, a: 0}
-  GhostType4: {r: 1, g: 0.61149544, b: 0, a: 0}
+  graves: []

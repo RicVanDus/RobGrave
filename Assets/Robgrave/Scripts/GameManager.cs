@@ -17,6 +17,14 @@ public class GameManager : MonoBehaviour
     public LevelProperties[] levels;
     public LevelProperties thisLevel;
 
+    [Header("Gravestones")]
+    public Color graveType0Color;
+    public Color graveType1Color;
+    public Color graveType2Color;
+    public Color graveDefaultColor;
+    public Color graveWarningColor;
+    public GameObject[] graveStones;
+
     [Header("Player attributes")]
     public Transform PlayerSpawn;
     public GameObject[] graves;
@@ -54,6 +62,7 @@ public class GameManager : MonoBehaviour
     // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
     // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
     // When purple is assigned, you assign blue, rest is filled with green
+    // -- assign random grave-mesh, with random rotation on Y (0 or 180) and slight random rotation on Z
 
 
     private void AssignGraves()
@@ -96,14 +105,10 @@ public class GameManager : MonoBehaviour
                     {
                         _grave.graveType = 2;
                         _gotcha = true;
-
                     }
 
                     indexDone[i] = _rnd;
                 }
-
-
-
             } while (!_gotcha);
         }
 
@@ -136,17 +141,53 @@ public class GameManager : MonoBehaviour
                     {
                         _grave.graveType = 1;
                         _gotcha = true;
-
                     }
 
                     indexDone[i] = _rnd;
-                }
-
-                
-
+                }                
             } while (!_gotcha);
         }
 
+        // assign meshes to all graves, with the right color.
+
+        for (int i = 0; i < graves.Length; i++)
+        {
+            Grave _grave = graves[i].GetComponent<Grave>();
+            GameObject _graveStone = graves[i].transform.Find("gravestone").gameObject;            
+
+
+            //Pick a random mesh
+            GameObject _randomGraveStone = graveStones[Random.Range(0, graveStones.Length)];
+            Mesh _randomMesh = _randomGraveStone.GetComponent<MeshFilter>().sharedMesh;
+            Material _randomMeshMaterial = _randomGraveStone.GetComponent<MeshRenderer>().sharedMaterial;
+            Color _graveColor = graveType0Color;
+
+            Vector3 _gravePos = new Vector3(_graveStone.transform.position.x, -0.5f, _graveStone.transform.position.z);
+            Vector3 _graveSize = new Vector3(1.3f, 1.3f, 1.3f);
+            Vector3 _graveRotation = new Vector3(0f, 0f, Random.Range(-6.0f, 6.0f));
+
+            _graveStone.GetComponent<MeshFilter>().mesh = _randomMesh;
+            _graveStone.GetComponent<MeshRenderer>().material = _randomMeshMaterial;
+            _graveStone.transform.position = _gravePos;
+            _graveStone.transform.localScale = _graveSize;
+            _graveStone.transform.Rotate(_graveRotation);
+            
+            switch (_grave.graveType)
+            {
+                case 0:
+                    _graveColor = graveType0Color;
+                    break;
+                case 1:
+                    _graveColor = graveType1Color;
+                    break;
+                case 2:
+                    _graveColor = graveType2Color;
+                    break;
+            }
+
+            _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _graveColor);
+
+        }
 
     }
 }

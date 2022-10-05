@@ -159,25 +159,25 @@ public class Enemy : MonoBehaviour
         {
             case 0:
                 huntTime = 10f;
-                moveSpeed = 3.5f;
+                moveSpeed = 3f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType1);
                 break;
 
             case 1:
                 huntTime= 20f;
-                moveSpeed = 4.0f;
+                moveSpeed = 3.5f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType2);
                 break;
 
             case 2:
                 huntTime = 30f;
-                moveSpeed = 4.5f;
+                moveSpeed = 4f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
                 break;
 
             case 3:
                 huntTime = 30f;
-                moveSpeed = 5.0f;
+                moveSpeed = 4.5f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
                 break;
 
