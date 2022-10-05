@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
         AssignGraves();
 
         // spawn all enemies
-        EnemyManager.Instance.CreateEnemyList();
         EnemyManager.Instance.SpawnAllEnemies();
     }
 

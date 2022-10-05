@@ -37,55 +37,34 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    public void CreateEnemyList()
+    // SpawnAllEnemies - spawns all enemies from current level, adding them to the list. Id = 
+    // DespawnAllEnemies - destroys all enemies, clears (list)
+    // SpawnEnemy(Type) - Spawns enemy of Type
+    // DespawnEnemy(id) - Destroys Enemy of id (list)
+    // 
+
+    public void SpawnAllEnemies()
     {
         LevelProperties _levelProps = GameManager.Instance.thisLevel;
 
         int _ghostTypes0 = _levelProps.ghostSpawnType0;
         int _ghostTypes1 = _levelProps.ghostSpawnType1;
         int _ghostTypes2 = _levelProps.ghostSpawnType2;
-        int _enemyId = 0;
 
         for (int i = 0; i < _ghostTypes0; i++)
         {
-            Enemy _newEnemy = new Enemy();
-            _newEnemy.ghostType = 0;
-            _newEnemy.EnemyId = _enemyId;
-
-            enemies.Add(_newEnemy);
-            _enemyId++;
+            SpawnEnemy(0);
         }
 
         for (int i = 0; i < _ghostTypes1; i++)
         {
-            Enemy _newEnemy = new Enemy();
-            _newEnemy.ghostType = 1;
-            _newEnemy.EnemyId = _enemyId;
-
-            enemies.Add(_newEnemy);
-            _enemyId++;
+            SpawnEnemy(1);
         }
 
 
         for (int i = 0; i < _ghostTypes2; i++)
         {
-            Enemy _newEnemy = new Enemy();
-            _newEnemy.ghostType = 2;
-            _newEnemy.EnemyId = _enemyId;
-
-            enemies.Add(_newEnemy);
-            _enemyId++;
-        }
-    }
-
-    public void SpawnAllEnemies()
-    {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            int _enemyGhostType = enemies[i].ghostType;
-            int _id = enemies[i].EnemyId;
-
-            SpawnEnemy(_enemyGhostType, _id);
+            SpawnEnemy(2);
         }
     }
 
@@ -94,36 +73,26 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    public void AddNewEnemy(int type)
-    {
-        Enemy _newEnemy = new Enemy();
-        int _newId = enemies.Count;
-
-        _newEnemy.ghostType = type;
-        _newEnemy.EnemyId = _newId;
-
-        enemies.Add(_newEnemy);
-
-        SpawnEnemy(_newEnemy.ghostType, _newEnemy.EnemyId);
-    }
-
-    private void SpawnEnemy(int type, int id)
+    public void SpawnEnemy(int type)
     {
         Quaternion randomRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
         Enemy _newEnemy = Instantiate(enemy, SelectedSpawnPosition(), randomRotation);
         _newEnemy.name = "Ghost type" + type;
         _newEnemy.ghostType = type;
-        _newEnemy.EnemyId= id;     
+        _newEnemy.EnemyId = enemies.Count;
 
-        //replace EnemyObject with spawned enemy
-        enemies[id] = _newEnemy;
-
-        Debug.Log("Enemy spawned!");
+        enemies.Add(_newEnemy);
+        
+        Debug.Log("Enemy spawned: [ID: " + _newEnemy.EnemyId + "]!");
     }
 
     void DespawnEnemy(int id)
     {
+        // TEST THIS
+        Enemy _enemyToDespawn = enemies[id];        
+        enemies.Remove(_enemyToDespawn);
+        Destroy(_enemyToDespawn);
 
     }
 

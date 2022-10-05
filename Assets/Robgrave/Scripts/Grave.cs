@@ -144,7 +144,7 @@ public class Grave : Interactable
                 if (_rnd1 == _rnd2)
                 {
                     Debug.Log("DEFILEMENT: You are haunted!");
-                    EnemyManager.Instance.AddNewEnemy(graveType);
+                    EnemyManager.Instance.SpawnEnemy(graveType);
                 }
                 else
                 {
