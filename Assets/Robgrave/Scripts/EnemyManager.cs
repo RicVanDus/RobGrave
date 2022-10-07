@@ -17,6 +17,9 @@ public class EnemyManager : MonoBehaviour
     public Color GhostType3;
     public Color GhostType4;
 
+    public delegate void OnEnemyUpdate();
+    public event OnEnemyUpdate EnemyUpdate;
+
     private void Awake()
     {
         if (Instance == null )
@@ -85,15 +88,18 @@ public class EnemyManager : MonoBehaviour
         enemies.Add(_newEnemy);
         
         Debug.Log("Enemy spawned: [ID: " + _newEnemy.EnemyId + "]!");
+
+        EnemyUpdate?.Invoke();
     }
 
-    void DespawnEnemy(int id)
+    public void DespawnEnemy(int id)
     {
         // TEST THIS
         Enemy _enemyToDespawn = enemies[id];        
         enemies.Remove(_enemyToDespawn);
         Destroy(_enemyToDespawn);
 
+        EnemyUpdate?.Invoke();
     }
 
     private Vector3 SelectedSpawnPosition()

@@ -22,6 +22,7 @@ public class Grave : Interactable
     public bool playerIsDigging = false;
     private bool graveIsDug = false;
     private bool graveTouched = false;
+    private bool graveDefiled = false;
 
     private void Awake()
     {
@@ -104,6 +105,10 @@ public class Grave : Interactable
                 if (currentDepth >= maxDepth)
                 {
                     graveIsDug = true;
+                    GameObject _graveStone = transform.Find("gravestone").gameObject;
+                    Color _defaultColor = GameManager.Instance.graveDefaultColor;
+                    _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _defaultColor);
+
                     SpawnLoot();
                 }
             }
@@ -131,7 +136,7 @@ public class Grave : Interactable
     {
         int _defDepth = currentDepth - defiledDepth;
 
-        if (_defDepth > 0 && currentDepth != maxDepth)
+        if (_defDepth > 0 && currentDepth != maxDepth && graveDefiled == false)
         {
             defileProgress += Time.deltaTime;
             Debug.Log(" Defiling grave! ");
@@ -143,8 +148,10 @@ public class Grave : Interactable
 
                 if (_rnd1 == _rnd2)
                 {
+                    graveDefiled = true;
                     Debug.Log("DEFILEMENT: You are haunted!");
                     EnemyManager.Instance.SpawnEnemy(graveType);
+                    
                 }
                 else
                 {
