@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
 
     public int hitPoints;
     public int score;
+    private int previousPreScore;
+    public int preScore;
+
+    private float scoreAddingTimer = 0f;
+    private float scoreAddingTime = 3f;
 
     public MeshRenderer playerMesh;
     private Material playerMeshMaterial;
@@ -40,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
     public delegate void OnRespawn();
     public event OnRespawn Respawned;
+
+    ///public delegate void OnChangingScore();
+   // public event OnChangingScore ChangingScore;
 
     public delegate void Interact();
 
@@ -111,8 +119,10 @@ public class PlayerController : MonoBehaviour
         vMovement = moveDirection.y;
 
         CheckIdleTime(Time.deltaTime);
-        
+
         blinkingTimer += Time.deltaTime;
+
+        CheckAddedScore();
     }
 
     private void FixedUpdate()
@@ -142,7 +152,7 @@ public class PlayerController : MonoBehaviour
         PlayerRotation(hMovement, vMovement);
 
         RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
-        
+
     }
 
     private void PlayerRotation(float h, float v)
@@ -224,7 +234,8 @@ public class PlayerController : MonoBehaviour
 
     public void AddScore(int value)
     {
-        score += value;
+        preScore += value;
+        scoreAddingTimer = 0f;
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -265,5 +276,43 @@ public class PlayerController : MonoBehaviour
         }
 
         RGAnimator.SetFloat("IdleTime", idleTimer);
+    }
+
+    private void CheckAddedScore()
+    {
+        if (preScore > 0)
+        {
+            scoreAddingTimer += Time.deltaTime;
+
+            if (scoreAddingTimer >= scoreAddingTime)
+            {
+                StartCoroutine(AddingPreScoreToScore(preScore));
+                preScore = 0;
+            }
+        }
+    }
+
+    private IEnumerator AddingPreScoreToScore(int preScore)
+    {
+        int amountToScore = preScore / 10;
+        int _counter = 0;
+
+        if (preScore > 20)
+        {
+            while (_counter < preScore)
+            {
+                score += amountToScore;
+                _counter += amountToScore;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        else
+        {
+            score += preScore;
+            yield break;
+        }
+
+        yield break;
     }
 }

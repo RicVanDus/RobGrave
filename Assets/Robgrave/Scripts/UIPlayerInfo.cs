@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class UIPlayerInfo : MonoBehaviour
 {
     public Text hitPoints;
+
     public Text score;
+    public Text preScore;
+    public Text targetScore;
 
     public Transform graphicGhostsTarget;
     public Image graphicGhost;
@@ -22,7 +25,7 @@ public class UIPlayerInfo : MonoBehaviour
     void Update()
     {
         hitPoints.text = PlayerController.Instance.hitPoints.ToString();
-        //score.text = "Score: " + PlayerController.Instance.score.ToString();
+        UpdateScore();
     }
 
     public void UpdateGhosts()
@@ -65,4 +68,23 @@ public class UIPlayerInfo : MonoBehaviour
         }
 
     }
+
+    public void UpdateScore()
+    {
+        score.text = PlayerController.Instance.score.ToString();
+
+        if (PlayerController.Instance.preScore == 0)
+        {
+            preScore.text = "";
+        }
+        else
+        {
+            preScore.text = "+" + PlayerController.Instance.preScore.ToString();
+        }
+
+        targetScore.text = "/ " + GameManager.Instance.thisLevel.valuablesRequired.ToString();
+
+    }
+    // player score: 
+    // add to pre-score, when timer runs out: divide by x seconds * 10. add that amount to the score
 }
