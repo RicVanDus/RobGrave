@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     public int hitPoints;
     public int score;
-    private int previousPreScore;
     public int preScore;
 
     private float scoreAddingTimer = 0f;
@@ -294,15 +293,24 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator AddingPreScoreToScore(int preScore)
     {
-        int amountToScore = preScore / 10;
+        float _amountToScore = preScore;
+        _amountToScore = _amountToScore / 10;
+        float _modAmount = _amountToScore % (preScore / 10);
+        _amountToScore -= _modAmount;       
+
         int _counter = 0;
 
         if (preScore > 20)
         {
-            while (_counter < preScore)
+            if (_modAmount > 0.0f)
             {
-                score += amountToScore;
-                _counter += amountToScore;
+                score += (int)(_modAmount * 10);
+                _counter += (int)(_modAmount * 10);
+            }
+            while (_counter < preScore)
+            {                
+                score += (int)_amountToScore;
+                _counter += (int)_amountToScore;
 
                 yield return new WaitForSeconds(0.1f);
             }
