@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public Color graveDefaultColor;
     public Color graveWarningColor;
     public GameObject[] graveStones;
+    public GameObject GraveUI;
 
     [Header("Player attributes")]
     public Transform PlayerSpawn;
@@ -186,6 +187,19 @@ public class GameManager : MonoBehaviour
 
             _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _graveColor);
 
+
+            // Add the GraveUI
+
+            if (_grave.graveType == 0)
+            {
+                GameObject _graveUI = Instantiate(GraveUI, _grave.transform);
+
+                GUI_grave_01 _UI = _graveUI.GetComponent<GUI_grave_01>();
+
+                _UI._grave = _grave;
+                _UI.SetUIPosition();
+             
+            }
         }
 
     }

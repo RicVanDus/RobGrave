@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
     protected BoxCollider[] colliders = new BoxCollider[5];
     protected BoxCollider trigger;
 
-    protected bool PlayerCanInteract = false;
+    public bool PlayerCanInteract = false;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -41,8 +41,7 @@ public class Interactable : MonoBehaviour
         //create function
         if (other.tag == "Player")
         {
-            PlayerCanInteract = true;
-            Debug.Log("Player Can Interact!");
+            PlayerCanInteract = true;            
         }
     }
 
@@ -50,8 +49,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            PlayerCanInteract = false;
-            Debug.Log("Player Can NOT Interact!");
+            PlayerCanInteract = false;            
         }
     }
 }

@@ -6,23 +6,26 @@ using UnityEngine.UI;
 public class Grave : Interactable
 {
     public int graveType = 0;
-    private int maxDepth;
-    private int currentDepth = 0;
-    private float diggingProgress = 0f;
-    private int defiledDepth = 0;
-    private float diggingtTime = 3.0f;
-    private float defileTime = 5.0f;
-    private float defileProgress = 0f;
+    public int maxDepth;
+    public int currentDepth = 0;
+    public float diggingProgress = 0f;
+    public int defiledDepth = 0;
+    public float diggingtTime = 3.0f;
+    public float defileTime = 5.0f;
+    public float defileProgress = 0f;
     public int valuables;
 
     [SerializeField] private Text _depthNumber;
 
-    Gravedirt _gravedirt;
+    Gravedirt _gravedirt;    
 
     public bool playerIsDigging = false;
+    public bool graveIsDifiling = false;
     private bool graveIsDug = false;
     private bool graveTouched = false;
     private bool graveDefiled = false;
+
+
 
     private void Awake()
     {
@@ -47,6 +50,8 @@ public class Grave : Interactable
         {
             playerIsDigging = false;
         }
+
+        _gravedirt.ChangeDirtColor(PlayerCanInteract);
 
         PlayerIsDiggingOrNot();
     }
@@ -94,7 +99,12 @@ public class Grave : Interactable
         if (playerIsDigging)
         {
             diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMultiplier);
+            if (defileProgress > 0f)
+            {
+                defileProgress -= Time.deltaTime;
+            }            
             graveTouched = true;
+            graveIsDifiling = false;
 
             if (diggingProgress >= diggingtTime)
             {
@@ -135,9 +145,11 @@ public class Grave : Interactable
     private void DefiledGrave()
     {
         int _defDepth = currentDepth - defiledDepth;
+        graveIsDifiling = false;
 
         if (_defDepth > 0 && currentDepth != maxDepth && graveDefiled == false)
         {
+            graveIsDifiling = true;
             defileProgress += Time.deltaTime;
             Debug.Log(" Defiling grave! ");
 
@@ -160,6 +172,7 @@ public class Grave : Interactable
 
                 defiledDepth++;
                 defileProgress = 0f;
+                graveIsDifiling = false;
             }
         }
     }
