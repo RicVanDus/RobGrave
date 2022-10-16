@@ -43,6 +43,13 @@ public class Enemy : MonoBehaviour
     private bool _searchingNewDestination = false;
 
 
+    // New Ghost AI idea:
+    // Ghost has a chance on arriving at the desination to- either move on or to stay there and wait for an amount of time. Looking around: slowly rotating.
+    // this does not apply for hunting a player
+    // Blue and purple ghosts do tend to move more around and stop less then green ghosts.
+    // NOTE: important to test out the implication of this to the core gameplay; could make the game harder by ghosts blocking passages.
+    // Player coming too close to the ghost should automatically activate hunt mode.
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -80,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         if (_distanceToPlayer > 7.0f)
         {
-            myMaterial.SetFloat("_Visibility", 0f);
+            myMaterial.SetFloat("_Visibility", 1f); // debug
         }
         else
         {

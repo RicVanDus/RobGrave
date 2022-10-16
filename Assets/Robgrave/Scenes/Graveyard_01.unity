@@ -50863,36 +50863,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
+    - target: {fileID: 508284440422133711, guid: b98bf73d8570ae6438001ce7d0e74bc4,
         type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 6602541996157569260, guid: e391c9a63dbef9249918411cfb271ba7,
-        type: 3}
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GhostType1.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GhostType2.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GhostType3.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GhostType4.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032032912114759, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GhostType4.g
-      value: 0.8279877
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2585032033640612564, guid: b98bf73d8570ae6438001ce7d0e74bc4,
         type: 3}
@@ -50954,221 +50928,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
+    - target: {fileID: 3816495063251259014, guid: b98bf73d8570ae6438001ce7d0e74bc4,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
+      propertyPath: m_LocalScale.x
+      value: 87.28934
       objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
+    - target: {fileID: 3816495063251259014, guid: b98bf73d8570ae6438001ce7d0e74bc4,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 100
+      propertyPath: m_LocalScale.z
+      value: 58.895092
       objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
+    - target: {fileID: 3816495063251259014, guid: b98bf73d8570ae6438001ce7d0e74bc4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.12
+      value: 4.1
       objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6924581
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.72145814
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605587, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 92.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605588, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_CameraType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605588, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_RenderShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605589, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: far clip plane
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605589, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605589, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033865605589, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: GraveUI
-      value: 
-      objectReference: {fileID: 2628140516386662936, guid: d9b45349c1053fa46a50801a673fecd5,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType0Color.b
-      value: 0.31892136
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType0Color.g
-      value: 0.38679248
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType0Color.r
-      value: 0.32057673
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType1Color.b
-      value: 0.41509432
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType1Color.g
-      value: 0.36084986
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType1Color.r
-      value: 0.2913492
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType2Color.b
-      value: 0.38540736
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType2Color.g
-      value: 0.31892136
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveType2Color.r
-      value: 0.38679248
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveDefaultColor.b
-      value: 0.2735849
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveDefaultColor.g
-      value: 0.2735849
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveDefaultColor.r
-      value: 0.2735849
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.size
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[2]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: d2253af0fd74c9a4097988ede1f9ff97,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[3]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: ae4031f92c637c5458d1a3e251d4a861,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[4]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 859d0470cd58fb942bee2ff929b49834,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[5]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: e5e0e7e76a2586843be1b4ce0e9c769a,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[6]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: efd81e8b8bd88a747babf081f53188b4,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[7]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 23589a22c6660c04ba86b479e244d1c7,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[8]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 53fc8480c5c98f64c813148fa53639e3,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[9]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 7a5a2bc2fe663704cb23a8990bfd0546,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[10]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: bbf1bc52522574f4ebd33f2b31c950fe,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[11]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 89a8da33b7ad6ca4d8e906687b83fadd,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[12]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 26195ad45f90c8446a687a9cdc5c682a,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[13]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 5bd7f54b965443c4393b64b77269825e,
-        type: 3}
-    - target: {fileID: 2585032033931779153, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: graveStones.Array.data[14]
-      value: 
-      objectReference: {fileID: 919132149155446097, guid: 97f75405f92e58b4fb707e836f301c4f,
-        type: 3}
-    - target: {fileID: 2585032034606129240, guid: b98bf73d8570ae6438001ce7d0e74bc4,
-        type: 3}
-      propertyPath: debugObject2
-      value: 
-      objectReference: {fileID: 104897356967195350, guid: 99d30c4d760d64e46b074c0792224e7a,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98bf73d8570ae6438001ce7d0e74bc4, type: 3}
 --- !u!4 &4987901296776953357
@@ -51459,6 +51233,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6535991398565715568, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535991398565715568, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535991398565715568, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6535991399147605075, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -51518,6 +51307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535991399391868830, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.15686275
       objectReference: {fileID: 0}
     - target: {fileID: 6535991399548993301, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
         type: 3}
