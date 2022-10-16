@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnRespawn();
     public event OnRespawn Respawned;
 
+
     ///public delegate void OnChangingScore();
    // public event OnChangingScore ChangingScore;
 

@@ -1,0 +1,49 @@
+Rob grave todo list
+----------------
+
+
+**PROGRAMMING**
+- add grave UI for blue and purple
+- make ghosts sometimes stop and slowly look around when not aware of player. Blue and purple ghosts are more active movers.
+- wishing well functionality
+- safe zone (start) / able to finish the level there / make ghosts spawn/move when in safe zone / safe zone is only available when (re)spawning and when having enough valuables
+- Menu system / gameloop
+- Menu with options
+- UI: adding announcements
+- UI: adding interaction key icons
+
+
+**3D**
+- create assets: more types of walls/boundaries (hedges, low fence, chainlinked poles?)
+- create asset: high fence surrounding graveyard
+- create asset: lantern/street light/lamppost
+- create asset: crypt
+- create asset: well
+- create asset: (dead) trees
+- create assets: Shovel, flashlight
+- create asset: present (yellow box with green/blue/purple bow tie)
+- create asset: ghost!
+- create asset: crow
+- create asset: mystery man
+- create asset: mobster
+- create asset: RG van
+- create asset: mobster car
+
+- animate: RG - digging
+- animate: RG - hitting lamppost
+- animate: RG - hitting present
+- animate: RG - falling (after ghosts catches)
+- animate: RG - being dragged and shook by ghost
+
+- animate: ghost - hunting (arms out)
+- animateL ghost - picking up RG
+- animate ghost - shaking RG
+
+**SOUND**
+- everything
+
+
+
+
+
+

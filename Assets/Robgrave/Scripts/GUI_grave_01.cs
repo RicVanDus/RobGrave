@@ -111,8 +111,7 @@ public class GUI_grave_01 : MonoBehaviour
             startedRedBlinking = false;
             if (startedRedBlinking == true)
             {
-                StopCoroutine(BlinkingRedCircle());
-                Debug.Log("Stopped BLINKING");
+                StopCoroutine(BlinkingRedCircle());                
             }                        
         }
 
@@ -138,25 +137,25 @@ public class GUI_grave_01 : MonoBehaviour
         {            
             if (Mathf.Round(_grave.transform.eulerAngles.y) == 0)
             {                
-                _newPos = new Vector3(0f, 0.4f, 0.85f);
+                _newPos = new Vector3(0f, 1.4f, 0.85f);
                 _newRot = Quaternion.Euler(0f, 0f, 0f); 
 
             }
             else if (Mathf.Round(_grave.transform.eulerAngles.y) == 180)
             {
-                _newPos = new Vector3(0f, 0.4f, 1.5f);
+                _newPos = new Vector3(0f, 1.4f, 1.5f);
                 _newRot = Quaternion.Euler(0f, 180f, 0f);
 
             }
             else if (Mathf.Round(_grave.transform.eulerAngles.y) == 90)
             {
-                _newPos = new Vector3(0.8f, 0.4f, 1.25f);
+                _newPos = new Vector3(0.8f, 1.4f, 1.25f);
                 _newRot = Quaternion.Euler(0f, -90f, 0f);
 
             }
             else
             {
-                _newPos = new Vector3(-0.8f, 0.4f, 1.25f);
+                _newPos = new Vector3(-0.8f, 1.4f, 1.25f);
                 _newRot = Quaternion.Euler(0f, 90f, 0f);
 
             }

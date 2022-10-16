@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class UIPlayerInfo : MonoBehaviour
 {
-    public Text hitPoints;
 
     public Text score;
     public Text preScore;
@@ -11,20 +10,23 @@ public class UIPlayerInfo : MonoBehaviour
 
     public Transform graphicGhostsTarget;
     public Image graphicGhost;
+    public Image graphicLives;
+    public Transform graphicLivesTarget;
 
     private void Start()
     {
-        
+        UpdateLives();
+        PlayerController.Instance.Respawned += UpdateLives;
     }
 
     private void Awake()
     {
         EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
+        
     }
 
     void Update()
     {
-        hitPoints.text = PlayerController.Instance.hitPoints.ToString();
         UpdateScore();
     }
 
@@ -85,6 +87,21 @@ public class UIPlayerInfo : MonoBehaviour
         targetScore.text = "/ " + GameManager.Instance.thisLevel.valuablesRequired.ToString();
 
     }
-    // player score: 
-    // add to pre-score, when timer runs out: divide by x seconds * 10. add that amount to the score
+
+    public void UpdateLives()
+    {
+        int nbChildren = graphicLivesTarget.childCount;
+
+        Debug.Log(" UPDATE LIVES");
+
+        for (int i = nbChildren - 1; i >= 0; i--)
+        {
+            DestroyImmediate(graphicLivesTarget.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < PlayerController.Instance.hitPoints; i++)
+        {
+            Image liveHeart = Instantiate(graphicLives, graphicLivesTarget);
+        }
+    }
 }

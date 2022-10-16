@@ -139,6 +139,12 @@ public class Grave : Interactable
     private void SpawnLoot()
     {
         int spawnNr = Random.Range(17, 26);
+
+        if (defiledDepth > 0)
+        {
+            valuables = (int)(valuables - (valuables * (0.2f * defiledDepth)));
+            spawnNr = spawnNr - defiledDepth;
+        }
         LootManager.Instance.SpawnLoot(valuables, spawnNr);
     }
 
