@@ -17,11 +17,12 @@ public class UIPlayerInfo : MonoBehaviour
     {
         UpdateLives();
         PlayerController.Instance.Respawned += UpdateLives;
+        EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
     }
 
     private void Awake()
     {
-        EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
+        
         
     }
 
