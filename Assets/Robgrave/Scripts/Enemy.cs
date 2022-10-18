@@ -41,14 +41,15 @@ public class Enemy : MonoBehaviour
     private float _searchPrecision = 0.5f;
 
     private bool _searchingNewDestination = false;
+    private bool _reachedDestination = false;
+
+    private float _lookAroundTimer = 0f;
+    private float _lookAroundTime = 0f;
+    private bool _setLookAround = false;
 
 
-    // New Ghost AI idea:
-    // Ghost has a chance on arriving at the desination to- either move on or to stay there and wait for an amount of time. Looking around: slowly rotating.
-    // this does not apply for hunting a player
-    // Blue and purple ghosts do tend to move more around and stop less then green ghosts.
-    // NOTE: important to test out the implication of this to the core gameplay; could make the game harder by ghosts blocking passages.
-    // Player coming too close to the ghost should automatically activate hunt mode.
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -79,6 +80,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         DistanceToPlayer();
+        GhostMovement();
+
 
         if (currentGhostType != ghostType)
         {
@@ -93,9 +96,18 @@ public class Enemy : MonoBehaviour
         {
             myMaterial.SetFloat("_Visibility", 1f);
         }
+    }
+
+    private void GhostMovement()
+    {
+        // When lookaround: rotate in a set speed
+        // maybe not make the ghosts stop when player is too far away
+
 
         if (_searchingNewDestination)
         {
+            _reachedDestination = false;
+            _setLookAround = false;
             Vector3 newDestination = GetNewDestination();
             navAgent.SetDestination(newDestination);
 
@@ -109,12 +121,41 @@ public class Enemy : MonoBehaviour
 
         if (navAgent.remainingDistance <= 0.1f)
         {
-            _searchingNewDestination = true;
+            _reachedDestination = true;
         }
 
+        if (_reachedDestination)
+        {
+            if (huntingPlayer || _distanceToPlayer > 20f)
+            {
+                _searchingNewDestination = true;
+            }
+
+            if (!_setLookAround)
+            {
+                _lookAroundTime = (Random.Range(1f, 6f) - ghostType);
+
+                if (_lookAroundTime < 2f)
+                {
+                    _searchingNewDestination = true;
+                }
+                _setLookAround = true;
+            }
+            else
+            {
+                _lookAroundTimer += Time.deltaTime;
+
+                if (_lookAroundTimer > _lookAroundTime)
+                {
+                    _searchingNewDestination = true;
+                    _lookAroundTimer = 0f;
+                }
+            }
+        }
+
+        // DEBUG VISUALS
         if (debugVisuals)
         {
-            
             ShowDebugPath();
         }
         else
@@ -138,7 +179,7 @@ public class Enemy : MonoBehaviour
         {
             if (LookForPlayer())
             {
-                huntingPlayer = true;
+                huntingPlayer = true;                
                 huntTimer = 0;
                 searchAreaSize = 2f;
 
@@ -147,6 +188,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
 
      private void ShowDebugPath()
     {
@@ -195,6 +237,7 @@ public class Enemy : MonoBehaviour
 
         navAgent.speed = moveSpeed;
     }
+
 
     private void DistanceToPlayer()
     {
