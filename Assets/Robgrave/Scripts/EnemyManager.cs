@@ -102,6 +102,11 @@ public class EnemyManager : MonoBehaviour
         EnemyUpdate?.Invoke();
     }
 
+    public void UpdateUI()
+    {
+        EnemyUpdate?.Invoke();
+    }
+
     private Vector3 SelectedSpawnPosition()
     {
         //float distanceToPlayer;

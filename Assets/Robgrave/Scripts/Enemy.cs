@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     private int currentGhostType;
     public int EnemyId;
 
+    public int score = 0;
+
     private float _oldSearchAreaSize;
     private float _oldMoveSpeed;
 
@@ -29,7 +31,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     private float huntTimer;
     private float huntTime = 3.0f;
-
     private bool huntingPlayer;
 
     private float _distanceToPlayer;
@@ -46,10 +47,6 @@ public class Enemy : MonoBehaviour
     private float _lookAroundTimer = 0f;
     private float _lookAroundTime = 0f;
     private bool _setLookAround = false;
-
-
-
-
 
     // Start is called before the first frame update
     void Awake()
@@ -82,11 +79,12 @@ public class Enemy : MonoBehaviour
         DistanceToPlayer();
         GhostMovement();
 
-
+        // Why was this needed?
+        /*
         if (currentGhostType != ghostType)
         {
             SetGhostType(ghostType);
-        }
+        } */
 
         if (_distanceToPlayer > 7.0f)
         {
@@ -145,6 +143,10 @@ public class Enemy : MonoBehaviour
             {
                 _lookAroundTimer += Time.deltaTime;
 
+                // rotate lerpje?
+                //transform.localRotation
+
+
                 if (_lookAroundTimer > _lookAroundTime)
                 {
                     _searchingNewDestination = true;
@@ -202,7 +204,7 @@ public class Enemy : MonoBehaviour
 
     private void SetGhostType(int _ghostType)
     {
-        currentGhostType = _ghostType;
+        ghostType = _ghostType;
 
         switch (_ghostType)
         {
@@ -235,6 +237,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
+        EnemyManager.Instance.UpdateUI();
         navAgent.speed = moveSpeed;
     }
 
@@ -319,7 +322,34 @@ public class Enemy : MonoBehaviour
     }
 
 
+    public void PickUpValuable(int _value)
+    {
+        score += _value;
 
+        Debug.Log(this.name + " - score: " + score);
+
+        if (score >= 100 && ghostType == 0)
+        {
+            SetGhostType(1);
+            score = 0;
+        }
+        else if (score >= 250 && ghostType == 1)
+        {
+            SetGhostType(2);
+            score = 0;
+        }
+        else if (score >= 500 && ghostType == 2)
+        {
+            SetGhostType(3);
+            score = 0;
+        }
+        else if (score >= 750 && ghostType == 3)
+        {
+            SetGhostType(4);
+            score = 0;
+        }
+
+    }
 
     private bool RunTimer(float Timer, float TimeEnds, float DeltaTime)
     {

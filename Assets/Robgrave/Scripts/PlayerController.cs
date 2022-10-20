@@ -59,8 +59,6 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance { get; private set; }
 
-
-
     private void OnEnable()
     {
         move = playerInputs.Player.Move;
@@ -160,7 +158,7 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = new Vector3(h * 10, 0f, v * 10);
 
         if (direction.magnitude == 0) { return; }
-        direction = Quaternion.Euler(0, cam.gameObject.transform.rotation.eulerAngles.y, 0) * direction;
+        direction = Quaternion.Euler(0, 0, 0) * direction;
 
         var rotation = Quaternion.LookRotation(direction);
 

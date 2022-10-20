@@ -35,6 +35,8 @@ public class Pickup : MonoBehaviour
         }
         else if (other.tag == "Enemy")
         {
+            Enemy _enemy = other.GetComponent<Enemy>();
+            _enemy.PickUpValuable(value);
             LootManager.Instance.ClearLootSpot(id);
             Destroy(this.gameObject);
         }

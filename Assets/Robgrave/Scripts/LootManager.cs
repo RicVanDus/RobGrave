@@ -157,7 +157,10 @@ public class LootManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("STOP");
+                if (Debug_Lootmanager)
+                {
+                    Debug.Log("STOP");
+                }
                 randomValuable = null;
             }
 

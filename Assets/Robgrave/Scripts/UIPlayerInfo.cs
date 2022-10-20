@@ -37,7 +37,7 @@ public class UIPlayerInfo : MonoBehaviour
 
         for (int i = nbChildren - 1; i >= 0; i--)
         {
-            DestroyImmediate(graphicGhostsTarget.GetChild(i).gameObject);
+            Destroy(graphicGhostsTarget.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < EnemyManager.Instance.enemies.Count; i++)
@@ -97,7 +97,7 @@ public class UIPlayerInfo : MonoBehaviour
 
         for (int i = nbChildren - 1; i >= 0; i--)
         {
-            DestroyImmediate(graphicLivesTarget.GetChild(i).gameObject);
+            Destroy(graphicLivesTarget.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < PlayerController.Instance.hitPoints; i++)
