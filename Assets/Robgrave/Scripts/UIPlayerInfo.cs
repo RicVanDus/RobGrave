@@ -13,6 +13,8 @@ public class UIPlayerInfo : MonoBehaviour
     public Image graphicLives;
     public Transform graphicLivesTarget;
 
+    
+
     private void Start()
     {
         UpdateLives();
@@ -63,7 +65,7 @@ public class UIPlayerInfo : MonoBehaviour
             }
             
 
-            Debug.Log(_ghost.ghostType);
+            
 
             Image _newGhostGraphic = Instantiate(graphicGhost, graphicGhostsTarget);
             _newGhostGraphic.color = _ghostColor;
@@ -86,6 +88,15 @@ public class UIPlayerInfo : MonoBehaviour
         }
 
         targetScore.text = "/ " + GameManager.Instance.thisLevel.valuablesRequired.ToString();
+
+        if (PlayerController.Instance.score < GameManager.Instance.thisLevel.valuablesRequired)
+        {
+            targetScore.color = new Color(1f, 0f, 0f);
+        } 
+        else
+        {
+            targetScore.color = new Color(0f, 1f, 0f);
+        }
 
     }
 

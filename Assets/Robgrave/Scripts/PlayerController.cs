@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public delegate void OnRespawn();
     public event OnRespawn Respawned;
 
+    public GameObject valuePopup;
+
 
     ///public delegate void OnChangingScore();
    // public event OnChangingScore ChangingScore;
@@ -234,6 +236,13 @@ public class PlayerController : MonoBehaviour
     {
         preScore += value;
         scoreAddingTimer = 0f;
+        Vector3 _spawnPos = new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z);
+        float _newScale = 0.001f * (value/5);
+
+        GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
+        _popupText.transform.localScale = new Vector3(_popupText.transform.localScale.x + _newScale, _popupText.transform.localScale.y + _newScale, _popupText.transform.localScale.z + _newScale);
+        ValuePopup _thisPopup = _popupText.GetComponent<ValuePopup>();
+        _thisPopup.PopUpScore(value, true);
     }
 
     private void OnInteract(InputAction.CallbackContext context)
