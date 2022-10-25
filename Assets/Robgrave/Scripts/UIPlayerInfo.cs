@@ -11,6 +11,7 @@ public class UIPlayerInfo : MonoBehaviour
     public Transform graphicGhostsTarget;
     public Image graphicGhost;
     public Image graphicLives;
+    public Image graphicLivesEmpty;
     public Transform graphicLivesTarget;
 
     
@@ -111,9 +112,14 @@ public class UIPlayerInfo : MonoBehaviour
             Destroy(graphicLivesTarget.GetChild(i).gameObject);
         }
 
-        for (int i = 0; i < PlayerController.Instance.hitPoints; i++)
+        for (int i = 0; i < PlayerController.Instance.maxLives; i++)
         {
-            Image liveHeart = Instantiate(graphicLives, graphicLivesTarget);
+            if (i+1 <= PlayerController.Instance.hitPoints)
+            {
+                Image liveHeart = Instantiate(graphicLives, graphicLivesTarget);
+            } else {
+                Image liveHeart = Instantiate(graphicLivesEmpty, graphicLivesTarget);
+            }            
         }
     }
 }

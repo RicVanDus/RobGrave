@@ -1,10 +1,30 @@
 Rob grave todo list
 ----------------
 
+** IDEAS **
+- Turn it into a survivor game, where you have to fend off skeletons spawning from the open graves. They can't hurt you, but they can be in your way. Maybe some types can shoot projectiles that stun you or trap you. They interrupt your digging as well.
+
+- first couple of minutes are ' free' , when the haunting starts (12 o clock) the skeletons rise from the graves. 
+
+- Heart containers can be empty and filled.
+	-> Cherries (+1 life) [green]
+	-> Strawberries (full life) [blue]
+	-> Orange (+1 max life) [purple]
+
+- Possible upgrades:
+	- better shovel (+damage and digspeed) [blue/purple]
+	- suit (+movement speed) [blue/purple]
+	- flashlight (+range and maybe a stun?) [blue/purple]
+	
+- Possible powerups:
+	- energy drink (+movement speed/digging speed) [green]
+	- ghosttrap (+immune to 1 ghost) [purple]
+	- 
+
 
 **PROGRAMMING**
-- add grave UI for blue and purple
-- make ghosts sometimes stop and slowly look around when not aware of player. Blue and purple ghosts are more active movers.
+
+
 - wishing well functionality
 - safe zone (start) / able to finish the level there / make ghosts spawn/move when in safe zone / safe zone is only available when (re)spawning and when having enough valuables
 - Menu system / gameloop

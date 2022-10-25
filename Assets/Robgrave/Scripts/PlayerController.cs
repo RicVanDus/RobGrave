@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public bool _using = false;
 
     public int hitPoints;
+    public int maxLives = 3;
     public int score;
     public int preScore;
 

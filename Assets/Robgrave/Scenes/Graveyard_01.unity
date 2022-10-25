@@ -99,7 +99,8 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 0582e94780b15aa44a4ad1384b7811f5,
     type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 6cc844c558cc8664ca9508253983dbf4,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -36719,6 +36720,7 @@ MonoBehaviour:
   _interacting: 0
   _using: 0
   hitPoints: 0
+  maxLives: 3
   score: 0
   preScore: 0
   playerMesh: {fileID: 0}
@@ -51109,6 +51111,12 @@ PrefabInstance:
       propertyPath: graphicLives
       value: 
       objectReference: {fileID: 710452251898660356, guid: 81c5d3a5d5e414c42a8d3f324d5a21a3,
+        type: 3}
+    - target: {fileID: 6535991397589180636, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
+        type: 3}
+      propertyPath: graphicLivesEmpty
+      value: 
+      objectReference: {fileID: 710452251898660356, guid: eea5f5ebd3faea54e81b26e4038f72bb,
         type: 3}
     - target: {fileID: 6535991397589180637, guid: 2fbd43d768ad1dc4ab2ebb0d73599b6b,
         type: 3}
