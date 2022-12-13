@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10.0f;
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
-    public float digSpeedMultiplier = 1.0f;
+    public float digSpeedMultiplier = 3.0f;
 
     public Camera cam;
 

@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
 
             Vector3 _gravePos = new Vector3(_graveStone.transform.position.x, -0.5f, _graveStone.transform.position.z);
             Vector3 _graveSize = new Vector3(1.3f, 1.3f, 1.3f);
-            Vector3 _graveRotation = new Vector3(0f, 0f, Random.Range(-6.0f, 6.0f));
+            Vector3 _graveRotation = new Vector3(Random.Range(-3.0f, 3.0f), 0f, Random.Range(-6.0f, 6.0f));
 
             _graveStone.GetComponent<MeshFilter>().mesh = _randomMesh;
             _graveStone.GetComponent<MeshRenderer>().material = _randomMeshMaterial;
