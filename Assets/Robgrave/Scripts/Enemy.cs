@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class Enemy : MonoBehaviour
 
     private bool debugVisuals = false;
     private LineRenderer pathLine;
+    public Light ghostLight; 
+    private float ghostLightIntensity = 1.5f;
 
     [Header("AI attributes")]
     [SerializeField] public int ghostType = 0;
@@ -38,8 +41,6 @@ public class Enemy : MonoBehaviour
 
     private float _visibility = 1f;
     private bool _visible = true;
-
-    public float Tester;
 
     private float _searchPrecision = 0.5f;
 
@@ -207,24 +208,28 @@ public class Enemy : MonoBehaviour
                 huntTime = 10f;
                 moveSpeed = 3f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType1);
+                ghostLight.color = EnemyManager.Instance.GhostType1;
                 break;
 
             case 1:
                 huntTime= 20f;
                 moveSpeed = 3.5f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType2);
+                ghostLight.color = EnemyManager.Instance.GhostType2;
                 break;
 
             case 2:
                 huntTime = 30f;
                 moveSpeed = 4f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
+                ghostLight.color = EnemyManager.Instance.GhostType3;
                 break;
 
             case 3:
                 huntTime = 30f;
                 moveSpeed = 4.5f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
+                ghostLight.color = EnemyManager.Instance.GhostType4;
                 break;
 
             default:
@@ -332,12 +337,12 @@ public class Enemy : MonoBehaviour
 
         //Debug.Log(this.name + " - score: " + score);
 
-        if (score >= 100 && ghostType == 0)
+        if (score >= 250 && ghostType == 0)
         {
             SetGhostType(1);
             score = 0;
         }
-        else if (score >= 250 && ghostType == 1)
+        else if (score >= 400 && ghostType == 1)
         {
             SetGhostType(2);
             score = 0;
@@ -347,7 +352,7 @@ public class Enemy : MonoBehaviour
             SetGhostType(3);
             score = 0;
         }
-        else if (score >= 750 && ghostType == 3)
+        else if (score >= 500 && ghostType == 3)
         {
             SetGhostType(4);
             score = 0;
@@ -373,14 +378,14 @@ public class Enemy : MonoBehaviour
     {
         if (show)
         {
-            Debug.Log("SHOW GHOST " + transform.name);
             DOTween.To(()=> _visibility, x=> _visibility = x, 1f, 0.7f);
+            ghostLight.DOIntensity(ghostLightIntensity, 1f);
             _visible = true;
         }
         else
         {
-            Debug.Log("HIDE GHOST " + transform.name);
             DOTween.To(()=> _visibility, x=> _visibility = x, 0f, 0.7f);
+            ghostLight.DOIntensity(0f, 1f);
             _visible = false;
         }
     } 
