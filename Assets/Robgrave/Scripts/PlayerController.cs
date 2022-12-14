@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -133,24 +134,28 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (movementDisabled || playerInteracting)
+        if (movementDisabled)
         {
             rigidB.velocity = new Vector3(0, 0, 0);
-        }
-
-        if (!(hMovement == 0 && vMovement == 0))
-        {
-            Vector3 newPosition = new Vector3(hMovement, 0f, vMovement);
-            newPosition.Normalize();
-
-            rigidB.velocity = (newPosition * moveSpeed);
         }
         else
         {
-            rigidB.velocity = new Vector3(0, 0, 0);
+            if (!(hMovement == 0 && vMovement == 0))
+            {
+                Vector3 newPosition = new Vector3(hMovement, 0f, vMovement);
+                newPosition.Normalize();
+
+                rigidB.velocity = (newPosition * moveSpeed);
+            }
+            else
+            {
+                rigidB.velocity = new Vector3(0, 0, 0);
+            }
+
+            PlayerRotation(hMovement, vMovement);
         }
 
-        PlayerRotation(hMovement, vMovement);
+
 
         RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
 
@@ -255,6 +260,7 @@ public class PlayerController : MonoBehaviour
         else if (context.canceled)
         {
             _interacting = false;
+            movementDisabled = false;
         }
     }
 
@@ -331,5 +337,12 @@ public class PlayerController : MonoBehaviour
         }
 
         yield break;
+    }
+
+    public void RotateToGrave(GameObject currentGrave)
+    {
+       
+        rigidB.DORotate(currentGrave.transform.rotation.eulerAngles, 0.3f, RotateMode.Fast);
+        
     }
 }

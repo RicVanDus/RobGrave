@@ -105,8 +105,6 @@ public class UIPlayerInfo : MonoBehaviour
     {
         int nbChildren = graphicLivesTarget.childCount;
 
-        Debug.Log(" UPDATE LIVES");
-
         for (int i = nbChildren - 1; i >= 0; i--)
         {
             Destroy(graphicLivesTarget.GetChild(i).gameObject);

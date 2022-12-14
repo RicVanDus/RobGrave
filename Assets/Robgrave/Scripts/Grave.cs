@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,7 @@ public class Grave : Interactable
     private bool graveIsDug = false;
     private bool graveTouched = false;
     private bool graveDefiled = false;
+    private bool _rotatedPlayer = false;
 
 
 
@@ -61,10 +63,16 @@ public class Grave : Interactable
         if (PlayerController.Instance._interacting)
         {
             playerIsDigging = true;
+            if (_rotatedPlayer == false)
+            {
+                RotatePlayer();    
+            }
+            
         }
         else
         {
             playerIsDigging = false;
+            _rotatedPlayer = false;
         }
     }
 
@@ -98,6 +106,8 @@ public class Grave : Interactable
     {
         if (playerIsDigging)
         {
+            PlayerController.Instance.movementDisabled = true;
+            
             diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMultiplier);
             if (defileProgress > 0f)
             {
@@ -157,7 +167,6 @@ public class Grave : Interactable
         {
             graveIsDifiling = true;
             defileProgress += Time.deltaTime;
-            Debug.Log(" Defiling grave! ");
 
             if (defileProgress >= defileTime)
             {
@@ -182,7 +191,13 @@ public class Grave : Interactable
             }
         }
     }
+
+    private void RotatePlayer()
+    {
+        _rotatedPlayer = true;
+        
+        PlayerController.Instance.RotateToGrave(this.GameObject());
+    }    
 }
 
 
-/*   TODO: Make functionality when diggingProces reaches 0 and is touched. It will tick down each segment and each segment has a 10% chance of spawning the ghost  */

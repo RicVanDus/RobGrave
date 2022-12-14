@@ -10,5 +10,4 @@ public class CameraEffects : MonoBehaviour
     {
         Graphics.Blit(source, destination, _mat);
     }
-
 }

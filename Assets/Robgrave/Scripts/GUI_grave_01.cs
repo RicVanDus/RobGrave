@@ -171,8 +171,6 @@ public class GUI_grave_01 : MonoBehaviour
 
         startedRedBlinking = true;
 
-        Debug.Log("Starting BLINKING");
-
         while (_grave.defileProgress > 0)
         {
             if (_grave.defiledDepth == 0)

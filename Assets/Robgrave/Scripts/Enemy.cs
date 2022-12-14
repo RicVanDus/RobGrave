@@ -389,4 +389,7 @@ public class Enemy : MonoBehaviour
             _visible = false;
         }
     } 
+    
+    
+    // Make collision with light emitting objects, if in it, set new bool to true. Check for this in Distance Player. 
 }
