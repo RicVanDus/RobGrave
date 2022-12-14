@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class Enemy : MonoBehaviour
 
     private float _distanceToPlayer;
 
-    private float _visibility;
+    private float _visibility = 1f;
+    private bool _visible = true;
 
     public float Tester;
 
@@ -85,15 +87,8 @@ public class Enemy : MonoBehaviour
         {
             SetGhostType(ghostType);
         } */
-
-        if (_distanceToPlayer > 7.0f)
-        {
-            myMaterial.SetFloat("_Visibility", 1f); // debug
-        }
-        else
-        {
-            myMaterial.SetFloat("_Visibility", 1f);
-        }
+        
+        myMaterial.SetFloat("_Visibility", _visibility);
     }
 
     private void GhostMovement()
@@ -249,6 +244,15 @@ public class Enemy : MonoBehaviour
 
 
         _distanceToPlayer = Vector3.Distance(myPos, playerPos);
+
+        if ((_distanceToPlayer > 9f) && _visible == true)
+        {
+            ShowEnemy(false);
+        }
+        else if ((_distanceToPlayer < 7f) && (_visible == false))
+        {
+            ShowEnemy(true);
+        }
     }
 
 
@@ -308,7 +312,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
-            if (hit.collider.tag == "Player")
+            if (hit.collider.tag == "Player")  
             {
                 seesPlayer = true;
             }
@@ -326,7 +330,7 @@ public class Enemy : MonoBehaviour
     {
         score += _value;
 
-        Debug.Log(this.name + " - score: " + score);
+        //Debug.Log(this.name + " - score: " + score);
 
         if (score >= 100 && ghostType == 0)
         {
@@ -365,4 +369,19 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void ShowEnemy(bool show)
+    {
+        if (show)
+        {
+            Debug.Log("SHOW GHOST " + transform.name);
+            DOTween.To(()=> _visibility, x=> _visibility = x, 1f, 0.7f);
+            _visible = true;
+        }
+        else
+        {
+            Debug.Log("HIDE GHOST " + transform.name);
+            DOTween.To(()=> _visibility, x=> _visibility = x, 0f, 0.7f);
+            _visible = false;
+        }
+    } 
 }
