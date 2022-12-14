@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public bool movementDisabled = false;
     public bool playerInteracting = false;
     private bool isInvulnerable = false;
+    private bool _canInteract;
 
     public float invulnerableTime = 3f;
     private float blinkingTimer;
@@ -188,6 +190,19 @@ public class PlayerController : MonoBehaviour
 
             GettingCaught?.Invoke();
         }
+
+        if (other.tag == "Grave")
+        {
+            _canInteract = true;
+        } 
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Grave")
+        {
+            _canInteract = false;
+        } 
     }
 
     private void EnemyCatchesPlayer()
@@ -253,7 +268,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _canInteract)
         {
             _interacting = true;
         }
@@ -261,6 +276,7 @@ public class PlayerController : MonoBehaviour
         {
             _interacting = false;
             movementDisabled = false;
+            
         }
     }
 
