@@ -107,6 +107,7 @@ public class Grave : Interactable
         if (playerIsDigging)
         {
             PlayerController.Instance.movementDisabled = true;
+            PlayerController.Instance.IsDigging(true);
             
             diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMultiplier);
             if (defileProgress > 0f)
@@ -124,6 +125,7 @@ public class Grave : Interactable
                 _gravedirt.DirtHeight(currentDepth);
                 if (currentDepth >= maxDepth)
                 {
+                    PlayerController.Instance.IsDigging(false);
                     graveIsDug = true;
                     GameObject _graveStone = transform.Find("gravestone").gameObject;
                     Color _defaultColor = GameManager.Instance.graveDefaultColor;

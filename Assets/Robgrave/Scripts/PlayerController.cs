@@ -7,38 +7,47 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Attributes")]
     public float moveSpeed = 10.0f;
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
     public float digSpeedMultiplier = 3.0f;
+    public int hitPoints;
+    public int maxLives = 3;
+    public int score;
+    public float invulnerableTime = 3f;
+    [NonSerialized] public int preScore;
 
+    [Header("Camera")]
     public Camera cam;
 
     private Vector2 moveDirection;
     private float hMovement;
     private float vMovement;
-    public bool _interacting = false;
-    public bool _using = false;
-
-    public int hitPoints;
-    public int maxLives = 3;
-    public int score;
-    public int preScore;
-
+    [NonSerialized] public bool _interacting = false;
+    [NonSerialized] public bool _using = false;
+    
     private float scoreAddingTimer = 0f;
     private float scoreAddingTime = 3f;
 
+    [Header("Meshes")]
     public MeshRenderer playerMesh;
+    
     private Material playerMeshMaterial;
     private Rigidbody rigidB;
     private Animator RGAnimator;
 
-    public bool movementDisabled = false;
-    public bool playerInteracting = false;
+    [SerializeField] private MeshRenderer _torchHand;
+    [SerializeField] private MeshRenderer _torchHip;
+    [SerializeField] private MeshRenderer _shovelHand;
+    [SerializeField] private MeshRenderer _shovelBack;
+    
+    [NonSerialized] public bool movementDisabled = false;
+    [NonSerialized] public bool playerInteracting = false;
     private bool isInvulnerable = false;
     private bool _canInteract;
 
-    public float invulnerableTime = 3f;
+    
     private float blinkingTimer;
 
     private float idleTimer;
@@ -114,6 +123,15 @@ public class PlayerController : MonoBehaviour
 
         hitPoints = 3;
         score = 0;
+    }
+
+    private void Start()
+    {
+        // starter values
+        _torchHand.enabled = true;
+        _torchHip.enabled = false;
+        _shovelBack.enabled = true;
+        _shovelHand.enabled = false;
     }
 
     private void Update()
@@ -276,6 +294,7 @@ public class PlayerController : MonoBehaviour
         {
             _interacting = false;
             movementDisabled = false;
+            IsDigging(false);
             
         }
     }
@@ -352,7 +371,7 @@ public class PlayerController : MonoBehaviour
             yield break;
         }
 
-        yield break;
+        //yield break;
     }
 
     public void RotateToGrave(GameObject currentGrave)
@@ -360,5 +379,27 @@ public class PlayerController : MonoBehaviour
        
         rigidB.DORotate(currentGrave.transform.rotation.eulerAngles, 0.3f, RotateMode.Fast);
         
+    }
+
+    public void IsDigging(bool digging)
+    {
+        bool _currentDig = RGAnimator.GetBool("Digging");
+        
+        if (digging && !_currentDig)
+        {
+            RGAnimator.SetBool("Digging", true);
+            _torchHand.enabled = false;
+            _torchHip.enabled = true;
+            _shovelBack.enabled = false;
+            _shovelHand.enabled = true;
+        }
+        else if (!digging && _currentDig)
+        {
+            RGAnimator.SetBool("Digging", false);
+            _torchHand.enabled = true;
+            _torchHip.enabled = false;
+            _shovelBack.enabled = true;
+            _shovelHand.enabled = false;
+        }
     }
 }
