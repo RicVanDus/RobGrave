@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     public GameObject GraveUI2;
     public GameObject GraveUI3;
 
+    [Header("Misc objects")] 
+    public GameObject steppingStone;
+    public Transform envStones;
+
     [Header("Player attributes")]
     public Transform PlayerSpawn;
     public GameObject[] graves;
@@ -45,20 +49,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        
+        
         // call function to assign graves
         AssignGraves();
+        SpawnSteppingStones();
 
         // spawn all enemies
         EnemyManager.Instance.SpawnAllEnemies();
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
-
-    }
-
 
     // Assign more purple and blue graves if the score threshold calls for it (total nr of graves / threshold value)
     // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
@@ -221,6 +220,33 @@ public class GameManager : MonoBehaviour
                 _UI.SetUIPosition();
             }
         }
+    }
 
+    private void SpawnSteppingStones()
+    {
+        var lootGrid = LootManager.Instance.lootPositions;
+
+        float _y = -0.72f;
+        
+
+        if (lootGrid.Count > 0)
+        {
+            for (int i = 0; i < lootGrid.Count; i++)
+            {
+                Vector3 _stonePos = new Vector3(lootGrid[i].GridPosition.x, _y, lootGrid[i].GridPosition.z);
+                
+                //random rotations
+                int _rnd = Random.Range(0, 3);
+                float _xRot = 90 * _rnd;
+                _rnd = Random.Range(0, 3);
+                float _yRot = 90 * _rnd;
+                _rnd = Random.Range(0, 3);
+                float _zRot = 90 * _rnd;
+
+                Quaternion _stoneRot = Quaternion.Euler(_xRot, _yRot, _zRot);
+
+                Instantiate(steppingStone, _stonePos, _stoneRot, envStones);
+            }
+        }
     }
 }
