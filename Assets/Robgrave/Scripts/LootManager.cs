@@ -97,7 +97,7 @@ public class LootManager : MonoBehaviour
     //
     public void SpawnLoot(int value, int spawns)
     {
-        ValuableTemplate randomValuable = new ValuableTemplate();
+        ValuableTemplate randomValuable = ScriptableObject.CreateInstance<ValuableTemplate>();
 
         float _newInnerRadius = lootSpawnInnerRadius;
         float _newOuterRadius = lootSpawnOuterRadius;
