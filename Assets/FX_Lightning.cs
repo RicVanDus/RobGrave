@@ -40,6 +40,8 @@ public class FX_Lightning : MonoBehaviour
             StartCoroutine(ShowLightning(5));
             _lightningTimer = 0f;
         }
+        
+        //Debug.Log("Lightning Timer: " + _lightningTimer + " / " + _lightningTime);
     }
 
 

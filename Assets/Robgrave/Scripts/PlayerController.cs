@@ -128,10 +128,10 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         // starter values
-        _torchHand.enabled = true;
-        _torchHip.enabled = false;
-        _shovelBack.enabled = true;
-        _shovelHand.enabled = false;
+        _torchHand.gameObject.SetActive(true);
+        _torchHip.gameObject.SetActive(false);
+        _shovelBack.gameObject.SetActive(true);
+        _shovelHand.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -388,18 +388,19 @@ public class PlayerController : MonoBehaviour
         if (digging && !_currentDig)
         {
             RGAnimator.SetBool("Digging", true);
-            _torchHand.enabled = false;
-            _torchHip.enabled = true;
-            _shovelBack.enabled = false;
-            _shovelHand.enabled = true;
+            _torchHand.gameObject.SetActive(false);
+            _torchHip.gameObject.SetActive(true);
+            _shovelBack.gameObject.SetActive(false);
+            _shovelHand.gameObject.SetActive(true);
+            
         }
         else if (!digging && _currentDig)
         {
             RGAnimator.SetBool("Digging", false);
-            _torchHand.enabled = true;
-            _torchHip.enabled = false;
-            _shovelBack.enabled = true;
-            _shovelHand.enabled = false;
+            _torchHand.gameObject.SetActive(true);
+            _torchHip.gameObject.SetActive(false);
+            _shovelBack.gameObject.SetActive(true);
+            _shovelHand.gameObject.SetActive(false);
         }
     }
 }
