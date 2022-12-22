@@ -32,6 +32,10 @@ Rob grave todo list
 - UI: adding announcements
 - UI: adding interaction key icons
 
+- UI: redo UI with 3D assets? 
+- UI: Ghosts progression to next stage
+
+
 
 **3D**
 - create assets: more types of walls/boundaries (hedges, low fence, chainlinked poles?)
@@ -40,16 +44,16 @@ Rob grave todo list
 - create asset: crypt
 - create asset: well
 - create asset: (dead) trees
-- create assets: Shovel, flashlight
-- create asset: present (yellow box with green/blue/purple bow tie)
-- create asset: ghost!
+
+- create asset: present (yellow box with green/blue/purple bow tie) // or chest?
+- create asset: ghost! (arms?)
 - create asset: crow
 - create asset: mystery man
 - create asset: mobster
 - create asset: RG van
 - create asset: mobster car
 
-- animate: RG - digging
+
 - animate: RG - hitting lamppost
 - animate: RG - hitting present
 - animate: RG - falling (after ghosts catches)
