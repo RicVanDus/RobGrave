@@ -49,8 +49,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
-        
         // call function to assign graves
         AssignGraves();
         SpawnSteppingStones();
@@ -64,8 +62,7 @@ public class GameManager : MonoBehaviour
     // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
     // When purple is assigned, you assign blue, rest is filled with green
     // -- assign random grave-mesh, with random rotation on Y (0 or 180) and slight random rotation on Z
-
-
+    
     private void AssignGraves()
     {
         int _scoreReq = thisLevel.valuablesRequired;
@@ -75,7 +72,6 @@ public class GameManager : MonoBehaviour
         int[] indexDone = new int[graves.Length];
         int[] gravesType1 = new int[thisLevel.graveType1];
         int[] gravesType2 = new int[thisLevel.graveType2];
-
 
         for (int i = 0; i < gravesType2.Length; i++)
         {

@@ -20,4 +20,5 @@ MonoBehaviour:
   graveType1: 2
   graveType2: 1
   timeToMidnight: 10
+  timeBetweenLightning: 20
   weather: 0

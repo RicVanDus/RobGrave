@@ -14,7 +14,7 @@ public class LevelProperties : ScriptableObject
     public int graveType1;
     public int graveType2;
     public float timeToMidnight;
-
+    public float timeBetweenLightning;
 
     public Enum_Weather weather;
 

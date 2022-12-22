@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5156250944449183570}
   - component: {fileID: -1278554950086631223}
   - component: {fileID: 8650908464609277390}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tooth
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine.Experimental.GlobalIllumination;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -51,6 +54,10 @@ public class Enemy : MonoBehaviour
     private float _lookAroundTime = 0f;
     private bool _setLookAround = false;
 
+    private float _lightTriggerTimer = 0f;
+    private readonly float _lightTriggerTime = 2f;
+    private bool _lightTriggered = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -90,6 +97,17 @@ public class Enemy : MonoBehaviour
         } */
         
         myMaterial.SetFloat("_Visibility", _visibility);
+        
+        
+        // ** LIGHTTRIGGERED ** 
+        if (_lightTriggered)
+        {
+            _lightTriggerTimer += Time.deltaTime;
+            if (_lightTriggerTimer > _lightTriggerTime)
+            {
+                _lightTriggered = false;
+            }
+        }
     }
 
     private void GhostMovement()
@@ -186,8 +204,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
-
+    
      private void ShowDebugPath()
     {
         if (navAgent.hasPath)
@@ -240,27 +257,31 @@ public class Enemy : MonoBehaviour
         EnemyManager.Instance.UpdateUI();
         navAgent.speed = moveSpeed;
     }
-
-
+    
     private void DistanceToPlayer()
     {
         Vector3 playerPos = PlayerController.Instance.transform.position;
         Vector3 myPos = transform.position;
-
-
+        
         _distanceToPlayer = Vector3.Distance(myPos, playerPos);
 
-        if ((_distanceToPlayer > 9f) && _visible == true)
-        {
-            ShowEnemy(false);
-        }
-        else if ((_distanceToPlayer < 7f) && (_visible == false))
+        if (_lightTriggered && _visible == false)
         {
             ShowEnemy(true);
         }
+        else
+        {
+            if (_distanceToPlayer > 9f && _visible)
+            {
+                ShowEnemy(false);
+            }
+            else if (_distanceToPlayer < 7f && _visible == false)
+            {
+                ShowEnemy(true);
+            }
+        }
     }
-
-
+    
     //Gets a random position on the Nav Mesh in a random search area between enemy and player
     private Vector3 GetNewDestination()
     {
@@ -317,7 +338,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
-            if (hit.collider.tag == "Player")  
+            if (hit.collider.CompareTag("Player"))   
             {
                 seesPlayer = true;
             }
@@ -357,21 +378,6 @@ public class Enemy : MonoBehaviour
             SetGhostType(4);
             score = 0;
         }
-
-    }
-
-    private bool RunTimer(float Timer, float TimeEnds, float DeltaTime)
-    {
-        if (Timer >= TimeEnds)
-        {
-            return true;
-        }
-
-        Timer += DeltaTime;
-
-
-        return false;
-
     }
 
     private void ShowEnemy(bool show)
@@ -388,8 +394,14 @@ public class Enemy : MonoBehaviour
             ghostLight.DOIntensity(0f, 1f);
             _visible = false;
         }
-    } 
-    
-    
-    // Make collision with light emitting objects, if in it, set new bool to true. Check for this in Distance Player. 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("LightCollider"))
+        {
+            _lightTriggered = true;
+            _lightTriggerTimer = 0f;
+        }
+    }
 }
