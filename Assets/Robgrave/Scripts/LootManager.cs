@@ -72,29 +72,6 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    private void CheckChance()
-    {
-        int check = 0;
-
-        for (int i = 0; i < 10; i++)
-        {
-            int _rnd1 = Random.Range(0, 5);
-            int _rnd2 = Random.Range(0, 5);
-
-            if (_rnd1 == _rnd2)
-            {
-                check++;
-            }
-
-        }
-
-        Debug.Log(check);
-    }
-
-
- 
-    //
-    //
     public void SpawnLoot(int value, int spawns)
     {
         ValuableTemplate randomValuable = ScriptableObject.CreateInstance<ValuableTemplate>();

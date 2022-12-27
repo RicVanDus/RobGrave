@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -216,6 +218,7 @@ public class PlayerController : MonoBehaviour
         {
             Enemy _nme = other.GetComponent<Enemy>();
             Ghosted(_nme.ghostType);
+            StartCoroutine(LosingLoot(_nme.ghostType));
             GettingCaught?.Invoke();
         }
 
@@ -238,8 +241,8 @@ public class PlayerController : MonoBehaviour
         isInvulnerable = true;
         movementDisabled = true;
         hitPoints -= 1;
-        
-        
+
+
         // invoke function that changes player shading to ghost, move 'm to a random position and lose 20% of his score. For blue ghosts, do this 2 times, purple 3 times. Then fade out and respawn.
         Invoke("Respawning", 3f);
     }
@@ -464,6 +467,44 @@ public class PlayerController : MonoBehaviour
                 _playerMeshMaterials[i].shader = _ghostShader;
                 _playerMeshMaterials[i].SetColor("_Color", _clr);
             }
+        }
+    }
+
+    private IEnumerator LosingLoot(int GhostType)
+    {
+        int _times = GhostType + 13;
+        float _radius = 40f;
+        float _innerRadius = 34f;
+        bool _approvedSpot = false;
+
+        for (int i = 0; i < _times; i++)
+        {
+            Vector3 _newPosition = new Vector3();
+            Vector3 _randomRadius = new Vector3();
+            
+            do
+            {
+                _randomRadius = Random.insideUnitSphere * _radius;
+                if (Vector3.Distance(transform.position, _randomRadius) > _innerRadius && Vector3.Distance(_randomRadius, GameManager.Instance.PlayerSpawn.position) > _innerRadius) 
+                {
+                    Debug.Log(Vector3.Distance(transform.position, _randomRadius));
+                    _approvedSpot = true;    
+                }
+            } while (_approvedSpot == false);
+
+            _newPosition = transform.position + _randomRadius;
+            
+            _newPosition.y = 0f;
+
+            NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, _radius, NavMesh.AllAreas);
+
+            yield return new WaitForSeconds(.01f);
+            
+
+            Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
+
+            Instantiate(LootManager.Instance.debugObject, _newPos, Quaternion.identity);
+            _approvedSpot = false;
         }
     }
 }
