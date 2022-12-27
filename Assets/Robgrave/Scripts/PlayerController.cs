@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,11 +32,17 @@ public class PlayerController : MonoBehaviour
     private float scoreAddingTime = 3f;
 
     [Header("Meshes")]
-    public MeshRenderer playerMesh;
+    [SerializeField] private SkinnedMeshRenderer _playerMesh;
+    [SerializeField] private MeshRenderer _playerCapMesh;
+    private Material[] _playerMeshMaterials;
+    
     
     private Material playerMeshMaterial;
     private Rigidbody rigidB;
     private Animator RGAnimator;
+
+    [SerializeField] private Shader _ghostShader;
+    private Shader _defaultShader;
 
     [SerializeField] private MeshRenderer _torchHand;
     [SerializeField] private MeshRenderer _torchHip;
@@ -47,7 +54,6 @@ public class PlayerController : MonoBehaviour
     private bool isInvulnerable = false;
     private bool _canInteract;
 
-    
     private float blinkingTimer;
 
     private float idleTimer;
@@ -59,8 +65,7 @@ public class PlayerController : MonoBehaviour
     public event OnRespawn Respawned;
 
     public GameObject valuePopup;
-
-
+    
     ///public delegate void OnChangingScore();
    // public event OnChangingScore ChangingScore;
 
@@ -100,6 +105,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        _defaultShader = _playerCapMesh.material.shader;
+         _playerMeshMaterials = _playerMesh.materials;
+        
         if (Instance == null)
         {
             Instance = this;
@@ -132,6 +140,7 @@ public class PlayerController : MonoBehaviour
         _torchHip.gameObject.SetActive(false);
         _shovelBack.gameObject.SetActive(true);
         _shovelHand.gameObject.SetActive(false);
+        Debug.Log("SHADER: " + _defaultShader);
     }
 
     private void Update()
@@ -205,7 +214,8 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Enemy" && isInvulnerable == false)
         {
-
+            Enemy _nme = other.GetComponent<Enemy>();
+            Ghosted(_nme.ghostType);
             GettingCaught?.Invoke();
         }
 
@@ -228,7 +238,9 @@ public class PlayerController : MonoBehaviour
         isInvulnerable = true;
         movementDisabled = true;
         hitPoints -= 1;
-
+        
+        
+        // invoke function that changes player shading to ghost, move 'm to a random position and lose 20% of his score. For blue ghosts, do this 2 times, purple 3 times. Then fade out and respawn.
         Invoke("Respawning", 3f);
     }
 
@@ -240,6 +252,16 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         transform.SetPositionAndRotation(GameManager.Instance.PlayerSpawn.position, GameManager.Instance.PlayerSpawn.rotation);
+        
+        _playerCapMesh.material.shader = _defaultShader;
+
+        if (_playerMeshMaterials.Length > 0)
+        {
+            for (int i=0; i < _playerMeshMaterials.Length; i++)
+            {
+                _playerMeshMaterials[i].shader = _defaultShader;
+            }
+        }
         StartCoroutine(InvulnerableTime());
     }
 
@@ -251,24 +273,29 @@ public class PlayerController : MonoBehaviour
         //Blinking player mesh while invulnerable
         while (invulnerableTime > blinkingTimer)
         {
-            /* 
-            if (playerMesh.enabled)
+            
+            if (_playerMesh.enabled)
             {
-                playerMesh.enabled = false;
+                _playerMesh.enabled = false;
+                _playerCapMesh.enabled = false;
             }
             else
             {
-                playerMesh.enabled = true;
+                _playerMesh.enabled = true;
+                _playerCapMesh.enabled = true;
             }
-            */
+            
 
             yield return new WaitForSeconds(.2f);
         }
 
-        //playerMesh.enabled = true;
+        _playerMesh.enabled = true;
+        _playerCapMesh.enabled = true;
+        _shovelBack.enabled = true;
+        _shovelHand.enabled = true;
+        _torchHand.enabled = true;
+        _torchHip.enabled = true;
         isInvulnerable = false;
-
-        yield break;
     }
 
     public void AddScore(int value)
@@ -401,6 +428,42 @@ public class PlayerController : MonoBehaviour
             _torchHip.gameObject.SetActive(false);
             _shovelBack.gameObject.SetActive(true);
             _shovelHand.gameObject.SetActive(false);
+        }
+    }
+
+    private void Ghosted(int GhostType)
+    {
+        Color _clr = Color.black;
+        
+        switch (GhostType)
+        {
+            case 0 :
+                _clr = EnemyManager.Instance.GhostType1;    
+                break;
+            case 1 :
+                _clr = EnemyManager.Instance.GhostType2;
+                break;
+            case 2 :
+                _clr = EnemyManager.Instance.GhostType3;
+                break;
+        }
+        
+        _shovelBack.enabled = false;
+        _torchHip.enabled = false;
+        _shovelHand.enabled = false;
+        _torchHand.enabled = false;
+        
+        // change shaders
+        _playerCapMesh.material.shader = _ghostShader;
+        _playerCapMesh.material.SetColor("_Color", _clr);
+        
+        if (_playerMeshMaterials.Length > 0)
+        {
+            for (int i=0; i < _playerMeshMaterials.Length; i++)
+            {
+                _playerMeshMaterials[i].shader = _ghostShader;
+                _playerMeshMaterials[i].SetColor("_Color", _clr);
+            }
         }
     }
 }

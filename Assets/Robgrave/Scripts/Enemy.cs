@@ -58,6 +58,19 @@ public class Enemy : MonoBehaviour
     private readonly float _lightTriggerTime = 2f;
     private bool _lightTriggered = false;
 
+    
+    private void OnEnable()
+    {
+        PlayerController.Instance.GettingCaught += PlayerIsCaught;
+        PlayerController.Instance.Respawned += PlayerRespawned;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.Instance.GettingCaught -= PlayerIsCaught;
+        PlayerController.Instance.Respawned -= PlayerRespawned;
+    }
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -297,17 +310,7 @@ public class Enemy : MonoBehaviour
         return hit.position;
     }
 
-    private void OnEnable()
-    {
-        PlayerController.Instance.GettingCaught += PlayerIsCaught;
-        PlayerController.Instance.Respawned += PlayerRespawned;
-    }
 
-    private void OnDisable()
-    {
-        PlayerController.Instance.GettingCaught -= PlayerIsCaught;
-        PlayerController.Instance.Respawned -= PlayerRespawned;
-    }
 
     private void PlayerIsCaught()
     {
