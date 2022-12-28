@@ -83,9 +83,13 @@ public class UIPlayerInfo : MonoBehaviour
         {
             preScore.text = "";
         }
-        else
+        else if (PlayerController.Instance.preScore > 0)
         {
             preScore.text = "+" + PlayerController.Instance.preScore.ToString();
+        }
+        else
+        {
+            preScore.text = "-" + PlayerController.Instance.preScore.ToString();
         }
 
         targetScore.text = "/ " + GameManager.Instance.thisLevel.valuablesRequired.ToString();

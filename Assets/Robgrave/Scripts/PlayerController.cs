@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
 
 
         // invoke function that changes player shading to ghost, move 'm to a random position and lose 20% of his score. For blue ghosts, do this 2 times, purple 3 times. Then fade out and respawn.
-        Invoke("Respawning", 3f);
+        
     }
 
     private void Respawning()
@@ -306,12 +306,13 @@ public class PlayerController : MonoBehaviour
         preScore += value;
         scoreAddingTimer = 0f;
         Vector3 _spawnPos = new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z);
-        float _newScale = 0.001f * (value/5);
+
+        float _newScale = Mathf.Clamp(0.001f * (Mathf.Abs(value)/5), 0f, 0.02f);
 
         GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
         _popupText.transform.localScale = new Vector3(_popupText.transform.localScale.x + _newScale, _popupText.transform.localScale.y + _newScale, _popupText.transform.localScale.z + _newScale);
         ValuePopup _thisPopup = _popupText.GetComponent<ValuePopup>();
-        _thisPopup.PopUpScore(value, true);
+        _thisPopup.PopUpScore(value, value>0);
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -325,7 +326,6 @@ public class PlayerController : MonoBehaviour
             _interacting = false;
             movementDisabled = false;
             IsDigging(false);
-            
         }
     }
 
@@ -368,6 +368,11 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(AddingPreScoreToScore(preScore));
                 preScore = 0;
             }
+        }
+        else if (preScore < 0)
+        {
+            StartCoroutine(AddingPreScoreToScore(preScore));
+            preScore = 0;
         }
     }
 
@@ -472,11 +477,35 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator LosingLoot(int GhostType)
     {
-        int _times = GhostType + 13;
+        int _times = GhostType + 1;
         float _radius = 40f;
         float _innerRadius = 34f;
         bool _approvedSpot = false;
+        int _scoreToDrop = 0;
+        int _amountOfDrops = 0;
+        
+        
+        
+        // recalculate _times & loot spawn amounts
 
+        if (score / _times > 100f)
+        {
+            _scoreToDrop = Mathf.FloorToInt(score * 0.2f);
+            _amountOfDrops = Random.Range(15, 25);
+        }
+        else if (score / _times == 0)
+        {
+            _times = 1;
+        }
+        else
+        {
+            _times = 1;
+            _scoreToDrop = score;
+            _amountOfDrops = Random.Range(15, 25);
+        }
+        
+        
+        // Doing it
         for (int i = 0; i < _times; i++)
         {
             Vector3 _newPosition = new Vector3();
@@ -487,7 +516,7 @@ public class PlayerController : MonoBehaviour
                 _randomRadius = Random.insideUnitSphere * _radius;
                 if (Vector3.Distance(transform.position, _randomRadius) > _innerRadius && Vector3.Distance(_randomRadius, GameManager.Instance.PlayerSpawn.position) > _innerRadius) 
                 {
-                    Debug.Log(Vector3.Distance(transform.position, _randomRadius));
+                    Debug.Log("Distance from player pos: "+ Vector3.Distance(transform.position, _randomRadius)+ "-- Spawn point ");
                     _approvedSpot = true;    
                 }
             } while (_approvedSpot == false);
@@ -498,13 +527,22 @@ public class PlayerController : MonoBehaviour
 
             NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, _radius, NavMesh.AllAreas);
 
-            yield return new WaitForSeconds(.01f);
+            yield return new WaitForSeconds(1f);
             
 
             Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
 
-            Instantiate(LootManager.Instance.debugObject, _newPos, Quaternion.identity);
+            transform.DORotate(new Vector3(0f, Random.Range(0f, 720f), 0f), 3f, RotateMode.FastBeyond360).SetEase(Ease.OutBounce);
+            transform.DOMove(_newPos, 3f, false).OnComplete(() =>
+            {
+                AddScore(-_scoreToDrop);
+                LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops);
+            }).SetEase((Ease.InExpo));
+            
             _approvedSpot = false;
+            
+            yield return new WaitForSeconds(6f);
         }
+        Invoke("Respawning", 1f);
     }
 }
