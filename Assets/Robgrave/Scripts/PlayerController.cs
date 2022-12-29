@@ -241,6 +241,8 @@ public class PlayerController : MonoBehaviour
         isInvulnerable = true;
         movementDisabled = true;
         hitPoints -= 1;
+        
+        RGAnimator.SetBool("Caught", true);
 
 
         // invoke function that changes player shading to ghost, move 'm to a random position and lose 20% of his score. For blue ghosts, do this 2 times, purple 3 times. Then fade out and respawn.
@@ -255,6 +257,8 @@ public class PlayerController : MonoBehaviour
     private void Respawn()
     {
         transform.SetPositionAndRotation(GameManager.Instance.PlayerSpawn.position, GameManager.Instance.PlayerSpawn.rotation);
+        RGAnimator.SetBool("Floating", false);
+        RGAnimator.SetBool("Caught", false);
         
         _playerCapMesh.material.shader = _defaultShader;
 
@@ -483,9 +487,7 @@ public class PlayerController : MonoBehaviour
         bool _approvedSpot = false;
         int _scoreToDrop = 0;
         int _amountOfDrops = 0;
-        
-        
-        
+
         // recalculate _times & loot spawn amounts
 
         if (score / _times > 100f)
@@ -503,7 +505,6 @@ public class PlayerController : MonoBehaviour
             _scoreToDrop = score;
             _amountOfDrops = Random.Range(15, 25);
         }
-        
         
         // Doing it
         for (int i = 0; i < _times; i++)
@@ -528,6 +529,7 @@ public class PlayerController : MonoBehaviour
             NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, _radius, NavMesh.AllAreas);
 
             yield return new WaitForSeconds(1f);
+            RGAnimator.SetBool("Floating", true);
             
 
             Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
@@ -535,8 +537,10 @@ public class PlayerController : MonoBehaviour
             transform.DORotate(new Vector3(0f, Random.Range(0f, 720f), 0f), 3f, RotateMode.FastBeyond360).SetEase(Ease.OutBounce);
             transform.DOMove(_newPos, 3f, false).OnComplete(() =>
             {
-                AddScore(-_scoreToDrop);
                 LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops);
+                AddScore(-_scoreToDrop);
+                transform.DOMoveY(6.5f, 1f, false).SetEase(Ease.InOutElastic);
+
             }).SetEase((Ease.InExpo));
             
             _approvedSpot = false;

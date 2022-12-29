@@ -1,10 +1,40 @@
 Rob grave todo list
 ----------------
 
+
 ** IDEAS **
 - Turn it into a survivor game, where you have to fend off skeletons spawning from the open graves. They can't hurt you, but they can be in your way. Maybe some types can shoot projectiles that stun you or trap you. They interrupt your digging as well.
 
 - first couple of minutes are ' free' , when the haunting starts (12 o clock) the skeletons rise from the graves. 
+
+- upgrades for shovel, RG and flashlight:
+Green +
+Blue ++
+Purple +++
+Up to a max of +25. 
+Every 5 gives a new upgrade.
+
+Shovel:
+	+5: swing ability
+	+10: +dig speed
+	+15: +swing dmg
+	+20: +dig speed
+	+25: spin to win ability
+
+Flashlight:
+	+5: +range
+	+10: slows ghost
+	+15: +range
+	+20: +range
+	+25: damages zombies
+
+Rob Graves:
+	+5: +speed
+	+10: +luck
+	+15: +speed
+	+20: +luck
+	+25: gets double powerups
+
 
 - Heart containers can be empty and filled.
 	-> Cherries (+1 life) [green]
@@ -19,11 +49,10 @@ Rob grave todo list
 - Possible powerups:
 	- energy drink (+movement speed/digging speed) [green]
 	- ghosttrap (+immune to 1 ghost) [purple]
-	- 
+
 
 
 **PROGRAMMING**
-
 
 - wishing well functionality
 - safe zone (start) / able to finish the level there / make ghosts spawn/move when in safe zone / safe zone is only available when (re)spawning and when having enough valuables
@@ -34,7 +63,6 @@ Rob grave todo list
 
 - UI: redo UI with 3D assets? 
 - UI: Ghosts progression to next stage
-
 
 
 **3D**
@@ -53,15 +81,8 @@ Rob grave todo list
 - create asset: RG van
 - create asset: mobster car
 
+- animate: RG - swinging
 
-- animate: RG - hitting lamppost
-- animate: RG - hitting present
-- animate: RG - falling (after ghosts catches)
-- animate: RG - being dragged and shook by ghost
-
-- animate: ghost - hunting (arms out)
-- animateL ghost - picking up RG
-- animate ghost - shaking RG
 
 **SOUND**
 - everything
