@@ -27,8 +27,6 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        Debug.Log("Something touched this");
         if (other.tag == "Player")
         {
             PlayerController.Instance.AddScore(value);
@@ -42,7 +40,5 @@ public class Pickup : MonoBehaviour
             LootManager.Instance.ClearLootSpot(id);
             Destroy(this.gameObject);
         }
-            
-        
     }
 }

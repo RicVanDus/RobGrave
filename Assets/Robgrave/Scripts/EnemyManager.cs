@@ -28,18 +28,6 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // SpawnAllEnemies - spawns all enemies from current level, adding them to the list. Id = 
     // DespawnAllEnemies - destroys all enemies, clears (list)
     // SpawnEnemy(Type) - Spawns enemy of Type

@@ -95,6 +95,10 @@ public class PlayerController : MonoBehaviour
         interact.Enable();
         interact.performed += OnInteract;
         interact.canceled += OnInteract;
+        
+        GameOverseer.Instance.Pause += OnPause;
+        GameOverseer.Instance.Playing += OnPlaying;
+        
     }
 
     private void OnDisable()
@@ -102,6 +106,10 @@ public class PlayerController : MonoBehaviour
         move.Disable();
         use.Disable();
         interact.Disable();
+        use.performed -= OnUse;
+        use.canceled -= OnUse;
+        interact.performed -= OnInteract;
+        interact.canceled -= OnInteract;        
     }
 
     // Start is called before the first frame update
@@ -142,7 +150,6 @@ public class PlayerController : MonoBehaviour
         _torchHip.gameObject.SetActive(false);
         _shovelBack.gameObject.SetActive(true);
         _shovelHand.gameObject.SetActive(false);
-        Debug.Log("SHADER: " + _defaultShader);
     }
 
     private void Update()
@@ -549,4 +556,19 @@ public class PlayerController : MonoBehaviour
         }
         Invoke("Respawning", 1f);
     }
+
+    
+    // functions subscribed to gamestate
+    private void OnPause()
+    {
+        movementDisabled = true;
+        RGAnimator.StopPlayback();
+    }
+
+    private void OnPlaying()
+    {
+        movementDisabled = false;
+        
+    }
+    
 }
