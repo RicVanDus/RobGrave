@@ -77,7 +77,8 @@ public class PlayerController : MonoBehaviour
 
     private InputAction move;
     private InputAction interact;
-    private InputAction use;
+    private InputAction attack;
+    private InputAction pause;
 
     public static PlayerController Instance { get; private set; }
 
@@ -86,30 +87,38 @@ public class PlayerController : MonoBehaviour
         move = playerInputs.Player.Move;
         move.Enable();
 
-        use = playerInputs.Player.Use;
-        use.Enable();
-        use.performed += OnUse;
-        use.canceled += OnUse;
+        attack = playerInputs.Player.Attack;
+        attack.Enable();
+        attack.performed += OnAttack;
+        attack.canceled += OnAttack;
 
         interact = playerInputs.Player.Interact;
         interact.Enable();
         interact.performed += OnInteract;
         interact.canceled += OnInteract;
+
+        pause = playerInputs.Player.Pause;
+        pause.Enable();
+        pause.performed += OnPause;
         
-        GameOverseer.Instance.Pause += OnPause;
-        GameOverseer.Instance.Playing += OnPlaying;
+        
+        Respawned += Respawn;   
+        
+        GameOverseer.Instance.Pause += WhenPaused;
+        GameOverseer.Instance.Playing += WhenPlaying;
         
     }
 
     private void OnDisable()
     {
         move.Disable();
-        use.Disable();
+        attack.Disable();
         interact.Disable();
-        use.performed -= OnUse;
-        use.canceled -= OnUse;
+        attack.performed -= OnAttack;
+        attack.canceled -= OnAttack;
         interact.performed -= OnInteract;
-        interact.canceled -= OnInteract;        
+        interact.canceled -= OnInteract;
+        Respawned -= Respawn;        
     }
 
     // Start is called before the first frame update
@@ -126,8 +135,7 @@ public class PlayerController : MonoBehaviour
 
         playerInputs = new RGInputs();
 
-        GettingCaught += EnemyCatchesPlayer;
-        Respawned += Respawn;
+
 
         rigidB = GetComponent<Rigidbody>();
 
@@ -155,6 +163,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         moveDirection = move.ReadValue<Vector2>();
+
         hMovement = moveDirection.x;
         vMovement = moveDirection.y;
 
@@ -193,10 +202,7 @@ public class PlayerController : MonoBehaviour
             PlayerRotation(hMovement, vMovement);
         }
 
-
-
         RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
-
     }
 
     private void PlayerRotation(float h, float v)
@@ -223,10 +229,23 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Enemy" && isInvulnerable == false)
         {
+            hitPoints -= 1;
             Enemy _nme = other.GetComponent<Enemy>();
             Ghosted(_nme.ghostType);
-            StartCoroutine(LosingLoot(_nme.ghostType));
             GettingCaught?.Invoke();
+            isInvulnerable = true;
+            movementDisabled = true;
+
+            if (hitPoints <= 0)
+            {
+                GameOverseer.Instance.SetGameState(GameState.GameOver);
+            }
+            else
+            {
+                StartCoroutine(LosingLoot(_nme.ghostType));
+            }
+            
+            RGAnimator.SetBool("Caught", true);
         }
 
         if (other.tag == "Grave")
@@ -241,19 +260,6 @@ public class PlayerController : MonoBehaviour
         {
             _canInteract = false;
         } 
-    }
-
-    private void EnemyCatchesPlayer()
-    {
-        isInvulnerable = true;
-        movementDisabled = true;
-        hitPoints -= 1;
-        
-        RGAnimator.SetBool("Caught", true);
-
-
-        // invoke function that changes player shading to ghost, move 'm to a random position and lose 20% of his score. For blue ghosts, do this 2 times, purple 3 times. Then fade out and respawn.
-        
     }
 
     private void Respawning()
@@ -341,7 +347,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnUse(InputAction.CallbackContext context)
+    private void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -559,16 +565,36 @@ public class PlayerController : MonoBehaviour
 
     
     // functions subscribed to gamestate
-    private void OnPause()
+    private void OnPause(InputAction.CallbackContext context)
+    {
+        GameState _gameState = GameOverseer.Instance.gameState;
+        if (context.performed && _gameState != GameState.Pause)
+        {
+            GameOverseer.Instance.SetGameState(GameState.Pause);
+        }
+        else if (context.performed && _gameState == GameState.Pause)
+        {
+            GameOverseer.Instance.SetGameState(GameState.Playing);
+        }
+        
+        
+    }
+
+    private void WhenPaused()
     {
         movementDisabled = true;
         RGAnimator.StopPlayback();
+        move.Disable();
+        interact.Disable();
+        attack.Disable();
     }
-
-    private void OnPlaying()
+    
+    private void WhenPlaying()
     {
         movementDisabled = false;
-        
+        move.Enable();
+        interact.Enable();
+        attack.Enable();
     }
     
 }

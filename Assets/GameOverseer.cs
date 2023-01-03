@@ -29,8 +29,11 @@ public class GameOverseer : MonoBehaviour
     public Action Extract;
     public Action GameOver;
 
-    public GameObject loadingScreen;
-
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject extractScreen;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject pauseMenu;
+    
     private Scene _gameScene;
     
     private void Awake()
@@ -45,17 +48,27 @@ public class GameOverseer : MonoBehaviour
     {
         Menu += ShowMainMenu;
         StartGame += LoadGame;
+        Pause += ShowPauseMenu;
+        GameOver += ShowGameOver;
+        Extract += ShowExtracted;
+        Playing += DisableAllOverlays;
     }
 
     private void OnDisable()
     {
         Menu -= ShowMainMenu;
         StartGame -= LoadGame;
+        Pause -= ShowPauseMenu;
+        GameOver -= ShowGameOver;
+        Extract -= ShowExtracted;
+        Playing -= DisableAllOverlays;
     }
 
     private void Start()
     {
         _gameScene = SceneManager.GetSceneByName("Game");
+        
+        DisableAllOverlays();
         
         SetGameState(GameState.Menu);
     }
@@ -134,6 +147,7 @@ public class GameOverseer : MonoBehaviour
 
     private void ShowMainMenu()
     {
+        DisableAllOverlays();
         LoadScene("MainMenu", true);
     }
 
@@ -141,5 +155,31 @@ public class GameOverseer : MonoBehaviour
     {
         UnloadScene("MainMenu");
         LoadScene("Graveyard_01", true);
+    }
+
+    private void ShowGameOver()
+    {
+        gameOverScreen.SetActive(true);
+    }
+
+    private void ShowPauseMenu()
+    {
+        DisableAllOverlays();
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    
+    private void ShowExtracted()
+    {
+        extractScreen.SetActive(true);
+    }
+
+    private void DisableAllOverlays()
+    {
+        extractScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+        pauseMenu.SetActive(false);
+        loadingScreen.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    
+    public Button defaultSelected;
     
     public void StartGame()
     {
         GameOverseer.Instance.SetGameState(GameState.StartGame);
+        defaultSelected.Select();
     }
     
     

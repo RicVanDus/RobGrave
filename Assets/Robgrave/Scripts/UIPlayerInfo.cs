@@ -19,15 +19,17 @@ public class UIPlayerInfo : MonoBehaviour
     private void Start()
     {
         UpdateLives();
-        PlayerController.Instance.Respawned += UpdateLives;
+        PlayerController.Instance.GettingCaught += UpdateLives;
         EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
+        GameOverseer.Instance.Playing += UpdateAll;
     }
 
     private void Awake()
     {
-        
-        
+
     }
+    
+    
 
     void Update()
     {
@@ -47,8 +49,7 @@ public class UIPlayerInfo : MonoBehaviour
         {
             Enemy _ghost = EnemyManager.Instance.enemies[i];
             Color _ghostColor = EnemyManager.Instance.GhostType1;
-
-
+            
             switch (_ghost.ghostType)
             {
                 case 0:
@@ -107,6 +108,7 @@ public class UIPlayerInfo : MonoBehaviour
 
     public void UpdateLives()
     {
+        Debug.Log("UPDATING LIVES: " + PlayerController.Instance.hitPoints);
         int nbChildren = graphicLivesTarget.childCount;
 
         for (int i = nbChildren - 1; i >= 0; i--)
@@ -123,5 +125,12 @@ public class UIPlayerInfo : MonoBehaviour
                 Image liveHeart = Instantiate(graphicLivesEmpty, graphicLivesTarget);
             }            
         }
+    }
+
+    public void UpdateAll()
+    {
+        UpdateLives();
+        UpdateGhosts();
+        UpdateScore();
     }
 }

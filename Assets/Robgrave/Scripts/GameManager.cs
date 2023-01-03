@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-
     [Header("Debug")]
     [FormerlySerializedAs("Debug mode")] [SerializeField] public bool debugMode;
     [SerializeField] public bool showAIpath;
@@ -49,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        GameOverseer.Instance.SetGameState(GameState.Playing);
+        
         // call function to assign graves
         AssignGraves();
         SpawnSteppingStones();
