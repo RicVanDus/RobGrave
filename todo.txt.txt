@@ -88,6 +88,14 @@ Rob Graves:
 - everything
 
 
+***VFX**
+
+- Particle effect when digging (throwing up dirt)
+- 'explosion' when grave is dug up (part meshes, part sprites (dirt))
+- Ghost effect when player is respawning/dead
+- Grave defiling (weird smoke effect)
+
+
 
 
 

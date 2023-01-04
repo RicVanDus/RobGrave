@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -17,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int currentLevel;
     public LevelProperties[] levels;
     public LevelProperties thisLevel;
+    
 
     [Header("Gravestones")]
     public Color graveType0Color;
