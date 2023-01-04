@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +36,16 @@ public class GameManager : MonoBehaviour
     [Header("Player attributes")]
     public Transform PlayerSpawn;
     public GameObject[] graves;
+    
+    private void OnEnable()
+    {
+        GameOverseer.Instance.StartGame += StartingGame;
+    }
+
+    private void OnDisable()
+    {
+        GameOverseer.Instance.StartGame -= StartingGame;
+    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -45,19 +57,7 @@ public class GameManager : MonoBehaviour
 
         thisLevel = levels[currentLevel - 1];
     }
-
-    private void Start()
-    {
-        GameOverseer.Instance.SetGameState(GameState.Playing);
-        
-        // call function to assign graves
-        AssignGraves();
-        SpawnSteppingStones();
-
-        // spawn all enemies
-        EnemyManager.Instance.SpawnAllEnemies();
-    }
-
+    
     // Assign more purple and blue graves if the score threshold calls for it (total nr of graves / threshold value)
     // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
     // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
                     if (_chance > _random)
                     {
                         _grave.graveType = 2;
+                        _grave.SetGraveType(2);
                         _gotcha = true;
                     }
 
@@ -138,6 +139,8 @@ public class GameManager : MonoBehaviour
                     if (_chance > _random)
                     {
                         _grave.graveType = 1;
+                        _grave.SetGraveType(1);
+                        
                         _gotcha = true;
                     }
 
@@ -245,5 +248,14 @@ public class GameManager : MonoBehaviour
                 Instantiate(steppingStone, _stonePos, _stoneRot, envStones);
             }
         }
+    }
+    
+    public void StartingGame()
+    {
+        AssignGraves();
+        SpawnSteppingStones();
+        EnemyManager.Instance.SpawnAllEnemies();
+        
+        GameOverseer.Instance.SetGameState(GameState.Playing);
     }
 }

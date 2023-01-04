@@ -73,7 +73,7 @@ public class GameOverseer : MonoBehaviour
         SetGameState(GameState.Menu);
     }
 
-    private void LoadScene(String sceneName, bool setActive)
+    private void LoadScene(String sceneName, bool setActive, bool isLevel)
     {
         var _scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -81,7 +81,7 @@ public class GameOverseer : MonoBehaviour
         {
             loadingScreen.SetActive(true);
             
-            StartCoroutine(SetActiveScene(_scene, sceneName));
+            StartCoroutine(SetActiveScene(_scene, sceneName, isLevel));
             _scene.allowSceneActivation = true;
         }
     }
@@ -125,7 +125,7 @@ public class GameOverseer : MonoBehaviour
     }
     
     // Loops until scene is loaded, then sets active
-    private IEnumerator SetActiveScene(AsyncOperation scene, String sceneName)
+    private IEnumerator SetActiveScene(AsyncOperation scene, String sceneName, bool isLevel)
     {
         bool _isLoaded = false;
 
@@ -138,6 +138,7 @@ public class GameOverseer : MonoBehaviour
             {
                 loadingScreen.SetActive(false);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+                if (isLevel) GameManager.Instance.StartingGame();
             }
             yield return null;
 
@@ -148,13 +149,13 @@ public class GameOverseer : MonoBehaviour
     private void ShowMainMenu()
     {
         DisableAllOverlays();
-        LoadScene("MainMenu", true);
+        LoadScene("MainMenu", true, false);
     }
 
     private void LoadGame()
     {
         UnloadScene("MainMenu");
-        LoadScene("Graveyard_01", true);
+        LoadScene("Graveyard_01", true, true);
     }
 
     private void ShowGameOver()

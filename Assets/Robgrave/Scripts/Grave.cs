@@ -81,7 +81,7 @@ public class Grave : Interactable
         _depthNumber.text = currentDepth + " / " + maxDepth;
     }
 
-    private void SetGraveType(int graveType)
+    public void SetGraveType(int graveType)
     {
         switch (graveType)
         {
