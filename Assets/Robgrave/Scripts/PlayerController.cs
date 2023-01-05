@@ -131,7 +131,6 @@ public class PlayerController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         playerInputs = new RGInputs();
@@ -224,7 +223,6 @@ public class PlayerController : MonoBehaviour
         {
             rigidB.MoveRotation(Quaternion.RotateTowards(transform.rotation, transform.rotation, rotationSpeed));
         }
-
     }
 
     private void OnTriggerEnter(Collider other)

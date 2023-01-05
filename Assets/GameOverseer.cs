@@ -149,25 +149,44 @@ public class GameOverseer : MonoBehaviour
 
         } while (_isLoaded == false);
     }
-
-
+    
     private void ShowMainMenu()
     {
         DisableAllOverlays();
+        UnloadAllScenes();
+        
         LoadScene("MainMenu", true, false);
     }
-
+    
     private void LoadGame()
     {
         UnloadScene("MainMenu");
         LoadScene("Graveyard_01", true, true);
     }
+    
+    //Unloads all scenes except GAME scene
+    private void UnloadAllScenes()
+    {
+        int index = SceneManager.sceneCount;
 
+        if (index > 1)
+        {
+            for (int i = 0; i < index; i++)
+            {
+                var _scene = SceneManager.GetSceneAt(i);
+                if (_scene.name != "Game")
+                {
+                    UnloadScene(_scene.name);
+                }
+            }
+        }
+    }
+    
     private void ShowGameOver()
     {
         gameOverScreen.SetActive(true);
     }
-
+    
     private void ShowPauseMenu()
     {
        // _eventSystem.firstSelectedGameObject = _pauseMenu.defaultSelected;
@@ -180,7 +199,7 @@ public class GameOverseer : MonoBehaviour
     {
         extractScreen.SetActive(true);
     }
-
+    
     private void DisableAllOverlays()
     {
         extractScreen.SetActive(false);
@@ -188,7 +207,7 @@ public class GameOverseer : MonoBehaviour
         pauseMenu.SetActive(false);
         loadingScreen.SetActive(false);
     }
-
+    
     private void PlayingGame()
     {
         DisableAllOverlays();
