@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 
@@ -34,6 +35,9 @@ public class GameOverseer : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     
     private Scene _gameScene;
+    [Header("UI")]
+    [SerializeField] private EventSystem _eventSystem;
+    [SerializeField] private PauseMenu _pauseMenu;
     
     private void Awake()
     {
@@ -50,7 +54,7 @@ public class GameOverseer : MonoBehaviour
         Pause += ShowPauseMenu;
         GameOver += ShowGameOver;
         Extract += ShowExtracted;
-        Playing += DisableAllOverlays;
+        Playing += PlayingGame;
     }
 
     private void OnDisable()
@@ -60,7 +64,7 @@ public class GameOverseer : MonoBehaviour
         Pause -= ShowPauseMenu;
         GameOver -= ShowGameOver;
         Extract -= ShowExtracted;
-        Playing -= DisableAllOverlays;
+        Playing -= PlayingGame;
     }
 
     private void Start()
@@ -70,6 +74,8 @@ public class GameOverseer : MonoBehaviour
         DisableAllOverlays();
         
         SetGameState(GameState.Menu);
+
+        Cursor.visible = false;
     }
 
     private void LoadScene(String sceneName, bool setActive, bool isLevel)
@@ -164,6 +170,7 @@ public class GameOverseer : MonoBehaviour
 
     private void ShowPauseMenu()
     {
+       // _eventSystem.firstSelectedGameObject = _pauseMenu.defaultSelected;
         DisableAllOverlays();
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
@@ -180,6 +187,11 @@ public class GameOverseer : MonoBehaviour
         gameOverScreen.SetActive(false);
         pauseMenu.SetActive(false);
         loadingScreen.SetActive(false);
+    }
+
+    private void PlayingGame()
+    {
+        DisableAllOverlays();
         Time.timeScale = 1f;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MeshRenderer _torchHip;
     [SerializeField] private MeshRenderer _shovelHand;
     [SerializeField] private MeshRenderer _shovelBack;
-    
+
     [NonSerialized] public bool movementDisabled = false;
     [NonSerialized] public bool playerInteracting = false;
     private bool isInvulnerable = false;
@@ -158,6 +159,7 @@ public class PlayerController : MonoBehaviour
         _torchHip.gameObject.SetActive(false);
         _shovelBack.gameObject.SetActive(true);
         _shovelHand.gameObject.SetActive(false);
+
     }
 
     private void Update()
@@ -576,9 +578,8 @@ public class PlayerController : MonoBehaviour
         {
             GameOverseer.Instance.SetGameState(GameState.Playing);
         }
-        
-        
     }
+
 
     private void WhenPaused()
     {
