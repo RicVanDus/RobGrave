@@ -14,8 +14,7 @@ public class UIPlayerInfo : MonoBehaviour
     public Image graphicLives;
     public Image graphicLivesEmpty;
     public Transform graphicLivesTarget;
-
-
+    
     private void OnEnable()
     {
         PlayerController.Instance.GettingCaught += UpdateLives;
@@ -33,16 +32,8 @@ public class UIPlayerInfo : MonoBehaviour
     private void Start()
     {
         UpdateLives();
-
     }
-
-    private void Awake()
-    {
-
-    }
-    
-    
-
+ 
     void Update()
     {
         UpdateScore();
@@ -56,7 +47,7 @@ public class UIPlayerInfo : MonoBehaviour
         {
             Destroy(graphicGhostsTarget.GetChild(i).gameObject);
         }
-
+        
         for (int i = 0; i < EnemyManager.Instance.enemies.Count; i++)
         {
             Enemy _ghost = EnemyManager.Instance.enemies[i];
@@ -78,14 +69,9 @@ public class UIPlayerInfo : MonoBehaviour
                     break;
             }
             
-
-            
-
             Image _newGhostGraphic = Instantiate(graphicGhost, graphicGhostsTarget);
             _newGhostGraphic.color = _ghostColor;
-            
         }
-
     }
 
     public void UpdateScore()
@@ -115,7 +101,6 @@ public class UIPlayerInfo : MonoBehaviour
         {
             targetScore.color = new Color(0f, 1f, 0f);
         }
-
     }
 
     public void UpdateLives()

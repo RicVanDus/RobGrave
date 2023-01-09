@@ -554,9 +554,9 @@ public class PlayerController : MonoBehaviour
             {
                 LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops);
                 AddScore(-_scoreToDrop);
-                transform.DOMoveY(6.5f, 1f, false).SetEase(Ease.InOutElastic);
+                transform.DOMoveY(6.5f, 1f, false).SetEase(Ease.OutElastic);
 
-            }).SetEase((Ease.InExpo));
+            }).SetEase((Ease.Linear));
             
             _approvedSpot = false;
             

@@ -48,7 +48,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Buldge_Height: 30
+    - _Buldge_Height: 38.4
     - _Dirt_Noise_Scale: 29.56
     - _Dirt_Noise_Strength: 0.00287
     - _QueueControl: 0

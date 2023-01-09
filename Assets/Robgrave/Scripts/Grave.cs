@@ -24,6 +24,8 @@ public class Grave : Interactable
     private bool graveTouched = false;
     private bool graveDefiled = false;
     private bool _rotatedPlayer = false;
+    [SerializeField] private GameObject _coffin;
+    private GameObject _coffinLid;
 
 
 
@@ -38,6 +40,7 @@ public class Grave : Interactable
         SetDepthText();
 
         _gravedirt = GetComponentInChildren<Gravedirt>();
+        _coffinLid = _coffin.transform.GetChild(0).gameObject;
     }
 
     protected override void Update()
@@ -91,11 +94,13 @@ public class Grave : Interactable
             case 1:
                 maxDepth = 4;
                 valuables = Random.Range(350, 500);
+                _coffin.transform.position += new Vector3(0f, -0.3f, 0f);
                 break;
 
             case 2:
                 maxDepth = 5;
                 valuables = Random.Range(600, 1000);
+                _coffin.transform.position += new Vector3(0f, -0.5f, 0f);
                 break;
         }
     }
@@ -123,6 +128,7 @@ public class Grave : Interactable
                 _gravedirt.DirtHeight(currentDepth);
                 if (currentDepth >= maxDepth)
                 {
+                    _coffinLid.SetActive(false);
                     PlayerController.Instance.IsDigging(false);
                     graveIsDug = true;
                     GameObject _graveStone = transform.Find("gravestone").gameObject;
