@@ -407,4 +407,19 @@ public class Enemy : MonoBehaviour
             _lightTriggerTimer = 0f;
         }
     }
+
+
+    public void CaughtPlayer()
+    {
+        //rotates to player, begins sucking up animation (set Vector3 pos of player)
+        
+    }
+
+    private IEnumerator SuckedUp()
+    {
+        // adds to the mask of being sucked up, on complete trigger Player ghost shader (or just time it in the Player script)
+        
+        yield break;
+    }
+    
 }

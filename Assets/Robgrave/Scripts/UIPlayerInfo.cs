@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,14 +15,25 @@ public class UIPlayerInfo : MonoBehaviour
     public Image graphicLivesEmpty;
     public Transform graphicLivesTarget;
 
-    
+
+    private void OnEnable()
+    {
+        PlayerController.Instance.GettingCaught += UpdateLives;
+        EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
+        GameOverseer.Instance.Playing += UpdateAll;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.Instance.GettingCaught -= UpdateLives;
+        EnemyManager.Instance.EnemyUpdate -= UpdateGhosts;
+        GameOverseer.Instance.Playing -= UpdateAll;
+    }
 
     private void Start()
     {
         UpdateLives();
-        PlayerController.Instance.GettingCaught += UpdateLives;
-        EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
-        GameOverseer.Instance.Playing += UpdateAll;
+
     }
 
     private void Awake()

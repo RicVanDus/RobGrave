@@ -38,8 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer _playerMesh;
     [SerializeField] private MeshRenderer _playerCapMesh;
     private Material[] _playerMeshMaterials;
-    
-    
+
     private Material playerMeshMaterial;
     private Rigidbody rigidB;
     private Animator RGAnimator;
@@ -56,6 +55,7 @@ public class PlayerController : MonoBehaviour
     [NonSerialized] public bool playerInteracting = false;
     private bool isInvulnerable = false;
     private bool _canInteract;
+    private bool _isCaught = false;
 
     private float blinkingTimer;
 
@@ -101,13 +101,11 @@ public class PlayerController : MonoBehaviour
         pause = playerInputs.Player.Pause;
         pause.Enable();
         pause.performed += OnPause;
-        
-        
+
         Respawned += Respawn;   
         
         GameOverseer.Instance.Pause += WhenPaused;
         GameOverseer.Instance.Playing += WhenPlaying;
-        
     }
 
     private void OnDisable()
@@ -115,10 +113,12 @@ public class PlayerController : MonoBehaviour
         move.Disable();
         attack.Disable();
         interact.Disable();
+        pause.Disable();
         attack.performed -= OnAttack;
         attack.canceled -= OnAttack;
         interact.performed -= OnInteract;
         interact.canceled -= OnInteract;
+        pause.performed -= OnPause;
         Respawned -= Respawn;        
     }
 
@@ -235,6 +235,7 @@ public class PlayerController : MonoBehaviour
             GettingCaught?.Invoke();
             isInvulnerable = true;
             movementDisabled = true;
+            _isCaught = true;
 
             if (hitPoints <= 0)
             {
@@ -272,6 +273,7 @@ public class PlayerController : MonoBehaviour
         transform.SetPositionAndRotation(GameManager.Instance.PlayerSpawn.position, GameManager.Instance.PlayerSpawn.rotation);
         RGAnimator.SetBool("Floating", false);
         RGAnimator.SetBool("Caught", false);
+        _isCaught = false;
         
         _playerCapMesh.material.shader = _defaultShader;
 
@@ -568,7 +570,9 @@ public class PlayerController : MonoBehaviour
     private void OnPause(InputAction.CallbackContext context)
     {
         GameState _gameState = GameOverseer.Instance.gameState;
-        if (context.performed && _gameState != GameState.Pause)
+        
+        // Not being able to pause when you are dead or caught
+        if (context.performed && _gameState != GameState.Pause && hitPoints > 0 && !_isCaught)
         {
             GameOverseer.Instance.SetGameState(GameState.Pause);
         }
@@ -581,19 +585,22 @@ public class PlayerController : MonoBehaviour
 
     private void WhenPaused()
     {
+        
         movementDisabled = true;
         RGAnimator.StopPlayback();
         move.Disable();
         interact.Disable();
         attack.Disable();
+        
     }
     
     private void WhenPlaying()
     {
+
         movementDisabled = false;
         move.Enable();
         interact.Enable();
-        attack.Enable();
+        attack.Enable();    
+
     }
-    
 }
