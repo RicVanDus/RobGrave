@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,13 +27,8 @@ public class Grave : Interactable
     private bool _rotatedPlayer = false;
     [SerializeField] private GameObject _coffin;
     private GameObject _coffinLid;
-
-
-
-    private void Awake()
-    {
-        
-    }
+    private GameObject _graveStone;
+    private bool _gravestoneIsShaking = false;
 
     protected override void Start()
     {
@@ -41,6 +37,7 @@ public class Grave : Interactable
 
         _gravedirt = GetComponentInChildren<Gravedirt>();
         _coffinLid = _coffin.transform.GetChild(0).gameObject;
+        _graveStone = transform.Find("gravestone").gameObject;
     }
 
     protected override void Update()
@@ -68,7 +65,6 @@ public class Grave : Interactable
             {
                 RotatePlayer();    
             }
-            
         }
         else
         {
@@ -131,9 +127,10 @@ public class Grave : Interactable
                     _coffinLid.SetActive(false);
                     PlayerController.Instance.IsDigging(false);
                     graveIsDug = true;
-                    GameObject _graveStone = transform.Find("gravestone").gameObject;
+                    
                     Color _defaultColor = GameManager.Instance.graveDefaultColor;
                     _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _defaultColor);
+                    _gravedirt.DirtHeight(6);
 
                     SpawnLoot();
                 }
@@ -167,12 +164,18 @@ public class Grave : Interactable
     private void DefiledGrave()
     {
         int _defDepth = currentDepth - defiledDepth;
-        graveIsDifiling = false;
+
 
         if (_defDepth > 0 && currentDepth != maxDepth && graveDefiled == false)
         {
             graveIsDifiling = true;
             defileProgress += Time.deltaTime;
+
+            if (!_gravestoneIsShaking)
+            {
+                _gravestoneIsShaking = true;
+                StartCoroutine(ShakingHeadStone());
+            }
 
             if (defileProgress >= defileTime)
             {
@@ -196,6 +199,12 @@ public class Grave : Interactable
                 graveIsDifiling = false;
             }
         }
+        else
+        {
+            graveIsDifiling = false;
+            _gravestoneIsShaking = false;
+            StopCoroutine(ShakingHeadStone());
+        }
     }
 
     private void RotatePlayer()
@@ -203,7 +212,31 @@ public class Grave : Interactable
         _rotatedPlayer = true;
         
         PlayerController.Instance.RotateToGrave(this.GameObject());
-    }    
+    }
+
+
+    private IEnumerator ShakingHeadStone()
+    {
+        Vector3 _oldRotation = _graveStone.transform.rotation.eulerAngles;
+        Vector3 _newRotation = Vector3.zero;
+        
+        do
+        {
+            //headstone shaking
+            float _x = Random.Range(-3f, 3f);
+            float _z = Random.Range(-3f, 3f);
+
+            _newRotation.z = _z;
+            
+            
+
+            _graveStone.transform.rotation = Quaternion.Euler(_oldRotation + _newRotation);
+            Debug.Log("SHAKIN BABY " + _newRotation);
+
+            yield return new WaitForSeconds(0.1f);
+        } while (graveIsDifiling);
+        
+    }
 }
 
 

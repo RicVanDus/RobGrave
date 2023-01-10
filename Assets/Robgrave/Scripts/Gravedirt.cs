@@ -51,6 +51,9 @@ public class Gravedirt : MonoBehaviour
             case 5:
                 _buldgeHeight = -90f;
                 break;
+            case 6:
+                _buldgeHeight = -160f;
+                break;
 
         }
 
