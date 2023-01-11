@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_grave_02 : MonoBehaviour
+public class GUI_grave_03 : MonoBehaviour
 {
 
     public Grave _grave;
@@ -17,8 +17,9 @@ public class GUI_grave_02 : MonoBehaviour
     private Image _circle2;
     private Image _circle3;
     private Image _circle4;
+    private Image _circle5;
 
-    private Color _defaultColor = new Color(0.28f, 0.43f, 0.76f);
+    private Color _defaultColor = new Color(0.72f, 0.28f, 0.76f);
     private Color _filledColor = new Color(0.9f, 1f, 0f);
     private Color _noColor = new Color(0.75f, 0.75f, 0.75f);
     private Color _redColor = new Color(1f, 0f, 0f);
@@ -31,6 +32,7 @@ public class GUI_grave_02 : MonoBehaviour
         _circle2 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle2").GetComponent<Image>();
         _circle3 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle3").GetComponent<Image>();
         _circle4 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle4").GetComponent<Image>();
+        _circle5 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle5").GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -75,6 +77,7 @@ public class GUI_grave_02 : MonoBehaviour
                 _circle2.color = _defaultColor;
                 _circle3.color = _defaultColor;
                 _circle4.color = _defaultColor;
+                _circle5.color = _defaultColor;
             }
             else if (_grave.currentDepth == 2)
             {
@@ -82,6 +85,7 @@ public class GUI_grave_02 : MonoBehaviour
                 _circle2.color = _filledColor;
                 _circle3.color = _defaultColor;
                 _circle4.color = _defaultColor;
+                _circle5.color = _defaultColor;
             }
             else if (_grave.currentDepth == 3)
             {
@@ -89,6 +93,7 @@ public class GUI_grave_02 : MonoBehaviour
                 _circle2.color = _filledColor;
                 _circle3.color = _filledColor;
                 _circle4.color = _defaultColor;
+                _circle5.color = _defaultColor;
             }
             else if (_grave.currentDepth == 4)
             {
@@ -96,6 +101,15 @@ public class GUI_grave_02 : MonoBehaviour
                 _circle2.color = _filledColor;
                 _circle3.color = _filledColor;
                 _circle4.color = _filledColor;
+                _circle5.color = _defaultColor;
+            }
+            else if (_grave.currentDepth == 5)
+            {
+                _circle1.color = _filledColor;
+                _circle2.color = _filledColor;
+                _circle3.color = _filledColor;
+                _circle4.color = _filledColor;
+                _circle5.color = _filledColor;
             }
             else
             {
@@ -103,6 +117,7 @@ public class GUI_grave_02 : MonoBehaviour
                 _circle2.color = _defaultColor;
                 _circle3.color = _defaultColor;
                 _circle4.color = _defaultColor;
+                _circle5.color = _defaultColor;
 
             }
         }
@@ -144,6 +159,14 @@ public class GUI_grave_02 : MonoBehaviour
             _circle2.color = _noColor;
             _circle3.color = _noColor;
         }
+        else if (_grave.defiledDepth == 4)
+        {
+            _circle1.color = _noColor;
+            _circle2.color = _noColor;
+            _circle3.color = _noColor;
+            _circle4.color = _noColor;
+        }
+
     }
 
 
@@ -153,30 +176,24 @@ public class GUI_grave_02 : MonoBehaviour
         Quaternion _newRot;
 
         if (_grave != null)
-        {
+        {       
+            _newPos = new Vector3(0f, 0.7f, -0.5f);
+            
             if (Mathf.Round(_grave.transform.eulerAngles.y) == 0)
-            {
-                _newPos = new Vector3(0f, 1.4f, 0.85f);
-                _newRot = Quaternion.Euler(0f, 0f, 0f);
-
+            {                
+                _newRot = Quaternion.Euler(0f, 0f, 0f); 
             }
             else if (Mathf.Round(_grave.transform.eulerAngles.y) == 180)
             {
-                _newPos = new Vector3(0f, 1.4f, 1.5f);
                 _newRot = Quaternion.Euler(0f, 180f, 0f);
-
             }
             else if (Mathf.Round(_grave.transform.eulerAngles.y) == 90)
             {
-                _newPos = new Vector3(0.8f, 1.4f, 1.25f);
                 _newRot = Quaternion.Euler(0f, -90f, 0f);
-
             }
             else
             {
-                _newPos = new Vector3(-0.8f, 1.4f, 1.25f);
                 _newRot = Quaternion.Euler(0f, 90f, 0f);
-
             }
 
             transform.localRotation = _newRot;
@@ -205,6 +222,10 @@ public class GUI_grave_02 : MonoBehaviour
             else if (_grave.defiledDepth == 2)
             {
                 _circle = _circle3;
+            }
+            else if (_grave.defiledDepth == 3)
+            {
+                _circle = _circle4;
             }
 
             if (_circle.color == _redColor)

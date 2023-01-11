@@ -189,9 +189,12 @@ public class GameManager : MonoBehaviour
 
             // Add the GraveUI
 
+            float _graveUIScale = 0.6f;
+            
             if (_grave.graveType == 0)
             {
                 GameObject _graveUI = Instantiate(GraveUI, _grave.transform);
+                _graveUI.transform.localScale *= _graveUIScale;
 
                 GUI_grave_01 _UI = _graveUI.GetComponent<GUI_grave_01>();
 
@@ -202,6 +205,7 @@ public class GameManager : MonoBehaviour
             else if (_grave.graveType == 1)
             {
                 GameObject _graveUI = Instantiate(GraveUI2, _grave.transform);
+                _graveUI.transform.localScale *= _graveUIScale;
 
                 GUI_grave_02 _UI = _graveUI.GetComponent<GUI_grave_02>();
 
@@ -211,6 +215,7 @@ public class GameManager : MonoBehaviour
             else if (_grave.graveType == 2)
             {
                 GameObject _graveUI = Instantiate(GraveUI3, _grave.transform);
+                _graveUI.transform.localScale *= _graveUIScale;
 
                 GUI_grave_03 _UI = _graveUI.GetComponent<GUI_grave_03>();
 

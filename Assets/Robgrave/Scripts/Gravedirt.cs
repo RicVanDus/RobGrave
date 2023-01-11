@@ -83,7 +83,7 @@ public class Gravedirt : MonoBehaviour
     {
         if (CanInteract)
         {
-            graveDirt.SetColor("_Color", _dirtColorInteract);
+            graveDirt.SetColor("_Color", _dirtColorDefault);
         }
         else
         {

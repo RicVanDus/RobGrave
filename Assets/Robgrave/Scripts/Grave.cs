@@ -30,6 +30,8 @@ public class Grave : Interactable
     private GameObject _graveStone;
     private bool _gravestoneIsShaking = false;
 
+    private Color _currentGraveStoneColor;
+    
     protected override void Start()
     {
         SetGraveType(graveType);
@@ -85,18 +87,21 @@ public class Grave : Interactable
             case 0:
                 maxDepth = 3;
                 valuables = Random.Range(125, 250);
+                _currentGraveStoneColor = GameManager.Instance.graveType0Color;
                 break;
 
             case 1:
                 maxDepth = 4;
                 valuables = Random.Range(350, 500);
                 _coffin.transform.position += new Vector3(0f, -0.3f, 0f);
+                _currentGraveStoneColor = GameManager.Instance.graveType1Color;
                 break;
 
             case 2:
                 maxDepth = 5;
                 valuables = Random.Range(600, 1000);
                 _coffin.transform.position += new Vector3(0f, -0.5f, 0f);
+                _currentGraveStoneColor = GameManager.Instance.graveType2Color;
                 break;
         }
     }
@@ -129,7 +134,7 @@ public class Grave : Interactable
                     graveIsDug = true;
                     
                     Color _defaultColor = GameManager.Instance.graveDefaultColor;
-                    _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _defaultColor);
+                    SetGraveStoneColor(_defaultColor);
                     _gravedirt.DirtHeight(6);
 
                     SpawnLoot();
@@ -170,6 +175,7 @@ public class Grave : Interactable
         {
             graveIsDifiling = true;
             defileProgress += Time.deltaTime;
+            
 
             if (!_gravestoneIsShaking)
             {
@@ -185,13 +191,8 @@ public class Grave : Interactable
                 if (_rnd1 == _rnd2)
                 {
                     graveDefiled = true;
-                    Debug.Log("DEFILEMENT: You are haunted!");
                     EnemyManager.Instance.SpawnEnemy(graveType);
                     
-                }
-                else
-                {
-                    Debug.Log("DEFILEMENT: You are lucky...");
                 }
 
                 defiledDepth++;
@@ -204,6 +205,7 @@ public class Grave : Interactable
             graveIsDifiling = false;
             _gravestoneIsShaking = false;
             StopCoroutine(ShakingHeadStone());
+            SetGraveStoneColor(_currentGraveStoneColor);
         }
     }
 
@@ -220,21 +222,49 @@ public class Grave : Interactable
         Vector3 _oldRotation = _graveStone.transform.rotation.eulerAngles;
         Vector3 _newRotation = Vector3.zero;
         
+        Color _warningColor = GameManager.Instance.graveWarningColor;
+
+        float _colorTime = 0.5f;
+        float _colorTimer = 0f;
+        bool _red = false;
+        
         do
         {
+            _colorTimer += 0.1f;
             //headstone shaking
             float _x = Random.Range(-3f, 3f);
             float _z = Random.Range(-3f, 3f);
 
             _newRotation.z = _z;
-            
-            
 
             _graveStone.transform.rotation = Quaternion.Euler(_oldRotation + _newRotation);
-            Debug.Log("SHAKIN BABY " + _newRotation);
+            
+            //Blinking red
+            if (_colorTimer >= _colorTime)
+            {
+                if (_red)
+                {
+                    SetGraveStoneColor(_currentGraveStoneColor);
+                    _red = false;
+                }
+                else
+                {
+                    SetGraveStoneColor(_warningColor);
+                    _red = true;
+                }
+
+                _colorTimer = 0f;
+            }
 
             yield return new WaitForSeconds(0.1f);
         } while (graveIsDifiling);
+        
+    }
+
+
+    private void SetGraveStoneColor(Color _color)
+    {
+        _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _color);
         
     }
 }
