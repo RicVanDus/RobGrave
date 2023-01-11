@@ -53,9 +53,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _BorderSize: 0.00085
+    - _Color2Contrast: 2.54
+    - _ColorNoiseScale: 9.36
     - _NoiseSize: 10000
     - _QueueControl: 0
     - _QueueOffset: -4
     m_Colors:
-    - _Color: {r: 0.09723212, g: 0.1792453, b: 0.12246694, a: 0}
+    - _Color: {r: 0.10493057, g: 0.16981131, b: 0.12185598, a: 0}
+    - _Color2: {r: 0.16978219, g: 0.23584908, b: 0.15908688, a: 0}
   m_BuildTextureStacks: []

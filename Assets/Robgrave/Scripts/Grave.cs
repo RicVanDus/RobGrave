@@ -140,7 +140,6 @@ public class Grave : Interactable
                     SpawnLoot();
                 }
             }
-
         }
         else
         {
@@ -170,13 +169,11 @@ public class Grave : Interactable
     {
         int _defDepth = currentDepth - defiledDepth;
 
-
         if (_defDepth > 0 && currentDepth != maxDepth && graveDefiled == false)
         {
             graveIsDifiling = true;
             defileProgress += Time.deltaTime;
             
-
             if (!_gravestoneIsShaking)
             {
                 _gravestoneIsShaking = true;
@@ -215,7 +212,6 @@ public class Grave : Interactable
         
         PlayerController.Instance.RotateToGrave(this.GameObject());
     }
-
 
     private IEnumerator ShakingHeadStone()
     {
@@ -258,9 +254,7 @@ public class Grave : Interactable
 
             yield return new WaitForSeconds(0.1f);
         } while (graveIsDifiling);
-        
     }
-
 
     private void SetGraveStoneColor(Color _color)
     {
