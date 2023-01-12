@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour
     private float _oldSearchAreaSize;
     private float _oldMoveSpeed;
 
+    [HideInInspector] public float ghostEvolveProgress;
+    private float _ghostEvolveScore;
 
     [SerializeField] private float moveSpeed = 5f;
     private float huntTimer;
@@ -284,11 +286,11 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (_distanceToPlayer > 9f && _visible)
+            if (_distanceToPlayer > 8f && _visible)
             {
                 ShowEnemy(false);
             }
-            else if (_distanceToPlayer < 7f && _visible == false)
+            else if (_distanceToPlayer < 6f && _visible == false)
             {
                 ShowEnemy(true);
             }
@@ -359,28 +361,49 @@ public class Enemy : MonoBehaviour
     {
         score += _value;
 
+        switch (ghostType)
+        {
+            case 0 :
+                _ghostEvolveScore = 250f;
+                break;
+            case 1 :
+                _ghostEvolveScore = 400f;
+                break;
+            case 2 :
+                _ghostEvolveScore = 500f;
+                break;
+        }
+        
+
         //Debug.Log(this.name + " - score: " + score);
 
         if (score >= 250 && ghostType == 0)
         {
             SetGhostType(1);
             score = 0;
+            _ghostEvolveScore = 400f;
         }
         else if (score >= 400 && ghostType == 1)
         {
             SetGhostType(2);
             score = 0;
+            _ghostEvolveScore = 500f;
         }
         else if (score >= 500 && ghostType == 2)
         {
             SetGhostType(3);
             score = 0;
+            _ghostEvolveScore = 500f;
         }
         else if (score >= 500 && ghostType == 3)
         {
             SetGhostType(4);
             score = 0;
         }
+
+        ghostEvolveProgress = score / _ghostEvolveScore;
+
+        EnemyManager.Instance.UpdateUI();
     }
 
     private void ShowEnemy(bool show)

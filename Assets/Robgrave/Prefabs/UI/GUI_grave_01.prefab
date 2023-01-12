@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2628140516386662939}
   - component: {fileID: 2628140516386662943}
   - component: {fileID: 4275992484540279611}
+  - component: {fileID: 6450448254063795867}
   m_Layer: 5
   m_Name: GUI_grave_01
   m_TagString: Untagged
@@ -39,7 +40,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6.9699707, y: 2.029007}
+  m_AnchoredPosition: {x: -6.9699707, y: 2.0289917}
   m_SizeDelta: {x: 35, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2628140516386662941
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2628140516386662939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +131,18 @@ MonoBehaviour:
   _grave: {fileID: 0}
   PlayerCanInteract: 0
   GraveDefiling: 0
+--- !u!114 &6450448254063795867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2628140516386662936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b219781c8e035f4f8c8cbcd2fd5712d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2628140516568711541
 GameObject:
   m_ObjectHideFlags: 0

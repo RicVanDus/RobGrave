@@ -10,7 +10,7 @@ public class UIPlayerInfo : MonoBehaviour
     public Text targetScore;
 
     public Transform graphicGhostsTarget;
-    public Image graphicGhost;
+    public GameObject graphicGhost;
     public Image graphicLives;
     public Image graphicLivesEmpty;
     public Transform graphicLivesTarget;
@@ -43,10 +43,14 @@ public class UIPlayerInfo : MonoBehaviour
     {
         int nbChildren = graphicGhostsTarget.childCount;
 
-        for (int i = nbChildren - 1; i >= 0; i--)
+        if (nbChildren > 0)
         {
-            Destroy(graphicGhostsTarget.GetChild(i).gameObject);
+            for (int i = nbChildren - 1; i >= 0; i--)
+            {
+                Destroy(graphicGhostsTarget.GetChild(i).gameObject);
+            }    
         }
+        
         
         for (int i = 0; i < EnemyManager.Instance.enemies.Count; i++)
         {
@@ -69,8 +73,11 @@ public class UIPlayerInfo : MonoBehaviour
                     break;
             }
             
-            Image _newGhostGraphic = Instantiate(graphicGhost, graphicGhostsTarget);
-            _newGhostGraphic.color = _ghostColor;
+            GameObject _newGhostGraphic = Instantiate(graphicGhost, graphicGhostsTarget);
+           _newGhostGraphic.GetComponent<Image>().color = _ghostColor;
+            // Filling up the ghost as its evolving
+            Image _ghostFill = _newGhostGraphic.transform.GetChild(0).GetComponent<Image>();
+            _ghostFill.fillAmount = _ghost.ghostEvolveProgress;
         }
     }
 

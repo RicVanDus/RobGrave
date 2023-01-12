@@ -112,4 +112,5 @@ public class EnemyManager : MonoBehaviour
 
         return enemySpawnPoints[randomIndex].transform.position;
     }
+    
 }

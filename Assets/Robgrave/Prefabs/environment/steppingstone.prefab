@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7056957856120551064}
   - component: {fileID: 6215110777271531837}
   - component: {fileID: 8188798782581263863}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: steppingstone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -144,7 +144,7 @@ public class Grave : Interactable
         else
         {
             diggingProgress -= Time.deltaTime;
-            if (diggingProgress <= 0f && graveTouched)
+            if (diggingProgress <= 0f && graveTouched &! graveIsDug)
             {
                 DefiledGrave();
             }
@@ -259,7 +259,7 @@ public class Grave : Interactable
     private void SetGraveStoneColor(Color _color)
     {
         _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _color);
-        
+        Debug.Log("Set headstone color : - " + _color);
     }
 }
 
