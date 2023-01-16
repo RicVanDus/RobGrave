@@ -49,7 +49,7 @@ public class GUI_grave_01 : MonoBehaviour
             {
                 CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
                 _canvasGroup.alpha = 0;
-            }            
+            }
         }        
     }
 

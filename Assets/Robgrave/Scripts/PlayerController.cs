@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
@@ -106,6 +107,15 @@ public class PlayerController : MonoBehaviour
         
         GameOverseer.Instance.Pause += WhenPaused;
         GameOverseer.Instance.Playing += WhenPlaying;
+
+        // changing input device, make a state that can be checked for UI changes
+        InputUser.onChange += (user, change, device) =>
+        {
+            if (change == InputUserChange.ControlSchemeChanged)
+            {
+                Debug.Log($"User {user} switched control scheme to {device}");
+            }
+        };
     }
 
     private void OnDisable()

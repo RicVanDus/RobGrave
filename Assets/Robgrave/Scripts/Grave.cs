@@ -27,8 +27,10 @@ public class Grave : Interactable
     private bool _rotatedPlayer = false;
     [SerializeField] private GameObject _coffin;
     private GameObject _coffinLid;
-    private GameObject _graveStone;
+    [HideInInspector] public GameObject _graveStone;
     private bool _gravestoneIsShaking = false;
+
+    [HideInInspector] public GameObject buttonPrompt;
 
     private Color _currentGraveStoneColor;
     
@@ -40,6 +42,8 @@ public class Grave : Interactable
         _gravedirt = GetComponentInChildren<Gravedirt>();
         _coffinLid = _coffin.transform.GetChild(0).gameObject;
         _graveStone = transform.Find("gravestone").gameObject;
+        
+        if (buttonPrompt != null) buttonPrompt.SetActive(false);
     }
 
     protected override void Update()
@@ -51,6 +55,7 @@ public class Grave : Interactable
         else
         {
             playerIsDigging = false;
+            buttonPrompt.SetActive(false);
         }
 
         _gravedirt.ChangeDirtColor(PlayerCanInteract);
@@ -62,6 +67,7 @@ public class Grave : Interactable
     {
         if (PlayerController.Instance._interacting)
         {
+            if (buttonPrompt != null) buttonPrompt.SetActive(false);
             playerIsDigging = true;
             if (_rotatedPlayer == false)
             {
@@ -72,6 +78,7 @@ public class Grave : Interactable
         {
             playerIsDigging = false;
             _rotatedPlayer = false;
+            if (buttonPrompt != null) buttonPrompt.SetActive(true);
         }
     }
 
