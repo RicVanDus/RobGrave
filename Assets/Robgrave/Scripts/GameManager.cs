@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour
             {
                 var _btnPrompt = Instantiate(ButtonPrompt, _grave.transform);
                 var _btnPromptScript = _btnPrompt.GetComponent<BtnPrompt>();
-                _btnPrompt.transform.position = _grave._graveStone.transform.position + new Vector3(0f, 1.5f, 0f);
+                _btnPrompt.transform.position = _grave._graveStone.transform.position + new Vector3(0f, 3.5f, 0f);
                 _btnPrompt.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                 _grave.buttonPrompt = _btnPrompt;
                 
