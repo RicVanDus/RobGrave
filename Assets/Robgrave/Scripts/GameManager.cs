@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +16,6 @@ public class GameManager : MonoBehaviour
     public LevelProperties[] levels;
     public LevelProperties thisLevel;
     
-
     [Header("Gravestones")]
     public Color graveType0Color;
     public Color graveType1Color;
@@ -23,14 +23,17 @@ public class GameManager : MonoBehaviour
     public Color graveDefaultColor;
     public Color graveWarningColor;
     public GameObject[] graveStones;
+    
+    [Header("UI")]
     public GameObject GraveUI;
     public GameObject GraveUI2;
     public GameObject GraveUI3;
+    public GameObject ButtonPrompt;
 
     [Header("Misc objects")] 
     public GameObject steppingStone;
     public Transform envStones;
-
+    
     [Header("Player attributes")]
     public Transform PlayerSpawn;
     public GameObject[] graves;
@@ -187,7 +190,7 @@ public class GameManager : MonoBehaviour
             _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _graveColor);
 
 
-            // Add the GraveUI
+            // Add the GraveUI & buttonPrompt
 
             float _graveUIScale = 0.6f;
             
@@ -221,6 +224,17 @@ public class GameManager : MonoBehaviour
 
                 _UI._grave = _grave;
                 _UI.SetUIPosition();
+            }
+
+            if (ButtonPrompt != null)
+            {
+                var _btnPrompt = Instantiate(ButtonPrompt, _grave.transform);
+                var _btnPromptScript = _btnPrompt.GetComponent<BtnPrompt>();
+                _btnPrompt.transform.position = _grave._graveStone.transform.position + new Vector3(0f, 3.5f, 0f);
+                _btnPrompt.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+                _grave.buttonPrompt = _btnPrompt;
+                
+                _btnPromptScript.SetTextAndIcon("Hold", "to dig");
             }
         }
     }
