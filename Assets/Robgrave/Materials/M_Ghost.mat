@@ -40,15 +40,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _Base_Transparency: 0.2
-    - _Constant_Noise_Speed: 1
-    - _Constant_Noise_Strength: 2
-    - _Noise_deform_scale: 9
+    - _Constant_Noise_Speed: 2.56
+    - _Constant_Noise_Strength: 2.3
+    - _Noise_deform_scale: 2.79
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Vertex_deform_strength: 1.2
+    - _Vertex_deform_strength: -2.23
     - _Visibility: 1
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _SuckingUpPosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2363433921872645210
 MonoBehaviour:
