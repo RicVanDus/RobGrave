@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
     public float digSpeedMultiplier = 3.0f;
+    public float flashLightReach = 18f;
     public int hitPoints;
     public int maxLives = 3;
     public int score;
@@ -183,6 +184,11 @@ public class PlayerController : MonoBehaviour
         blinkingTimer += Time.deltaTime;
 
         CheckAddedScore();
+
+        if (LookForEnemy())
+        {
+            Debug.Log("GHOOOOOST!");
+        }
     }
 
     private void FixedUpdate()
@@ -592,7 +598,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool LookForEnemy()
+    {
+        bool seesEnemy = false;
 
+        Vector3 drawFromPosition = new Vector3(0, 0.5f, 0);
+        drawFromPosition += transform.position;
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
+        {
+            Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+
+            if (hit.collider.CompareTag("Enemy"))   
+            {
+                seesEnemy = true;
+                hit.collider.GetComponent<Enemy>().CaughtInLight();
+            }
+        }
+        else
+        {
+            Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * flashLightReach, Color.white);
+        }
+
+        return seesEnemy;
+    }
+    
+    
     private void WhenPaused()
     {
         

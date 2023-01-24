@@ -117,6 +117,14 @@ public class Enemy : MonoBehaviour
         // ** LIGHTTRIGGERED ** 
         if (_lightTriggered)
         {
+            if (_lightTriggerTimer < 0.2f)
+            {
+                myMaterial.SetFloat("_Base_Transparency", 0.5f);
+            }
+            else
+            {
+                myMaterial.SetFloat("_Base_Transparency", 0.2f);
+            }
             _lightTriggerTimer += Time.deltaTime;
             if (_lightTriggerTimer > _lightTriggerTime)
             {
@@ -426,9 +434,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("LightCollider"))
         {
-            _lightTriggered = true;
-            _lightTriggerTimer = 0f;
+            CaughtInLight();
         }
+    }
+
+    public void CaughtInLight()
+    {
+        _lightTriggered = true;
+        _lightTriggerTimer = 0f;
+        
     }
 
 
@@ -443,6 +457,17 @@ public class Enemy : MonoBehaviour
         // adds to the mask of being sucked up, on complete trigger Player ghost shader (or just time it in the Player script)
         
         yield break;
+    }
+
+    private void Respawn()
+    {
+        // respawns Enemy at one of the respawn points
+        // Maybe add some effect? -poof
+
+        var spawnPoints = EnemyManager.Instance.enemySpawnPoints;
+        int rndIndex = Random.Range(0, spawnPoints.Count);
+
+        transform.position = spawnPoints[rndIndex].transform.position;
     }
    
 }
