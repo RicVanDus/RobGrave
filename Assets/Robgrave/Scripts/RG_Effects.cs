@@ -38,9 +38,15 @@ public class RG_Effects : MonoBehaviour
     
     private IEnumerator ToggleDirtFromShovel()
     {
+        Vector3 oldRot = _dirtFromShovel.transform.localRotation.eulerAngles;
+        Vector3 newRot = oldRot;
+        newRot.y += Random.Range(0f, 30f);
+
+        _dirtFromShovel.transform.localRotation = Quaternion.Euler(newRot);
         _dirtFromShovel.Play();
 
         yield return new WaitForSeconds(0.3f);
+        _dirtFromShovel.transform.localRotation = Quaternion.Euler(oldRot);
         
         _dirtFromShovel.Stop();
     }
