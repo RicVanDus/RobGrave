@@ -100,13 +100,13 @@ public class UIPlayerInfo : MonoBehaviour
 
         targetScore.text = "/ " + GameManager.Instance.thisLevel.valuablesRequired.ToString();
 
-        if (PlayerController.Instance.score < GameManager.Instance.thisLevel.valuablesRequired)
+        if (PlayerController.Instance.goalAchieved)
         {
-            targetScore.color = new Color(1f, 0f, 0f);
+            targetScore.color = new Color(0f, 1f, 0f);
         } 
         else
         {
-            targetScore.color = new Color(0f, 1f, 0f);
+            targetScore.color = new Color(1f, 0f, 0f);
         }
     }
 

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     
     private float scoreAddingTimer = 0f;
     private float scoreAddingTime = 3f;
+    [HideInInspector] public bool goalAchieved = false;
 
     [Header("Meshes")]
     [SerializeField] private SkinnedMeshRenderer _playerMesh;
@@ -69,10 +71,11 @@ public class PlayerController : MonoBehaviour
     public delegate void OnRespawn();
     public event OnRespawn Respawned;
 
-    public GameObject valuePopup;
     
-    ///public delegate void OnChangingScore();
-   // public event OnChangingScore ChangingScore;
+
+    public GameObject valuePopup;
+    public delegate void OnChangingScore();
+    public event OnChangingScore ChangingScore;
 
     public delegate void Interact();
 
@@ -268,7 +271,12 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Grave")
         {
             _canInteract = true;
-        } 
+        }
+
+        if (other.tag == "Exit")
+        {
+            _canInteract = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -276,7 +284,12 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Grave")
         {
             _canInteract = false;
-        } 
+        }
+
+        if (other.tag == "Exit")
+        {
+            _canInteract = false;
+        }
     }
 
     private void Respawning()
@@ -426,11 +439,13 @@ public class PlayerController : MonoBehaviour
             {
                 score += (int)(_modAmount * 10);
                 _counter += (int)(_modAmount * 10);
+                CheckIfGoalAchieved();
             }
             while (_counter < preScore)
             {                
                 score += (int)_amountToScore;
                 _counter += (int)_amountToScore;
+                CheckIfGoalAchieved();
 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -438,10 +453,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             score += preScore;
-            yield break;
+            CheckIfGoalAchieved();
         }
-
-        //yield break;
     }
 
     public void RotateToGrave(GameObject currentGrave)
@@ -645,5 +658,18 @@ public class PlayerController : MonoBehaviour
         interact.Enable();
         attack.Enable();    
 
+    }
+    private void CheckIfGoalAchieved()
+    {
+        if (score >= GameManager.Instance.thisLevel.valuablesRequired)
+        {
+            goalAchieved = true;
+        }
+        else
+        {
+            goalAchieved = false;
+        }
+        
+        ChangingScore?.Invoke();
     }
 }

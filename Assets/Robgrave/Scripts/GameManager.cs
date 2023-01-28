@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -33,10 +34,17 @@ public class GameManager : MonoBehaviour
     [Header("Misc objects")] 
     public GameObject steppingStone;
     public Transform envStones;
-    
+
     [Header("Player attributes")]
     public Transform PlayerSpawn;
     public GameObject[] graves;
+    public GameObject exitTrigger;
+    
+    private float _gameTimeSeconds;
+    private int _gameTimeMinutes;
+    private int _gameTimeHours;
+    private bool _gameStarted;
+    
     
     private void OnEnable()
     {
@@ -58,7 +66,16 @@ public class GameManager : MonoBehaviour
 
         thisLevel = levels[currentLevel - 1];
     }
-    
+
+    private void Update()
+    {
+        if (_gameStarted)
+        {
+            GameTime();
+        }
+    }
+
+
     // Assign more purple and blue graves if the score threshold calls for it (total nr of graves / threshold value)
     // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
     // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
@@ -225,17 +242,7 @@ public class GameManager : MonoBehaviour
                 _UI._grave = _grave;
                 _UI.SetUIPosition();
             }
-
-            if (ButtonPrompt != null)
-            {
-                var _btnPrompt = Instantiate(ButtonPrompt, _grave.transform);
-                var _btnPromptScript = _btnPrompt.GetComponent<BtnPrompt>();
-                _btnPrompt.transform.position = _grave._graveStone.transform.position + new Vector3(0f, 3.5f, 0f);
-                _btnPrompt.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-                _grave.buttonPrompt = _btnPrompt;
-                
-                _btnPromptScript.SetTextAndIcon("Hold", "to dig");
-            }
+            
         }
     }
 
@@ -274,5 +281,24 @@ public class GameManager : MonoBehaviour
         EnemyManager.Instance.SpawnAllEnemies();
         
         GameOverseer.Instance.SetGameState(GameState.Playing);
+        _gameStarted = true;
+    }
+
+    private void GameTime()
+    {
+        _gameTimeSeconds += Time.deltaTime;
+
+        if (_gameTimeSeconds >= 60f)
+        {
+            _gameTimeMinutes++;
+            _gameTimeSeconds = 0f;
+        }
+
+        if (_gameTimeMinutes >= 60)
+        {
+            _gameTimeHours++;
+            _gameTimeMinutes = 0;
+        }
+        
     }
 }
