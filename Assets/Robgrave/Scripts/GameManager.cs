@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
     private int _gameTimeMinutes;
     private int _gameTimeHours;
     private bool _gameStarted;
-    
+    public string gameTime;
+    private bool _witchingHour = false;
     
     private void OnEnable()
     {
@@ -65,6 +66,10 @@ public class GameManager : MonoBehaviour
         }
 
         thisLevel = levels[currentLevel - 1];
+
+        _gameTimeHours = thisLevel.startHours;
+        _gameTimeMinutes = thisLevel.startMinutes;
+        _gameTimeSeconds = thisLevel.startSeconds;
     }
 
     private void Update()
@@ -299,6 +304,9 @@ public class GameManager : MonoBehaviour
             _gameTimeHours++;
             _gameTimeMinutes = 0;
         }
-        
+
+        if (_gameTimeHours == 0 && _witchingHour == false) _witchingHour = true;
+
+        gameTime = _gameTimeHours + ":" + _gameTimeMinutes + "'" + _gameTimeSeconds;
     }
 }

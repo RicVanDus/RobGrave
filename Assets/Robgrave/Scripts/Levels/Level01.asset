@@ -19,6 +19,9 @@ MonoBehaviour:
   valuablesRequired: 1500
   graveType1: 2
   graveType2: 1
-  timeToMidnight: 10
   timeBetweenLightning: 20
-  weather: 0
+  startHours: 11
+  startMinutes: 45
+  startSeconds: 0
+  weather: 1
+  map: 0

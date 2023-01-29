@@ -1,5 +1,7 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.UI;
 
 public class UIPlayerInfo : MonoBehaviour
@@ -8,12 +10,16 @@ public class UIPlayerInfo : MonoBehaviour
     public Text score;
     public Text preScore;
     public Text targetScore;
+    public TextMeshProUGUI gameTime;
 
     public Transform graphicGhostsTarget;
     public GameObject graphicGhost;
     public Image graphicLives;
     public Image graphicLivesEmpty;
     public Transform graphicLivesTarget;
+
+    private string _startTime;
+    private string _currentGameTime;
     
     private void OnEnable()
     {
@@ -37,6 +43,7 @@ public class UIPlayerInfo : MonoBehaviour
     void Update()
     {
         UpdateScore();
+        UpdateTime();
     }
 
     public void UpdateGhosts()
@@ -131,10 +138,52 @@ public class UIPlayerInfo : MonoBehaviour
         }
     }
 
+    private void UpdateTime()
+    {
+        gameTime.text = GameManager.Instance.gameTime;
+        
+        Debug.Log(TimeFormatConverter(gameTime.text));
+    }
+
+    private (int, int, float) TimeFormatConverter(string input)
+    {
+        string sHours = "";
+        string sMinutes = "";
+        string sSeconds = "";
+
+        int hInd = input.IndexOf(":");
+        int mInd = input.IndexOf("'");
+        int sInd = input.IndexOf(".");
+
+        for (int ih = 0; ih < hInd; ih++)
+        {
+            sHours += input[ih];
+        }
+        
+        for (int im = hInd + 1; im < mInd; im++)
+        {
+            sMinutes += input[im];
+        }
+        
+        for (int isec = mInd + 1; isec < sInd; isec++)
+        {
+            sSeconds += input[isec];
+        }
+
+        int iHours = Int32.Parse(sHours);
+        int iMinutes = Int32.Parse(sMinutes);
+        float fSeconds = float.Parse(sSeconds);
+        
+        return (iHours, iMinutes, fSeconds);
+    }
+    
     public void UpdateAll()
     {
         UpdateLives();
         UpdateGhosts();
         UpdateScore();
     }
+    
+    
+    
 }

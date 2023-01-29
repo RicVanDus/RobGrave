@@ -13,9 +13,16 @@ public class LevelProperties : ScriptableObject
 
     public int graveType1;
     public int graveType2;
-    public float timeToMidnight;
     public float timeBetweenLightning;
 
+    [Header("Start Time")] 
+    public int startHours;
+    public int startMinutes;
+    public float startSeconds;
+
+    [Header("Weather")]
     public Enum_Weather weather;
 
+    [Header("Map")] public Enum_Map map;
 }
+
