@@ -141,8 +141,6 @@ public class UIPlayerInfo : MonoBehaviour
     private void UpdateTime()
     {
         gameTime.text = GameManager.Instance.gameTime;
-        
-        Debug.Log(TimeFormatConverter(gameTime.text));
     }
 
     private (int, int, float) TimeFormatConverter(string input)

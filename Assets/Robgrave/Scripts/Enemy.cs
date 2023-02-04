@@ -112,6 +112,15 @@ public class Enemy : MonoBehaviour
         } */
         
         myMaterial.SetFloat("_Visibility", _visibility);
+
+        if (_visibility > 0f)
+        {
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = true;
+        }
+        else
+        {
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
         
         
         // ** LIGHTTRIGGERED ** 
