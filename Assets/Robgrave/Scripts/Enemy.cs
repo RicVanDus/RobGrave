@@ -60,6 +60,9 @@ public class Enemy : MonoBehaviour
     private readonly float _lightTriggerTime = 2f;
     private bool _lightTriggered = false;
 
+    private float _greedyGhostTimer = 0f;
+    private float _greedyGhostTime = 60f;
+    private bool _blinkingGhost = false;
     
     private void OnEnable()
     {
@@ -104,13 +107,6 @@ public class Enemy : MonoBehaviour
         DistanceToPlayer();
         GhostMovement();
 
-        // Why was this needed?
-        /*
-        if (currentGhostType != ghostType)
-        {
-            SetGhostType(ghostType);
-        } */
-        
         myMaterial.SetFloat("_Visibility", _visibility);
 
         if (_visibility > 0f)
@@ -121,7 +117,6 @@ public class Enemy : MonoBehaviour
         {
             transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
-        
         
         // ** LIGHTTRIGGERED ** 
         if (_lightTriggered)
@@ -140,14 +135,28 @@ public class Enemy : MonoBehaviour
                 _lightTriggered = false;
             }
         }
+
+        if (ghostType == 3)
+        {
+            _greedyGhostTimer += Time.deltaTime;
+
+            if (_greedyGhostTimer > (_greedyGhostTime * 0.9) && !_blinkingGhost)
+            {
+                StartCoroutine(Blinking());
+            }
+
+            if (_greedyGhostTimer > _greedyGhostTime)
+            {
+                GreedyGhostOver();
+            }
+        }
     }
 
     private void GhostMovement()
     {
         // When lookaround: rotate in a set speed
         // maybe not make the ghosts stop when player is too far away
-
-
+        
         if (_searchingNewDestination)
         {
             _reachedDestination = false;
@@ -188,10 +197,6 @@ public class Enemy : MonoBehaviour
             else
             {
                 _lookAroundTimer += Time.deltaTime;
-
-                // rotate lerpje?
-                //transform.localRotation
-
 
                 if (_lookAroundTimer > _lookAroundTime)
                 {
@@ -279,6 +284,7 @@ public class Enemy : MonoBehaviour
                 moveSpeed = 4.5f;
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
                 ghostLight.color = EnemyManager.Instance.GhostType4;
+                _greedyGhostTimer = 0f;
                 break;
 
             default:
@@ -297,7 +303,7 @@ public class Enemy : MonoBehaviour
         
         _distanceToPlayer = Vector3.Distance(myPos, playerPos);
 
-        if (_lightTriggered && _visible == false)
+        if (_lightTriggered && _visible == false || ghostType == 3)
         {
             ShowEnemy(true);
         }
@@ -328,8 +334,6 @@ public class Enemy : MonoBehaviour
 
         return hit.position;
     }
-
-
 
     private void PlayerIsCaught()
     {
@@ -390,9 +394,6 @@ public class Enemy : MonoBehaviour
                 _ghostEvolveScore = 500f;
                 break;
         }
-        
-
-        //Debug.Log(this.name + " - score: " + score);
 
         if (score >= 250 && ghostType == 0)
         {
@@ -411,11 +412,6 @@ public class Enemy : MonoBehaviour
             SetGhostType(3);
             score = 0;
             _ghostEvolveScore = 500f;
-        }
-        else if (score >= 500 && ghostType == 3)
-        {
-            SetGhostType(4);
-            score = 0;
         }
 
         ghostEvolveProgress = score / _ghostEvolveScore;
@@ -478,5 +474,40 @@ public class Enemy : MonoBehaviour
 
         transform.position = spawnPoints[rndIndex].transform.position;
     }
-   
+
+    public void GreedyGhostGotCaught()
+    {
+        ResetGhost();
+        LootManager.Instance.SpawnLoot(Random.Range(1500, 2000), Random.Range(10,20));
+    }
+
+    private void ResetGhost()
+    {
+        Respawn();
+        SetGhostType(0);
+    }
+
+    private void GreedyGhostOver()
+    {
+        _blinkingGhost = false;
+        StopCoroutine(Blinking());
+        SetGhostType(2);
+    }
+
+    private IEnumerator Blinking()
+    {
+        while (ghostType == 3)
+        {
+            if (myMaterial.GetColor("_Color") == EnemyManager.Instance.GhostType4)
+            {
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
+            }
+            else
+            {
+                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
 }

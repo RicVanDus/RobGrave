@@ -248,24 +248,32 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Enemy" && isInvulnerable == false)
         {
-            hitPoints -= 1;
             Enemy _nme = other.GetComponent<Enemy>();
-            Ghosted(_nme.ghostType);
-            GettingCaught?.Invoke();
-            isInvulnerable = true;
-            movementDisabled = true;
-            _isCaught = true;
 
-            if (hitPoints <= 0)
+            if (_nme.ghostType == 3)
             {
-                GameOverseer.Instance.SetGameState(GameState.GameOver);
+                _nme.GreedyGhostGotCaught();
             }
             else
             {
-                StartCoroutine(LosingLoot(_nme.ghostType));
-            }
+                Ghosted(_nme.ghostType);
+                GettingCaught?.Invoke();
+                isInvulnerable = true;
+                movementDisabled = true;
+                _isCaught = true;
+                hitPoints -= 1;
+                
+                if (hitPoints <= 0)
+                {
+                    GameOverseer.Instance.SetGameState(GameState.GameOver);
+                }
+                else
+                {
+                    StartCoroutine(LosingLoot(_nme.ghostType));
+                }
             
-            RGAnimator.SetBool("Caught", true);
+                RGAnimator.SetBool("Caught", true);
+            }
         }
 
         if (other.tag == "Grave")
