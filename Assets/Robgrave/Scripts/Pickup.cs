@@ -8,12 +8,22 @@ public class Pickup : MonoBehaviour
     public bool AutoPickup = true;
     public int value;
     public string objectName;
+    [Header("Light")]
+    [SerializeField] private GameObject _pointLight;
+    [SerializeField] private float _lightHeight;
+    private Vector3 _lightPos;
+
+    private bool _noLight;
 
     // Start is called before the first frame update
     void Start()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
+        if (_pointLight == null)
+        {
+            _noLight = true;
+        }
     }
 
     // Update is called once per frame
@@ -22,6 +32,13 @@ public class Pickup : MonoBehaviour
         if (this.gameObject.transform.position.y < 2f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        }
+        
+        _lightPos = new Vector3(0f, _lightHeight, 0f);
+
+        if (!_noLight)
+        {
+            PositionPointLight();
         }
     }
 
@@ -40,5 +57,10 @@ public class Pickup : MonoBehaviour
             LootManager.Instance.ClearLootSpot(id);
             Destroy(this.gameObject);
         }
+    }
+
+    private void PositionPointLight()
+    {
+        _pointLight.transform.position = transform.position + _lightPos;
     }
 }

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 544340631161317249}
   m_LocalRotation: {x: -0.7110067, y: -0.07750629, z: -0.09711313, w: 0.69212085}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12.57765, y: 12.57765, z: 12.57765}
+  m_LocalScale: {x: 15.429999, y: 15.429999, z: 15.429999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -103,6 +103,8 @@ MonoBehaviour:
   AutoPickup: 1
   value: 0
   objectName: 
+  _pointLight: {fileID: 0}
+  _lightHeight: 0.3
 --- !u!65 &5292228710763254421
 BoxCollider:
   m_ObjectHideFlags: 0

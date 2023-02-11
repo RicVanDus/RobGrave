@@ -363,10 +363,39 @@ public class PlayerController : MonoBehaviour
         scoreAddingTimer = 0f;
         Vector3 _spawnPos = new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z);
 
-        float _newScale = Mathf.Clamp(0.001f * (Mathf.Abs(value)/5), 0f, 0.02f);
+        float _newScale = 0f;
 
-        GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
-        _popupText.transform.localScale = new Vector3(_popupText.transform.localScale.x + _newScale, _popupText.transform.localScale.y + _newScale, _popupText.transform.localScale.z + _newScale);
+        if (value < 0)
+        {
+            _newScale = 0.02f;
+        }
+        else if (value == 5)
+        {
+            _newScale = 0.01f;
+        }
+        else if (value == 10)
+        {
+            _newScale = 0.011f;
+        }
+        else if (value == 20)
+        {
+            _newScale = 0.012f;
+        }
+        else if (value == 40)
+        {
+            _newScale = 0.0135f;
+        }
+        else if (value == 100)
+        {
+            _newScale = 0.015f;
+        }
+        else if (value == 200)
+        {
+            _newScale = 0.018f;
+        }
+
+            GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
+        _popupText.transform.localScale = _newScale * Vector3.one;
         ValuePopup _thisPopup = _popupText.GetComponent<ValuePopup>();
         _thisPopup.PopUpScore(value, value>0);
     }
