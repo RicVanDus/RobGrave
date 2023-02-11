@@ -84,7 +84,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Basic_Emission: 0.29
+    - _Basic_Emission: 0.79
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0

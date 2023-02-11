@@ -121,9 +121,9 @@ public class Enemy : MonoBehaviour
         // ** LIGHTTRIGGERED ** 
         if (_lightTriggered)
         {
-            if (_lightTriggerTimer < 0.2f)
+            if (_lightTriggerTimer < 0.5f)
             {
-                myMaterial.SetFloat("_Base_Transparency", 0.5f);
+                myMaterial.SetFloat("_Base_Transparency", 0.7f);
             }
             else
             {

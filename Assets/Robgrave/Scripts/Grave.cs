@@ -120,9 +120,12 @@ public class Grave : Interactable
             if (defileProgress > 0f)
             {
                 defileProgress -= Time.deltaTime;
-            }            
+            }
             graveTouched = true;
             graveIsDifiling = false;
+            _gravestoneIsShaking = false;
+            StopCoroutine(ShakingHeadStone());
+            SetGraveStoneColor(_currentGraveStoneColor);
 
             if (diggingProgress >= diggingtTime)
             {
@@ -147,7 +150,7 @@ public class Grave : Interactable
         else
         {
             diggingProgress -= Time.deltaTime;
-            if (diggingProgress <= 0f && graveTouched &! graveIsDug)
+            if (diggingProgress <= 0f && graveTouched && !graveIsDug && !graveDefiled)
             {
                 DefiledGrave();
             }
@@ -192,7 +195,6 @@ public class Grave : Interactable
                 {
                     graveDefiled = true;
                     EnemyManager.Instance.SpawnEnemy(graveType);
-                    
                 }
 
                 defiledDepth++;

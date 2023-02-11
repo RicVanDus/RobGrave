@@ -109,7 +109,7 @@ public class GUI_grave_01 : MonoBehaviour
             _radialFill.fillAmount = _grave.diggingProgress / _grave.diggingtTime;
             _radialFill.fillClockwise = true;
             startedRedBlinking = false;
-            if (startedRedBlinking == true)
+            if (startedRedBlinking)
             {
                 StopCoroutine(BlinkingRedCircle());                
             }                        
@@ -134,11 +134,11 @@ public class GUI_grave_01 : MonoBehaviour
         Quaternion _newRot;
 
         if (_grave != null)
-        {       
+        {
             _newPos = new Vector3(0f, 0.7f, -0.5f);
             
             if (Mathf.Round(_grave.transform.eulerAngles.y) == 0)
-            {                
+            {
                 _newRot = Quaternion.Euler(0f, 0f, 0f); 
             }
             else if (Mathf.Round(_grave.transform.eulerAngles.y) == 180)
@@ -165,7 +165,7 @@ public class GUI_grave_01 : MonoBehaviour
 
         startedRedBlinking = true;
 
-        while (_grave.defileProgress > 0)
+        while (GraveDefiling)
         {
             if (_grave.defiledDepth == 0)
             {
@@ -191,8 +191,7 @@ public class GUI_grave_01 : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
         }                
-
-        yield break;
+        
     }
 
 }

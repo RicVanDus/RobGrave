@@ -628,7 +628,7 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
+        if (Physics.SphereCast(drawFromPosition, 1f, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
