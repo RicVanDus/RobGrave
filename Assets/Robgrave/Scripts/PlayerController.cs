@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 3.0f;
     public float digSpeedMultiplier = 3.0f;
     public float flashLightReach = 18f;
-    public int hitPoints;
+    public int currentLives;
     public int maxLives = 3;
     public int score;
     public float invulnerableTime = 3f;
@@ -111,6 +111,9 @@ public class PlayerController : MonoBehaviour
         
         GameOverseer.Instance.Pause += WhenPaused;
         GameOverseer.Instance.Playing += WhenPlaying;
+        GameOverseer.Instance.StartGame += DataFromGO;
+        GameOverseer.Instance.Extract += DataToGO;
+        
 
         // changing input device, make a state that can be checked for UI changes
         InputUser.onChange += (user, change, device) =>
@@ -134,6 +137,10 @@ public class PlayerController : MonoBehaviour
         interact.canceled -= OnInteract;
         pause.performed -= OnPause;
         Respawned -= Respawn;        
+        GameOverseer.Instance.Pause -= WhenPaused;
+        GameOverseer.Instance.Playing -= WhenPlaying;
+        GameOverseer.Instance.StartGame -= DataFromGO;
+        GameOverseer.Instance.Extract -= DataToGO;
     }
 
     // Start is called before the first frame update
@@ -148,9 +155,7 @@ public class PlayerController : MonoBehaviour
         }
 
         playerInputs = new RGInputs();
-
-
-
+        
         rigidB = GetComponent<Rigidbody>();
 
         RGAnimator = GetComponentInChildren<Animator>();
@@ -161,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
         gameObject.tag = "Player";
 
-        hitPoints = 3;
+        currentLives = 3;
         score = 0;
     }
 
@@ -261,9 +266,9 @@ public class PlayerController : MonoBehaviour
                 isInvulnerable = true;
                 movementDisabled = true;
                 _isCaught = true;
-                hitPoints -= 1;
+                currentLives -= 1;
                 
-                if (hitPoints <= 0)
+                if (currentLives <= 0)
                 {
                     GameOverseer.Instance.SetGameState(GameState.GameOver);
                 }
@@ -638,7 +643,7 @@ public class PlayerController : MonoBehaviour
         GameState _gameState = GameOverseer.Instance.gameState;
         
         // Not being able to pause when you are dead or caught
-        if (context.performed && _gameState != GameState.Pause && hitPoints > 0 && !_isCaught)
+        if (context.performed && _gameState != GameState.Pause && currentLives > 0 && !_isCaught)
         {
             GameOverseer.Instance.SetGameState(GameState.Pause);
         }
@@ -674,28 +679,24 @@ public class PlayerController : MonoBehaviour
 
         return seesEnemy;
     }
-    
-    
+
     private void WhenPaused()
     {
-        
         movementDisabled = true;
         RGAnimator.StopPlayback();
         move.Disable();
         interact.Disable();
         attack.Disable();
-        
     }
     
     private void WhenPlaying()
     {
-
         movementDisabled = false;
         move.Enable();
         interact.Enable();
-        attack.Enable();    
-
+        attack.Enable();
     }
+    
     private void CheckIfGoalAchieved()
     {
         if (score >= GameManager.Instance.thisLevel.valuablesRequired)
@@ -708,5 +709,22 @@ public class PlayerController : MonoBehaviour
         }
         
         ChangingScore?.Invoke();
+    }
+
+    private void DataToGO()
+    {
+        GameOverseer.Instance.score = score;
+        GameOverseer.Instance.maxLives = maxLives;
+        GameOverseer.Instance.currentLives = currentLives;
+    }
+    
+    private void DataFromGO()
+    {
+        if (GameOverseer.Instance.maxLives != 0)
+        {
+            score = GameOverseer.Instance.score;
+            maxLives = GameOverseer.Instance.maxLives;
+            currentLives = GameOverseer.Instance.currentLives;
+        }
     }
 }

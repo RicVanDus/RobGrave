@@ -63,7 +63,7 @@ public class ExitTrigger : MonoBehaviour
     
     private void PlayerExit()
     {
-        GameOverseer.Instance.SetGameState(GameState.Extract);
+        GameManager.Instance.PlayerExtract();
     }
 
     private void ShowUI(bool show)
@@ -107,8 +107,6 @@ public class ExitTrigger : MonoBehaviour
         {
             exitSign.color = new Color(1f,0f,0f,0.5f);
         }
-
         
-        Debug.Log("Set Exit Sign Color!");
     }
 }

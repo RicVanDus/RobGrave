@@ -33,6 +33,12 @@ public class GameOverseer : MonoBehaviour
     [SerializeField] private GameObject extractScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseMenu;
+
+    [HideInInspector] public int score = 0;
+    [HideInInspector] public int currentLives = 0;
+    [HideInInspector] public int maxLives = 0;
+    [HideInInspector] public int currentLevel = 0;
+    
     
     private Scene _gameScene;
     [Header("UI")]

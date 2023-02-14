@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        thisLevel = levels[currentLevel - 1];
+        thisLevel = levels[GameOverseer.Instance.currentLevel];
 
         _gameTimeHours = thisLevel.startHours;
         _gameTimeMinutes = thisLevel.startMinutes;
@@ -308,5 +308,12 @@ public class GameManager : MonoBehaviour
         if (_gameTimeHours == 0 && _witchingHour == false) _witchingHour = true;
 
         gameTime = _gameTimeHours + ":" + _gameTimeMinutes + "'" + _gameTimeSeconds;
+    }
+
+    public void PlayerExtract()
+    {
+        GameOverseer.Instance.currentLevel++;
+        PlayerController.Instance.score -= thisLevel.valuablesRequired;
+        GameOverseer.Instance.SetGameState(GameState.Extract);
     }
 }

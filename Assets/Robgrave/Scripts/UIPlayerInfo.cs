@@ -119,7 +119,7 @@ public class UIPlayerInfo : MonoBehaviour
 
     public void UpdateLives()
     {
-        Debug.Log("UPDATING LIVES: " + PlayerController.Instance.hitPoints);
+        Debug.Log("UPDATING LIVES: " + PlayerController.Instance.currentLives);
         int nbChildren = graphicLivesTarget.childCount;
 
         for (int i = nbChildren - 1; i >= 0; i--)
@@ -129,7 +129,7 @@ public class UIPlayerInfo : MonoBehaviour
 
         for (int i = 0; i < PlayerController.Instance.maxLives; i++)
         {
-            if (i+1 <= PlayerController.Instance.hitPoints)
+            if (i+1 <= PlayerController.Instance.currentLives)
             {
                 Image liveHeart = Instantiate(graphicLives, graphicLivesTarget);
             } else {
