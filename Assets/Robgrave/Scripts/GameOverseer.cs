@@ -37,7 +37,7 @@ public class GameOverseer : MonoBehaviour
     [HideInInspector] public int score = 0;
     [HideInInspector] public int currentLives = 0;
     [HideInInspector] public int maxLives = 0;
-    [HideInInspector] public int currentLevel = 0;
+    public int currentLevel = 0;
     
     
     private Scene _gameScene;
@@ -166,7 +166,7 @@ public class GameOverseer : MonoBehaviour
     
     private void LoadGame()
     {
-        UnloadScene("MainMenu");
+        UnloadAllScenes();
         LoadScene("Graveyard_01", true, true);
     }
     
@@ -204,6 +204,7 @@ public class GameOverseer : MonoBehaviour
     private void ShowExtracted()
     {
         extractScreen.SetActive(true);
+        Time.timeScale = 0f;
     }
     
     private void DisableAllOverlays()

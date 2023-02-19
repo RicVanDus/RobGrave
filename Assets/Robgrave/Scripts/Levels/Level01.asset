@@ -16,7 +16,7 @@ MonoBehaviour:
   ghostSpawnType0: 4
   ghostSpawnType1: 0
   ghostSpawnType2: 0
-  valuablesRequired: 1500
+  valuablesRequired: 100
   graveType1: 2
   graveType2: 1
   timeBetweenLightning: 20

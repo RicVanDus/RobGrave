@@ -14,6 +14,7 @@ public class ExitTrigger : MonoBehaviour
 
     private float _holdTimer = 0f;
     private float _holdTime = 3f;
+    private bool _playerLeft = false;
     
     
     // Start is called before the first frame update
@@ -54,9 +55,10 @@ public class ExitTrigger : MonoBehaviour
 
         radialImg.fillAmount = _holdTimer / _holdTime;
         
-        if (_holdTimer > _holdTime)
+        if (_holdTimer > _holdTime && !_playerLeft)
         {
             PlayerExit();
+            _playerLeft = true;
         }
     }
     
