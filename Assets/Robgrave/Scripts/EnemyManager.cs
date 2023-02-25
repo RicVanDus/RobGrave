@@ -60,7 +60,14 @@ public class EnemyManager : MonoBehaviour
 
     public void DespawnAllEnemies()
     {
-
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var nme = enemies[i];
+            Destroy(nme.gameObject);
+        }
+        
+        enemies.Clear();
+        EnemyUpdate?.Invoke();
     }
 
     public void SpawnEnemy(int type)
@@ -74,17 +81,20 @@ public class EnemyManager : MonoBehaviour
 
         enemies.Add(_newEnemy);
         
-        Debug.Log("Enemy spawned: [ID: " + _newEnemy.EnemyId + "]!");
-
         EnemyUpdate?.Invoke();
     }
 
-    public void DespawnEnemy(int id)
+    public void DespawnEnemy(int enemyId)
     {
-        // TEST THIS
-        Enemy _enemyToDespawn = enemies[id];        
-        enemies.Remove(_enemyToDespawn);
-        Destroy(_enemyToDespawn);
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var nme = enemies[i];
+            if (nme.EnemyId == enemyId)
+            {
+                enemies.Remove(nme);
+                Destroy(nme.gameObject);
+            }
+        }
 
         EnemyUpdate?.Invoke();
     }

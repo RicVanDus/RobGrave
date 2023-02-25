@@ -204,6 +204,9 @@ public class GameOverseer : MonoBehaviour
     private void ShowExtracted()
     {
         extractScreen.SetActive(true);
+        score = PlayerController.Instance.score;
+        maxLives = PlayerController.Instance.maxLives;
+        currentLives = PlayerController.Instance.currentLives;
         Time.timeScale = 0f;
     }
     

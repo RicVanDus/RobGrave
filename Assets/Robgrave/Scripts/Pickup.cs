@@ -12,6 +12,10 @@ public class Pickup : MonoBehaviour
     [SerializeField] private GameObject _pointLight;
     [SerializeField] private float _lightHeight;
     private Vector3 _lightPos;
+    private Rigidbody _rigidbody;
+    private bool _physicsEnabled = true;
+    private float physicsDisableTimer = 0f;
+    private float physicsDisableTime = 2f;
 
     private bool _noLight;
 
@@ -19,6 +23,7 @@ public class Pickup : MonoBehaviour
     void Start()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        _rigidbody = gameObject.GetComponent<Rigidbody>();
 
         if (_pointLight == null)
         {
@@ -32,6 +37,13 @@ public class Pickup : MonoBehaviour
         if (this.gameObject.transform.position.y < 2f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            physicsDisableTimer += Time.deltaTime;
+            if (physicsDisableTimer > physicsDisableTime && _physicsEnabled)
+            {
+                _physicsEnabled = false;
+                _rigidbody.freezeRotation = true;
+                _rigidbody.useGravity = false;
+            }
         }
         
         _lightPos = new Vector3(0f, _lightHeight, 0f);

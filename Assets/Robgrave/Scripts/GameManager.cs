@@ -312,6 +312,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerExtract()
     {
+        EnemyManager.Instance.DespawnAllEnemies();
         GameOverseer.Instance.currentLevel++;
         PlayerController.Instance.score -= thisLevel.valuablesRequired;
         GameOverseer.Instance.SetGameState(GameState.Extract);

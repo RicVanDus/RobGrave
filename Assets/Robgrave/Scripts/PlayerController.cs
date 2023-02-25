@@ -177,6 +177,8 @@ public class PlayerController : MonoBehaviour
         _torchHip.gameObject.SetActive(false);
         _shovelBack.gameObject.SetActive(true);
         _shovelHand.gameObject.SetActive(false);
+        
+        if (GameManager.Instance.currentLevel > 1) DataFromGO();
 
     }
 
@@ -262,12 +264,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Ghosted(_nme.ghostType);
-                GettingCaught?.Invoke();
                 isInvulnerable = true;
                 movementDisabled = true;
                 _isCaught = true;
                 currentLives -= 1;
-                
+                GettingCaught?.Invoke();
+
                 if (currentLives <= 0)
                 {
                     GameOverseer.Instance.SetGameState(GameState.GameOver);
@@ -720,11 +722,8 @@ public class PlayerController : MonoBehaviour
     
     private void DataFromGO()
     {
-        if (GameOverseer.Instance.maxLives != 0)
-        {
-            score = GameOverseer.Instance.score;
-            maxLives = GameOverseer.Instance.maxLives;
-            currentLives = GameOverseer.Instance.currentLives;
-        }
+        score = GameOverseer.Instance.score;
+        maxLives = GameOverseer.Instance.maxLives;
+        currentLives = GameOverseer.Instance.currentLives;
     }
 }

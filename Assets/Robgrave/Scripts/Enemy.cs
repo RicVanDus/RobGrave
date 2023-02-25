@@ -79,16 +79,17 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        navAgent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        pathLine = GetComponent<LineRenderer>();
-        
-        myMaterial = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().GetComponent<Renderer>().material;
+
     }
 
     private void Start()
     {
        _debugger = Instantiate<GameObject>(_debugSphere);
+       player = GameObject.FindGameObjectWithTag("Player");
+       navAgent = GetComponent<NavMeshAgent>();
+        
+       pathLine = GetComponent<LineRenderer>();
+       myMaterial = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().GetComponent<Renderer>().material;       
 
         if (GameManager.Instance.debugMode)
         {
