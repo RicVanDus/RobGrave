@@ -720,4 +720,11 @@ public class PlayerController : MonoBehaviour
         maxLives = GameOverseer.Instance.maxLives;
         currentLives = GameOverseer.Instance.currentLives;
     }
+
+    public void TeleportTo(Transform newPos)
+    {
+        transform.position = newPos.position;
+        transform.localRotation = newPos.rotation;
+        
+    }
 }
