@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 3.0f;
     public float digSpeedMultiplier = 3.0f;
     public float flashLightReach = 18f;
-    public int currentLives;
+    public int currentLives = 3;
     public int maxLives = 3;
-    public int score;
+    public int score = 0;
     public float invulnerableTime = 3f;
     [NonSerialized] public int preScore;
 
@@ -70,9 +70,7 @@ public class PlayerController : MonoBehaviour
 
     public delegate void OnRespawn();
     public event OnRespawn Respawned;
-
     
-
     public GameObject valuePopup;
     public delegate void OnChangingScore();
     public event OnChangingScore ChangingScore;
@@ -165,9 +163,6 @@ public class PlayerController : MonoBehaviour
         //playerMeshMaterial = playerMesh.GetComponent<Renderer>().material;
 
         gameObject.tag = "Player";
-
-        currentLives = 3;
-        score = 0;
     }
 
     private void Start()
@@ -177,9 +172,8 @@ public class PlayerController : MonoBehaviour
         _torchHip.gameObject.SetActive(false);
         _shovelBack.gameObject.SetActive(true);
         _shovelHand.gameObject.SetActive(false);
-        
-        if (GameManager.Instance.currentLevel > 1) DataFromGO();
 
+        if (GameOverseer.Instance.currentLevel > 0) DataFromGO();
     }
 
     private void Update()
@@ -197,7 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if (LookForEnemy())
         {
-            Debug.Log("GHOOOOOST!");
+            // EFFECT ON FLASHLIGHT? // COLOR CHANGE?
         }
     }
 
@@ -664,7 +658,7 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.SphereCast(drawFromPosition, 1f, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
+        if (Physics.SphereCast(drawFromPosition, 0.5f, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 

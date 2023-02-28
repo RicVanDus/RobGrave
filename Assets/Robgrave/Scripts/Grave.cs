@@ -264,7 +264,6 @@ public class Grave : Interactable
     private void SetGraveStoneColor(Color _color)
     {
         _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _color);
-        Debug.Log("Set headstone color : - " + _color);
     }
 }
 

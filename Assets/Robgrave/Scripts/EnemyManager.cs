@@ -81,6 +81,8 @@ public class EnemyManager : MonoBehaviour
 
         enemies.Add(_newEnemy);
         
+        Debug.Log("Enemy Added: " + _newEnemy.name);
+        
         EnemyUpdate?.Invoke();
     }
 
@@ -95,7 +97,6 @@ public class EnemyManager : MonoBehaviour
                 Destroy(nme.gameObject);
             }
         }
-
         EnemyUpdate?.Invoke();
     }
 

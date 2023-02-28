@@ -119,7 +119,6 @@ public class UIPlayerInfo : MonoBehaviour
 
     public void UpdateLives()
     {
-        Debug.Log("UPDATING LIVES: " + PlayerController.Instance.currentLives);
         int nbChildren = graphicLivesTarget.childCount;
 
         for (int i = nbChildren - 1; i >= 0; i--)

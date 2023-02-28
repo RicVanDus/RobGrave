@@ -49,12 +49,10 @@ public class GameManager : MonoBehaviour
     
     private void OnEnable()
     {
-        GameOverseer.Instance.StartGame += StartingGame;
     }
 
     private void OnDisable()
     {
-        GameOverseer.Instance.StartGame -= StartingGame;
     }
 
     // Start is called before the first frame update
@@ -64,7 +62,10 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
 
+    private void Start()
+    {
         thisLevel = levels[GameOverseer.Instance.currentLevel];
 
         _gameTimeHours = thisLevel.startHours;
@@ -281,6 +282,7 @@ public class GameManager : MonoBehaviour
     
     public void StartingGame()
     {
+        Debug.Log("**** STARTING GAME ******");
         AssignGraves();
         SpawnSteppingStones();
         EnemyManager.Instance.SpawnAllEnemies();

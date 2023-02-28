@@ -34,9 +34,9 @@ public class GameOverseer : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseMenu;
 
-    [HideInInspector] public int score = 0;
-    [HideInInspector] public int currentLives = 0;
-    [HideInInspector] public int maxLives = 0;
+    public int score = 0;
+    public int currentLives = 0;
+    public int maxLives = 0;
     public int currentLevel = 0;
     
     
@@ -155,19 +155,41 @@ public class GameOverseer : MonoBehaviour
 
         } while (_isLoaded == false);
     }
+
+    private IEnumerator QueueScene(String sceneName, bool isLevel, bool setActive)
+    {
+        bool _isUnloaded = false;
+        loadingScreen.SetActive(true);
+
+        do
+        {
+            Debug.Log("UNLOADING SCENES CHECK");
+            int sceneCount = SceneManager.sceneCount;
+
+            if (sceneCount == 1)
+            {
+                _isUnloaded = true;
+                LoadScene(sceneName, isLevel, setActive);
+                loadingScreen.SetActive(false);
+            }
+
+            yield return null;
+
+        } while (_isUnloaded == false);
+    }
     
     private void ShowMainMenu()
     {
         DisableAllOverlays();
         UnloadAllScenes();
         
-        LoadScene("MainMenu", true, false);
+    StartCoroutine(QueueScene("MainMenu", true, false));
     }
     
     private void LoadGame()
     {
         UnloadAllScenes();
-        LoadScene("Graveyard_01", true, true);
+        StartCoroutine(QueueScene("Graveyard_01", true, true));
     }
     
     //Unloads all scenes except GAME scene

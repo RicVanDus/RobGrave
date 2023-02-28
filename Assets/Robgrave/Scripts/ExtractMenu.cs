@@ -12,6 +12,7 @@ public class ExtractMenu : MonoBehaviour
     private void OnEnable()
     {
         GameOverseer.Instance.Extract += UpdateText;
+        UpdateText();
     }
 
 
@@ -37,6 +38,7 @@ public class ExtractMenu : MonoBehaviour
 
     public void UpdateText()
     {
+        
         _extractText.text = "You have escaped with $" + PlayerController.Instance.score + "!";
     }
 }
