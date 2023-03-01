@@ -7,12 +7,12 @@ using Random = UnityEngine.Random;
 public class Crypt : MonoBehaviour
 {
     public Crypt[] linkedCrypts;
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private Transform _moveTo;
+    [SerializeField] public Transform _spawnPoint;
+    [SerializeField] public Transform _moveTo;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !PlayerController.Instance.movementDisabled)
         {
             TeleportPlayer();
         }
@@ -25,7 +25,7 @@ public class Crypt : MonoBehaviour
             int randomIndex = Random.Range(0, linkedCrypts.Length);
 
             var randomCrypt = linkedCrypts[randomIndex];
-            PlayerController.Instance.TeleportTo(randomCrypt._spawnPoint);
+            PlayerController.Instance.CryptTeleport(randomCrypt);
         }
         else
         {

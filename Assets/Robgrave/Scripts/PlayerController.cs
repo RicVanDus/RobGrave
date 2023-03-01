@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvulnerable = false;
     private bool _canInteract;
     private bool _isCaught = false;
+    private bool _isTeleporting = false;
 
     private float blinkingTimer;
 
@@ -223,7 +224,7 @@ public class PlayerController : MonoBehaviour
             PlayerRotation(hMovement, vMovement);
         }
 
-        RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
+        if (!_isTeleporting) RGAnimator.SetFloat("Speed", rigidB.velocity.magnitude);
     }
 
     private void PlayerRotation(float h, float v)
@@ -726,5 +727,21 @@ public class PlayerController : MonoBehaviour
         transform.position = newPos.position;
         transform.localRotation = newPos.rotation;
         
+    }
+
+    public void CryptTeleport(Crypt toCrypt)
+    {
+        movementDisabled = true;
+        _isTeleporting = true;
+        transform.position = toCrypt._moveTo.position;
+        transform.rotation = toCrypt._moveTo.rotation;
+        RGAnimator.SetFloat("Speed", 3.5f);
+
+        transform.DOMove(toCrypt._spawnPoint.position, 1.3f).OnComplete(() =>
+        {
+            movementDisabled = false;
+            _isTeleporting = false;
+        });
+
     }
 }

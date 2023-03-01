@@ -180,7 +180,4 @@ public class UIPlayerInfo : MonoBehaviour
         UpdateGhosts();
         UpdateScore();
     }
-    
-    
-    
 }
