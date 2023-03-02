@@ -287,6 +287,11 @@ public class PlayerController : MonoBehaviour
         {
             _canInteract = true;
         }
+        
+        if (other.tag == "Lamppost")
+        {
+            _canInteract = true;
+        }        
     }
 
     private void OnTriggerExit(Collider other)
@@ -297,6 +302,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (other.tag == "Exit")
+        {
+            _canInteract = false;
+        }
+
+        if (other.tag == "Lamppost")
         {
             _canInteract = false;
         }

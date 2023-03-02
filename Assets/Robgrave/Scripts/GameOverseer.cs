@@ -38,7 +38,9 @@ public class GameOverseer : MonoBehaviour
     public int currentLives = 0;
     public int maxLives = 0;
     public int currentLevel = 0;
-    
+
+    public int upgradeTools;
+    public int upgradeRG;
     
     private Scene _gameScene;
     [Header("UI")]

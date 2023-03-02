@@ -7,74 +7,67 @@ Rob grave todo list
 
 - first couple of minutes are ' free' , when the haunting starts (12 o clock) the skeletons rise from the graves. 
 
-- upgrades for shovel, RG and flashlight:
+- upgrades for tools or RG
 Green +
 Blue ++
 Purple +++
 Up to a max of +25. 
 Every 5 gives a new upgrade.
 
-Shovel:
-	+5: swing ability
-	+10: +dig speed
-	+15: +swing dmg
-	+20: +dig speed
-	+25: spin to win ability
 
-Flashlight:
-	+5: +range
-	+10: slows ghost
-	+15: +range
-	+20: +range
-	+25: damages zombies
 
-Rob Graves:
-	+5: +speed
-	+10: +luck
-	+15: +speed
-	+20: +luck
-	+25: gets double powerups
+Rob:
++5		enables valuable multiplier
++10		speed boost
++15		
++20
++25
+
+Tools:
++5		enables shovel attack
++10		flash light range
++15		digging speed
++20
++25
+
+
 
 
 - Heart containers can be empty and filled.
 	-> Cherries (+1 life) [green]
 	-> Strawberries (full life) [blue]
 	-> Orange (+1 max life) [purple]
-
-- Possible upgrades:
-	- better shovel (+damage and digspeed) [blue/purple]
-	- suit (+movement speed) [blue/purple]
-	- flashlight (+range and maybe a stun?) [blue/purple]
 	
 - Possible powerups:
-	- energy drink (+movement speed/digging speed) [green]
-	- ghosttrap (+immune to 1 ghost) [purple]
+	- energy drink (+movement speed/digging speed for 30 seconds) [green]
+	- lightning rod (lightning strike every 10 seconds for 60 seconds)
+	- ghosttrap (+immune to 1 ghost, traps it for 60seconds, the respawns) [purple]
 
 
 
 **PROGRAMMING**
 
 - wishing well functionality
-- safe zone (start) / able to finish the level there / make ghosts spawn/move when in safe zone / safe zone is only available when (re)spawning and when having enough valuables
-- Menu system / gameloop
+
+
 - Menu with options
 - UI: adding announcements
 - UI: adding interaction key icons
 
 - UI: redo UI with 3D assets? 
-- UI: Ghosts progression to next stage
+
 
 
 **3D**
-- create assets: more types of walls/boundaries (hedges, low fence, chainlinked poles?)
+
 - create asset: high fence surrounding graveyard
-- create asset: lantern/street light/lamppost
+
 - create asset: crypt
 - create asset: well
 - create asset: (dead) trees
 
-- create asset: present (yellow box with green/blue/purple bow tie) // or chest?
-- create asset: ghost! (arms?)
+- create asset: present (yellow box with green/blue/purple bow tie) // or chest? Mystery box!
+
 - create asset: crow
 - create asset: mystery man
 - create asset: mobster
@@ -97,6 +90,8 @@ Rob Graves:
 
 
 
-
+LAMPPOST:
+Wind up time adds a bar, like the grave system. After last bar the light slowly begins to flicker.
+During this RG hits the light (light responds: every 'hit' it makes it shake a bit.
 
 
