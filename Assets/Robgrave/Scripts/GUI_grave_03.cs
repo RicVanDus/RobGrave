@@ -177,7 +177,7 @@ public class GUI_grave_03 : MonoBehaviour
 
         if (_grave != null)
         {       
-            _newPos = new Vector3(0f, 0.7f, -0.5f);
+            _newPos = new Vector3(0f, 0.1f, -0.5f);
             
             if (Mathf.Round(_grave.transform.eulerAngles.y) == 0)
             {                

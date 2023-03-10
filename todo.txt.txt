@@ -95,3 +95,8 @@ Wind up time adds a bar, like the grave system. After last bar the light slowly 
 During this RG hits the light (light responds: every 'hit' it makes it shake a bit.
 
 
+
+
+
+
+

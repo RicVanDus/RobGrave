@@ -18,11 +18,13 @@ public class Lamppost : MonoBehaviour
     private Material _lamp2Mat;
 
     private float _lightTimer;
-    private float _maxLightTime = 20f;
-    private bool _lightIsOn = false;
+    private float _maxLightTime = 2f;
+    private bool _lightIsOn = true;
+    private int _lightStage;
 
     private bool _playerCanInteract = false;
     private bool _playerIsInteracting = false;
+    private bool _lightIsflashing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,28 +35,49 @@ public class Lamppost : MonoBehaviour
 
     private void Update()
     {
-        
-        if (_playerCanInteract && PlayerController.Instance._interacting)
+        Debug.Log("LANTAARN - Stage[" + _lightStage + "] - Timer: " + _lightTimer);
+
+        if (_lightStage > 0 && !_lightIsOn && !_lightIsflashing)
         {
-            _lightTimer = Mathf.Clamp(_lightTimer + Time.deltaTime, 0f, _maxLightTime);
-            StopCoroutine(FlashingLight());
-            if (!_lightIsOn) ToggleLight(true);
-            _playerIsInteracting = true;
+            ToggleLight(true);
+        }
+        else if (_lightStage == 0 && _lightIsOn && !_lightIsflashing)
+        {
+            ToggleLight(false);
+        } 
+        
+        if (_playerCanInteract)
+        {
+            if (PlayerController.Instance._interacting)
+            {
+                TimerChange(true);
+            }
+            else
+            {
+                TimerChange(false);
+            }
         }
         else
         {
-            _lightTimer = Mathf.Clamp(_lightTimer - Time.deltaTime, 0f, _maxLightTime);
-            _playerIsInteracting = false;
+            {
+                TimerChange(false);
+            }
         }
 
-        if (_lightTimer < (_maxLightTime * 0.2f) && _lightTimer > 0f && !_playerIsInteracting)
+        if (_lightStage == 1 && !_playerIsInteracting)
         {
-            StartCoroutine(FlashingLight());
+            if (!_lightIsflashing)
+            {
+                StartCoroutine(FlashingLight());
+            }
         }
-        else if (_lightTimer == 0f)
+        else
         {
-            ToggleLight(false);
-            StopCoroutine(FlashingLight());
+            if (_lightIsflashing)
+            {
+                StopCoroutine(FlashingLight());
+                _lightIsflashing = false;
+            }
         }
     }
 
@@ -68,13 +91,72 @@ public class Lamppost : MonoBehaviour
 
     private IEnumerator FlashingLight()
     {
+        _lightIsflashing = true;
         do
         {
             ToggleLight(!_lightIsOn);
 
             yield return new WaitForSeconds(0.5f);
-        } while (_lightTimer != 0f);
+        } while (_lightIsflashing);
     }
+
+    private void TimerChange(bool add)
+    {
+        if (add)
+        {
+            _playerIsInteracting = true;
+            
+            if (_lightStage < 3)
+            {
+                _lightTimer += Time.deltaTime;
+                if (_lightTimer >= _maxLightTime)
+                {
+                    _lightStage++;
+                    if (_lightStage != 3)
+                    {
+                        _lightTimer = 0f;
+                    }
+                    else
+                    {
+                        _lightTimer = _maxLightTime;
+                    }
+                }
+            }
+            else
+            {
+                _lightTimer += Time.deltaTime;
+                if (_lightTimer >= _maxLightTime)
+                {
+                    _lightTimer = _maxLightTime;
+                }
+            }
+        }
+        else
+        {
+            _playerIsInteracting = false;
+            if (_lightStage > 0)
+            {
+                _lightTimer -= Time.deltaTime/4;
+                if (_lightTimer <= 0f)
+                {
+                    _lightStage--;
+                    if (_lightStage > 0)
+                    {
+                        _lightTimer = _maxLightTime;
+                    }
+                    else
+                    {
+                        _lightTimer = 0f;
+                    }
+                }
+            }
+            else
+            {
+                _lightTimer = 0f;
+            }
+        }
+    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
