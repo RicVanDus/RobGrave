@@ -21,6 +21,7 @@ public class Lamppost : MonoBehaviour
     private float _maxLightTime = 2f;
     private bool _lightIsOn = true;
     private int _lightStage;
+    private int _maxLightStages = 3;
 
     private bool _playerCanInteract = false;
     private bool _playerIsInteracting = false;
@@ -102,6 +103,9 @@ public class Lamppost : MonoBehaviour
 
     private void TimerChange(bool add)
     {
+        
+        
+
         if (add)
         {
             _playerIsInteracting = true;
@@ -109,25 +113,19 @@ public class Lamppost : MonoBehaviour
             if (_lightStage < 3)
             {
                 _lightTimer += Time.deltaTime;
-                if (_lightTimer >= _maxLightTime)
+
+                if (_lightStage < (int)(_lightTimer / _maxLightTime))
                 {
-                    _lightStage++;
-                    if (_lightStage != 3)
-                    {
-                        _lightTimer = 0f;
-                    }
-                    else
-                    {
-                        _lightTimer = _maxLightTime;
-                    }
+                    _lightStage = (int)(_lightTimer / _maxLightTime);
                 }
+
             }
             else
             {
                 _lightTimer += Time.deltaTime;
-                if (_lightTimer >= _maxLightTime)
+                if (_lightTimer >= _maxLightTime * _maxLightStages)
                 {
-                    _lightTimer = _maxLightTime;
+                    _lightTimer = _maxLightTime * _maxLightStages;
                 }
             }
         }
@@ -137,17 +135,17 @@ public class Lamppost : MonoBehaviour
             if (_lightStage > 0)
             {
                 _lightTimer -= Time.deltaTime/4;
-                if (_lightTimer <= 0f)
+                if (_lightTimer > 0f)
                 {
-                    _lightStage--;
-                    if (_lightStage > 0)
+                    if (_lightStage > (int)Mathf.Ceil(_lightTimer / _maxLightTime))
                     {
-                        _lightTimer = _maxLightTime;
+                        _lightStage = (int)Mathf.Ceil(_lightTimer / _maxLightTime);
                     }
-                    else
-                    {
-                        _lightTimer = 0f;
-                    }
+                }
+                else
+                {
+                    _lightTimer = 0f;
+                    _lightStage = 0;
                 }
             }
             else
