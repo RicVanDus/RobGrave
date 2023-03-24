@@ -13,9 +13,11 @@ public class Lamppost : MonoBehaviour
     [SerializeField] private GameObject _cone;
     [SerializeField] private Light _spotLight;
     [SerializeField] SphereCollider _collider;
+    [SerializeField] private GameObject _UI;
     
     private Material _lamp1Mat;
     private Material _lamp2Mat;
+    private GUI_lamppost _GUI_lamppost;
 
     private float _lightTimer;
     private float _maxLightTime = 2f;
@@ -32,12 +34,11 @@ public class Lamppost : MonoBehaviour
     {
         _lamp1Mat = _lamp1.GetComponent<Renderer>().material;
         _lamp2Mat = _lamp2.GetComponent<Renderer>().material;
+        _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
     }
 
     private void Update()
     {
-        Debug.Log("LANTAARN - Stage[" + _lightStage + "] - Timer: " + _lightTimer);
-
         if (_lightStage > 0 && !_lightIsOn && !_lightIsflashing)
         {
             ToggleLight(true);
@@ -57,12 +58,16 @@ public class Lamppost : MonoBehaviour
             {
                 TimerChange(false);
             }
+
+            _GUI_lamppost.ShowGraphic = true;
         }
         else
         {
             {
                 TimerChange(false);
             }
+            
+            _GUI_lamppost.ShowGraphic = false;
         }
 
         if (_lightStage == 1 && !_playerIsInteracting)
@@ -80,6 +85,10 @@ public class Lamppost : MonoBehaviour
                 _lightIsflashing = false;
             }
         }
+
+        _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
+        _GUI_lamppost.currentLightStages = _lightStage;
+        _GUI_lamppost.FillAmount = (_lightTimer - (_lightStage * _maxLightTime)) / _maxLightTime;
     }
 
     private void ToggleLight(bool toggle)
@@ -103,9 +112,6 @@ public class Lamppost : MonoBehaviour
 
     private void TimerChange(bool add)
     {
-        
-        
-
         if (add)
         {
             _playerIsInteracting = true;
