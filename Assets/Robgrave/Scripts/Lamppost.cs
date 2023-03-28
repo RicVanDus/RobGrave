@@ -18,6 +18,7 @@ public class Lamppost : MonoBehaviour
     private Material _lamp1Mat;
     private Material _lamp2Mat;
     private GUI_lamppost _GUI_lamppost;
+    private bool _guiVisible = false;
 
     private float _lightTimer;
     private float _maxLightTime = 2f;
@@ -59,15 +60,18 @@ public class Lamppost : MonoBehaviour
                 TimerChange(false);
             }
 
-            _GUI_lamppost.ShowGraphic = true;
+            if (!_guiVisible)
+            {
+                _GUI_lamppost.ShowGraphic = true;
+                _guiVisible = true;                
+            }
+
         }
         else
         {
             {
                 TimerChange(false);
             }
-            
-            _GUI_lamppost.ShowGraphic = false;
         }
 
         if (_lightStage == 1 && !_playerIsInteracting)
@@ -86,9 +90,21 @@ public class Lamppost : MonoBehaviour
             }
         }
 
-        _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
-        _GUI_lamppost.currentLightStages = _lightStage;
-        _GUI_lamppost.FillAmount = (_lightTimer - (_lightStage * _maxLightTime)) / _maxLightTime;
+        if (!_playerCanInteract && _lightTimer == 0f)
+        {
+            if (_guiVisible)
+            {
+                _GUI_lamppost.ShowGraphic = false;
+                _guiVisible = false;
+            }
+        }
+        else
+        {
+            _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
+            _GUI_lamppost.currentLightStages = _lightStage;
+            _GUI_lamppost.FillAmount = (_lightTimer - (_lightStage * _maxLightTime)) / _maxLightTime;            
+        }
+
     }
 
     private void ToggleLight(bool toggle)
