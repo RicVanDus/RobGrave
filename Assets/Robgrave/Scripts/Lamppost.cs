@@ -74,7 +74,7 @@ public class Lamppost : MonoBehaviour
             }
         }
 
-        if (_lightStage == 1 && !_playerIsInteracting)
+        if (_lightStage == 1 && _lightTimer < (_maxLightTime/2) && !_playerIsInteracting)
         {
             if (!_lightIsflashing)
             {
@@ -102,7 +102,7 @@ public class Lamppost : MonoBehaviour
         {
             _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
             _GUI_lamppost.currentLightStages = _lightStage;
-            _GUI_lamppost.FillAmount = (_lightTimer - (_lightStage * _maxLightTime)) / _maxLightTime;            
+            _GUI_lamppost.FillAmount = (_lightTimer % _maxLightTime) / _maxLightTime;
         }
 
     }
