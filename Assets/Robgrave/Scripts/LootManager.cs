@@ -19,21 +19,18 @@ public class LootManager : MonoBehaviour
     public float lootSpawnInnerRadius = 0f;
 
     public bool Debug_Lootmanager = false;
-
-
+    
     public float debugTime = 5f;
     private float debugTimer = 0f;
-
-    //public LootPosition[] lootPositions = new LootPosition[_gridAmount];
+    
     public List<LootPosition> lootPositions = new List<LootPosition>();
     public List<LootPosition> selectedPositions = new List<LootPosition>();
 
     private List<GameObject> debugObjects = new List<GameObject>();
-
-    [SerializeField]
+    
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
-
-
+    [SerializeField] private GameObject _giftBox;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -371,5 +368,11 @@ public class LootManager : MonoBehaviour
         }
 
         debugObjects.Clear();
+    }
+
+    public void SpawnGiftBox(int type, bool randomPos)
+    {
+        // spawns gift box of type 0, 1 or 2.
+        // on available lootspot around grave or random lootspot (wishing well)
     }
 }
