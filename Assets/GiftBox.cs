@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class GiftBox : MonoBehaviour
 {
+    public GiftBoxTemplate giftBoxData;
+
     private Material _material;
-
-    public int GiftType;
-
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        _material = GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -25,7 +26,15 @@ public class GiftBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(this);
+            if (giftBoxData.duration > 0f)
+            {
+                
+            }
+            else
+            {
+                giftBoxData.Apply();
+                Destroy(gameObject);
+            }
         }
     }
 }
