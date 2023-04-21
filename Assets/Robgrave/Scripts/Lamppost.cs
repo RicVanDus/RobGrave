@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,6 +19,8 @@ public class Lamppost : MonoBehaviour
     private Material _lamp1Mat;
     private Material _lamp2Mat;
     private GUI_lamppost _GUI_lamppost;
+    private bool _guiVisible = false;
+    private Vector3 _guiDefaultScale;
 
     private float _lightTimer;
     private float _maxLightTime = 2f;
@@ -28,6 +31,7 @@ public class Lamppost : MonoBehaviour
     private bool _playerCanInteract = false;
     private bool _playerIsInteracting = false;
     private bool _lightIsflashing = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +39,7 @@ public class Lamppost : MonoBehaviour
         _lamp1Mat = _lamp1.GetComponent<Renderer>().material;
         _lamp2Mat = _lamp2.GetComponent<Renderer>().material;
         _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
+        _guiDefaultScale = _UI.transform.localScale;
     }
 
     private void Update()
@@ -59,18 +64,20 @@ public class Lamppost : MonoBehaviour
                 TimerChange(false);
             }
 
-            _GUI_lamppost.ShowGraphic = true;
+            if (!_guiVisible)
+            {
+                SetGUIVisible(true);           
+            }
+
         }
         else
         {
             {
                 TimerChange(false);
             }
-            
-            _GUI_lamppost.ShowGraphic = false;
         }
 
-        if (_lightStage == 1 && !_playerIsInteracting)
+        if (_lightStage == 1 && _lightTimer < (_maxLightTime/2) && !_playerIsInteracting)
         {
             if (!_lightIsflashing)
             {
@@ -86,9 +93,20 @@ public class Lamppost : MonoBehaviour
             }
         }
 
-        _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
-        _GUI_lamppost.currentLightStages = _lightStage;
-        _GUI_lamppost.FillAmount = (_lightTimer - (_lightStage * _maxLightTime)) / _maxLightTime;
+        if (!_playerCanInteract && _lightTimer == 0f)
+        {
+            if (_guiVisible)
+            {
+                SetGUIVisible(false);
+            }
+        }
+        else
+        {
+            _GUI_lamppost.PlayerIsInteracting = _playerIsInteracting;
+            _GUI_lamppost.currentLightStages = _lightStage;
+            _GUI_lamppost.FillAmount = (_lightTimer % _maxLightTime) / _maxLightTime;
+        }
+
     }
 
     private void ToggleLight(bool toggle)
@@ -176,6 +194,27 @@ public class Lamppost : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _playerCanInteract = false;
+        }
+    }
+
+    private void SetGUIVisible(bool visible)
+    {
+        if (visible)
+        {
+            _GUI_lamppost.ShowGraphic = true;
+            _UI.transform.localScale = Vector3.zero;
+
+            _UI.transform.DOScale(_guiDefaultScale, 0.3f).SetEase(Ease.InExpo);
+            _guiVisible = true;
+        }
+        else
+        {
+            _UI.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InExpo).OnComplete(()=>
+            {
+                _GUI_lamppost.ShowGraphic = false;
+            });
+            
+            _guiVisible = false;
         }
     }
 }
