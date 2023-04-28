@@ -630,7 +630,7 @@ public class PlayerController : MonoBehaviour
             transform.DORotate(new Vector3(0f, Random.Range(0f, 720f), 0f), 3f, RotateMode.FastBeyond360).SetEase(Ease.OutBounce);
             transform.DOMove(_newPos, 3f, false).OnComplete(() =>
             {
-                LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops);
+                LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops, 0);
                 AddScore(-_scoreToDrop);
                 transform.DOMoveY(6.5f, 1f, false).SetEase(Ease.OutElastic);
 

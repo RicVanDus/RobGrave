@@ -7,7 +7,6 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager Instance;
 
-
     public GameObject debugObject;
     public GameObject debugObject2;
 
@@ -30,6 +29,12 @@ public class LootManager : MonoBehaviour
     
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
     [SerializeField] private GameObject _giftBox;
+
+    [Header("Giftbox prefabs")] 
+    [SerializeField] private GameObject _greenGiftbox;
+    [SerializeField] private GameObject _blueGiftbox;
+    [SerializeField] private GameObject _purpleGiftbox;
+    [SerializeField] private GameObject _cryptKey;
     
     private void Awake()
     {
@@ -69,14 +74,13 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    public void SpawnLoot(int value, int spawns)
+    public void SpawnLoot(int value, int spawns, int giftType)
     {
         ValuableTemplate randomValuable = ScriptableObject.CreateInstance<ValuableTemplate>();
 
         float _newInnerRadius = lootSpawnInnerRadius;
         float _newOuterRadius = lootSpawnOuterRadius;
         bool _createdSpawnPoints = false;
-
 
         CreateSpawnPoints(spawns, _newInnerRadius, _newOuterRadius);
 
@@ -93,7 +97,16 @@ public class LootManager : MonoBehaviour
             }
         } while (_createdSpawnPoints == false);
 
-
+        // Assign a spawn to giftbox, 1 = cryptkey, 2 = green, 3 = blue, 4 = purple
+        if (giftType > 0)
+        {
+            int _rndIndex = Random.Range(1, selectedPositions.Count);
+            
+            SpawnGiftBox(giftType, false, selectedPositions[_rndIndex].Id);
+            
+            selectedPositions.RemoveAt(_rndIndex);
+        }
+        
         // **** DEBUG ****
         if (Debug_Lootmanager)
         {
@@ -197,9 +210,7 @@ public class LootManager : MonoBehaviour
         
         return valuables[randomIndex];
     }
-
-
-
+    
     private void CreateLootGrid()
     {
         float _zBase = -33f;
@@ -307,7 +318,6 @@ public class LootManager : MonoBehaviour
         return false;
     }
 
-
     public void ClearLootSpot(int id)
     {
         LootPosition tmpPos = new LootPosition();
@@ -316,9 +326,7 @@ public class LootManager : MonoBehaviour
 
         lootPositions[id] = tmpPos;
     }
-
-
-
+    
     //DEbug function to check if positions are cleared by picking up loot
     public int CheckValidLootPositions()
     {
@@ -359,7 +367,8 @@ public class LootManager : MonoBehaviour
             debugObjects.Add(_debugObject);
         }
     }
-
+    
+    
     public void ClearDebugObjects()
     {
         for (int i = 0; i < debugObjects.Count; i++)
@@ -370,9 +379,49 @@ public class LootManager : MonoBehaviour
         debugObjects.Clear();
     }
 
-    public void SpawnGiftBox(int type, bool randomPos)
+    public void SpawnGiftBox(int type, bool randomPos, int id)
     {
-        // spawns gift box of type 0, 1 or 2.
-        // on available lootspot around grave or random lootspot (wishing well)
+        // spawns gift box of type 1, 2, 3 or 4
+
+        if (randomPos)
+        {
+            bool _gotPos = false;
+            do
+            {
+                int _rndIndex = Random.Range(1, lootPositions.Count);
+
+                if (lootPositions[_rndIndex].Empty)
+                {
+                    id = _rndIndex;
+                    _gotPos = true;
+                }
+
+            } while (!_gotPos);
+        }
+
+        LootPosition _LP = lootPositions[id];
+        _LP.Empty = false;
+        lootPositions[id] = _LP;
+        
+        Vector3 _spawnPos = lootPositions[id].GridPosition;
+        
+        Quaternion _spawnRot = Quaternion.identity;
+        
+        GameObject _prefab = _greenGiftbox;
+
+        switch (type)
+        {
+            case 1 :
+                _prefab = _cryptKey;
+                break;
+            case 3 :
+                _prefab = _blueGiftbox;
+                break;
+            case 4 :
+                _prefab = _purpleGiftbox;
+                break;
+        }
+
+        Instantiate(_prefab, _spawnPos, _spawnRot);
     }
 }

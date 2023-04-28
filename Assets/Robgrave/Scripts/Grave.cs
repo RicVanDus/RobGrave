@@ -14,6 +14,7 @@ public class Grave : Interactable
     public float defileTime = 5.0f;
     public float defileProgress = 0f;
     public int valuables;
+    public bool hasGiftbox;
 
     [SerializeField] private Text _depthNumber;
 
@@ -162,13 +163,23 @@ public class Grave : Interactable
     private void SpawnLoot()
     {
         int spawnNr = Random.Range(17, 26);
+        int giftBoxType = 0;
+
+        if (GameManager.Instance.cryptKeyGrave == this)
+        {
+            giftBoxType = 1;
+        }
+        else if (hasGiftbox)
+        {
+            giftBoxType = CalculateGiftboxType();
+        }
 
         if (defiledDepth > 0)
         {
             valuables = (int)(valuables - (valuables * (0.2f * defiledDepth)));
             spawnNr = spawnNr - defiledDepth;
         }
-        LootManager.Instance.SpawnLoot(valuables, spawnNr);
+        LootManager.Instance.SpawnLoot(valuables, spawnNr, giftBoxType);
     }
 
     private void DefiledGrave()
@@ -264,6 +275,37 @@ public class Grave : Interactable
     private void SetGraveStoneColor(Color _color)
     {
         _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _color);
+    }
+
+    private int CalculateGiftboxType()
+    {
+        float _diceRoll = Random.Range(0f, 99f);
+        float _maxPurple = 97f;
+        float _maxBlue = 90f;
+        int _giftType = 2;
+
+        if (graveType == 2)
+        {
+            _maxPurple = 50f;
+            _maxBlue = 10f;
+        }
+        else if (graveType == 1)
+        {
+            _maxPurple = 90f;
+            _maxBlue = 50f;            
+        }
+
+        if (_diceRoll > _maxBlue)
+        {
+            _giftType = 3;
+        }
+
+        if (_diceRoll > _maxPurple)
+        {
+            _giftType = 4;
+        }
+
+        return _giftType;
     }
 }
 

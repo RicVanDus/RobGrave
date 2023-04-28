@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int currentLevel;
     public LevelProperties[] levels;
     public LevelProperties thisLevel;
+    public Grave cryptKeyGrave;
     
     [Header("Gravestones")]
     public Color graveType0Color;
@@ -248,8 +249,10 @@ public class GameManager : MonoBehaviour
                 _UI._grave = _grave;
                 _UI.SetUIPosition();
             }
-            
         }
+        
+        AssignGiftboxes();
+        AssignCryptKey();
     }
 
     private void SpawnSteppingStones()
@@ -257,14 +260,13 @@ public class GameManager : MonoBehaviour
         var lootGrid = LootManager.Instance.lootPositions;
 
         float _y = -0.72f;
-        
 
         if (lootGrid.Count > 0)
         {
             for (int i = 0; i < lootGrid.Count; i++)
             {
                 Vector3 _stonePos = new Vector3(lootGrid[i].GridPosition.x, _y, lootGrid[i].GridPosition.z);
-                
+
                 //random rotations
                 int _rnd = Random.Range(0, 3);
                 float _xRot = 90 * _rnd;
@@ -310,6 +312,48 @@ public class GameManager : MonoBehaviour
         if (_gameTimeHours == 0 && _witchingHour == false) _witchingHour = true;
 
         gameTime = _gameTimeHours + ":" + _gameTimeMinutes + "'" + _gameTimeSeconds;
+    }
+
+    private void AssignGiftboxes()
+    {
+        int giftboxAmount = (int)(graves.Length * thisLevel.percentageGiftboxes);
+
+        Debug.Log("GIFTBOXAMOUNT: " + giftboxAmount);
+
+        for (int i = 0; i < giftboxAmount; i++)
+        {
+            int rndIndex = Random.Range(0, graves.Length);
+
+            Grave thisGrave = graves[rndIndex].GetComponent<Grave>();
+
+            if (!thisGrave.hasGiftbox)
+            {
+                thisGrave.hasGiftbox = true;
+            }
+            else
+            {
+                i--;
+            }
+        }
+    }
+
+    private void AssignCryptKey()
+    {
+        bool _assigned = false;
+        
+        do
+        {
+            int rndIndex = Random.Range(0, graves.Length);
+
+            Grave thisGrave = graves[rndIndex].GetComponent<Grave>();
+
+            if (!thisGrave.hasGiftbox)
+            {
+                cryptKeyGrave = thisGrave;
+                _assigned = true;
+            }
+
+        } while (!_assigned);
     }
 
     public void PlayerExtract()
