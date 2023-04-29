@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GUI_grave_01 : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class GUI_grave_01 : MonoBehaviour
     private Color _noColor = new Color(0.75f, 0.75f, 0.75f);
     private Color _redColor = new Color(1f, 0f, 0f);
 
+    private bool _isVisible = true;
+
+    private Vector3 _localPos;
+    private Quaternion _localRot;
+    private Vector3 _newPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +36,11 @@ public class GUI_grave_01 : MonoBehaviour
         _circle1 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle1").GetComponent<Image>();
         _circle2 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle2").GetComponent<Image>();
         _circle3 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle3").GetComponent<Image>();
+
+        _localPos = transform.localPosition;
+        _localRot = transform.localRotation;
+        _newPos = _localPos;
+        _newPos.y -= 1f;
     }
 
     // Update is called once per frame
@@ -42,13 +54,25 @@ public class GUI_grave_01 : MonoBehaviour
             if (PlayerCanInteract || GraveDefiling || _grave.diggingProgress > 0f)
             {
                 UpdateUI();
-                CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
-                _canvasGroup.alpha = 1;
+
+                if (!_isVisible)
+                {
+                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
+                    _canvasGroup.alpha = 1;
+                    
+                    _isVisible = true;
+                }
+
             }
             else
             {
-                CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
-                _canvasGroup.alpha = 0;
+                if (_isVisible)
+                {
+                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
+                    _canvasGroup.alpha = 0; 
+                    _isVisible = false;
+                }
+
             }
         }        
     }

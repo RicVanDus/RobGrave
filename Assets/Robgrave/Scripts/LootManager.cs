@@ -404,6 +404,7 @@ public class LootManager : MonoBehaviour
         lootPositions[id] = _LP;
         
         Vector3 _spawnPos = lootPositions[id].GridPosition;
+        _spawnPos.y = Random.Range(1f, 4f);
         
         Quaternion _spawnRot = Quaternion.identity;
         

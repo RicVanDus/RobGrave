@@ -3,6 +3,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// TODO: make UI variable and handle visibility from this script (including Tween anim)
+
 public class Grave : Interactable
 {
     public int graveType = 0;

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
