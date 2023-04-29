@@ -479,7 +479,7 @@ public class Enemy : MonoBehaviour
     public void GreedyGhostGotCaught()
     {
         ResetGhost();
-        LootManager.Instance.SpawnLoot(Random.Range(1500, 2000), Random.Range(10,20));
+        LootManager.Instance.SpawnLoot(Random.Range(1500, 2000), Random.Range(10,20), 0);
     }
 
     private void ResetGhost()

@@ -422,6 +422,9 @@ public class LootManager : MonoBehaviour
                 break;
         }
 
+        GiftBox _giftbox = _prefab.GetComponent<GiftBox>();
+        _giftbox.lootId = lootPositions[id].Id;
+
         Instantiate(_prefab, _spawnPos, _spawnRot);
     }
 }

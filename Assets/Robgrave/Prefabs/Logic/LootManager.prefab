@@ -46,8 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugObject: {fileID: 104897356967195350, guid: 7550a8ef7a50fc843876e70516ad958a,
     type: 3}
+  debugObject2: {fileID: 0}
   lootSpawnOuterRadius: 10
   lootSpawnInnerRadius: 4
+  Debug_Lootmanager: 0
   debugTime: 5
   valuables:
   - {fileID: 11400000, guid: 2085ff297f026514abfb8c841bdb6614, type: 2}
@@ -56,3 +58,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5807a2a94a46e54fb47f55ced6f8a49, type: 2}
   - {fileID: 11400000, guid: ec15ab2a08fd5c64d90ff70d93f9f577, type: 2}
   - {fileID: 11400000, guid: 45d8c51da61cbca4dae43abea1edf2d2, type: 2}
+  _giftBox: {fileID: 0}
+  _greenGiftbox: {fileID: 1885772128636807677, guid: 4f5fa77fe439af74cbb13be545e65d81,
+    type: 3}
+  _blueGiftbox: {fileID: 3091689693595454360, guid: 615df6968bdaaa84d9e554eef55a147c,
+    type: 3}
+  _purpleGiftbox: {fileID: 3086175987215229346, guid: 4be9882f2f148774ca85853a22be800e,
+    type: 3}
+  _cryptKey: {fileID: 6686451955449611979, guid: 285ca527f4a0b554d99aa8176b8a5aaf,
+    type: 3}
