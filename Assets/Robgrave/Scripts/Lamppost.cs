@@ -31,6 +31,11 @@ public class Lamppost : MonoBehaviour
     private bool _playerCanInteract = false;
     private bool _playerIsInteracting = false;
     private bool _lightIsflashing = false;
+
+    private float _baseConeSize;
+    private float _baseSpotlightSize;
+    private float _baseTriggerSize;
+    
     
 
     // Start is called before the first frame update
@@ -40,6 +45,10 @@ public class Lamppost : MonoBehaviour
         _lamp2Mat = _lamp2.GetComponent<Renderer>().material;
         _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
         _guiDefaultScale = _UI.transform.localScale;
+
+        _baseConeSize = _cone.transform.localScale.x / 5;
+        _baseTriggerSize = _collider.radius / 5;
+        _baseSpotlightSize = _spotLight.range / 5;
     }
 
     private void Update()
@@ -115,6 +124,8 @@ public class Lamppost : MonoBehaviour
         _collider.enabled = toggle;
         _spotLight.enabled = toggle;
         _cone.SetActive(toggle);
+        _lamp1.SetActive(toggle);
+        _lamp2.SetActive(toggle);
     }
 
     private IEnumerator FlashingLight()
@@ -141,6 +152,7 @@ public class Lamppost : MonoBehaviour
                 if (_lightStage < (int)(_lightTimer / _maxLightTime))
                 {
                     _lightStage = (int)(_lightTimer / _maxLightTime);
+                    SetLightSize();
                 }
 
             }
@@ -164,6 +176,7 @@ public class Lamppost : MonoBehaviour
                     if (_lightStage > (int)Mathf.Ceil(_lightTimer / _maxLightTime))
                     {
                         _lightStage = (int)Mathf.Ceil(_lightTimer / _maxLightTime);
+                        SetLightSize();
                     }
                 }
                 else
@@ -216,5 +229,17 @@ public class Lamppost : MonoBehaviour
             
             _guiVisible = false;
         }
+    }
+
+    private void SetLightSize()
+    {
+        int size = _lightStage + 2;
+        float triggerSize = _baseTriggerSize * size;
+        float spotlightSize = _baseSpotlightSize * size;
+        float coneSize = _baseConeSize * size;
+
+        _collider.radius = triggerSize;
+        _cone.transform.localScale = new Vector3(coneSize, coneSize, 5f);
+        _spotLight.range = spotlightSize;
     }
 }

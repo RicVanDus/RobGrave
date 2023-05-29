@@ -507,11 +507,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void RotateToGrave(GameObject currentGrave)
+    public void RotateToObject(GameObject obj)
     {
-       
-        rigidB.DORotate(currentGrave.transform.rotation.eulerAngles, 0.3f, RotateMode.Fast);
-        
+        rigidB.DORotate(obj.transform.rotation.eulerAngles, 0.3f, RotateMode.Fast);
     }
 
     public void IsDigging(bool digging)
@@ -535,6 +533,11 @@ public class PlayerController : MonoBehaviour
             _shovelBack.gameObject.SetActive(true);
             _shovelHand.gameObject.SetActive(false);
         }
+    }
+
+    public void IsHitting(bool hitting)
+    {
+        // SET STUFF FOR ANIMATION AND VISUALS
     }
 
     private void Ghosted(int GhostType)

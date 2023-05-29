@@ -229,7 +229,7 @@ public class Grave : Interactable
     {
         _rotatedPlayer = true;
         
-        PlayerController.Instance.RotateToGrave(this.GameObject());
+        PlayerController.Instance.RotateToObject(this.GameObject());
     }
 
     private IEnumerator ShakingHeadStone()
