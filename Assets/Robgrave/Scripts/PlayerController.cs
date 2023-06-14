@@ -580,7 +580,7 @@ public class PlayerController : MonoBehaviour
     {
         int _times = GhostType + 1;
         float _radius = 40f;
-        float _innerRadius = 34f;
+        float _innerRadius = 20f;
         bool _approvedSpot = false;
         int _scoreToDrop = 0;
         int _amountOfDrops = 0;
@@ -611,7 +611,7 @@ public class PlayerController : MonoBehaviour
             
             do
             {
-                _randomRadius = Random.insideUnitSphere * _radius;
+                _randomRadius = Random.insideUnitSphere * _radius + (Vector3.one * _innerRadius);
                 if (Vector3.Distance(transform.position, _randomRadius) > _innerRadius && Vector3.Distance(_randomRadius, GameManager.Instance.PlayerSpawn.position) > _innerRadius) 
                 {
                     Debug.Log("Distance from player pos: "+ Vector3.Distance(transform.position, _randomRadius)+ "-- Spawn point ");
