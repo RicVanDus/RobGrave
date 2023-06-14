@@ -632,7 +632,7 @@ public class PlayerController : MonoBehaviour
             Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
 
             transform.DORotate(new Vector3(0f, Random.Range(0f, 720f), 0f), 3f, RotateMode.FastBeyond360).SetEase(Ease.OutBounce);
-            transform.DOMove(_newPos, 3f, false).OnComplete(() =>
+            transform.DOMove(_newPos, 2f, false).SetEase(Ease.OutSine).OnComplete(() =>
             {
                 LootManager.Instance.SpawnLoot(_scoreToDrop, _amountOfDrops, 0);
                 AddScore(-_scoreToDrop);
@@ -642,7 +642,7 @@ public class PlayerController : MonoBehaviour
             
             _approvedSpot = false;
             
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(4f);
         }
         Invoke("Respawning", 1f);
     }
