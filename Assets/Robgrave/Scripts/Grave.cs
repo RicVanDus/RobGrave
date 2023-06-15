@@ -35,6 +35,9 @@ public class Grave : Interactable
     private bool _gravestoneIsShaking = false;
 
     private Color _currentGraveStoneColor;
+
+    private WaitForSeconds _shortWait = new(0.1f);
+    
     
     protected override void Start()
     {
@@ -271,7 +274,7 @@ public class Grave : Interactable
                 _colorTimer = 0f;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return _shortWait;
         } while (graveIsDifiling);
     }
 

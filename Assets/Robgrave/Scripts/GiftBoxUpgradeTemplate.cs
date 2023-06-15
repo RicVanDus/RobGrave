@@ -20,6 +20,5 @@ public class GiftBoxUpgradeTemplate : GiftBoxTemplate
     public override void Apply()
     {
         // add powerup to playercontroller (int) and destroy this gameobject
-        
     }
 }

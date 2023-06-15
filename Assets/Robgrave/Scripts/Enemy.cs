@@ -63,6 +63,8 @@ public class Enemy : MonoBehaviour
     private float _greedyGhostTimer = 0f;
     private float _greedyGhostTime = 60f;
     private bool _blinkingGhost = false;
+
+    private WaitForSeconds _wait05 = new(0.5f);
     
     private void OnEnable()
     {
@@ -508,7 +510,7 @@ public class Enemy : MonoBehaviour
                 myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return _wait05;
         }
     }
 }

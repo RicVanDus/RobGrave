@@ -10,7 +10,6 @@ public class GiftBox : MonoBehaviour
     private Material _material;
     public int lootId;
     
-    
     // Start is called before the first frame update
     void Start()
     {
