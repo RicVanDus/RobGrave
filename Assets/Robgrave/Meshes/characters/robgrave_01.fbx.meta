@@ -35,10 +35,10 @@ ModelImporter:
     second: IdleDefault.001 (1)
   - first:
       74: -2094984312616648814
-    second: Running (1)
+    second: Digging
   - first:
       74: -4288865778422056833
-    second: Digging (1)
+    second: Digging
   - first:
       74: 6569498529150986814
     second: Caught
@@ -99,7 +99,7 @@ ModelImporter:
       takeName: Digging
       internalID: 0
       firstFrame: 0
-      lastFrame: 148
+      lastFrame: 149
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -558,7 +558,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
