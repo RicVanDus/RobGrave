@@ -28,6 +28,7 @@ public class GUI_grave_01 : MonoBehaviour
     private Vector3 _localPos;
     private Quaternion _localRot;
     private Vector3 _newPos;
+    private Vector3 _defaultScale;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class GUI_grave_01 : MonoBehaviour
 
         _localPos = transform.localPosition;
         _localRot = transform.localRotation;
+        _defaultScale = transform.localScale;
         _newPos = _localPos;
         _newPos.y -= 1f;
     }
@@ -61,6 +63,8 @@ public class GUI_grave_01 : MonoBehaviour
                     _canvasGroup.alpha = 1;
                     
                     _isVisible = true;
+                    transform.localScale = Vector3.zero;
+                    transform.DOScale(_defaultScale, 0.5f).SetEase(Ease.OutBounce);
                 }
 
             }
@@ -68,9 +72,14 @@ public class GUI_grave_01 : MonoBehaviour
             {
                 if (_isVisible)
                 {
-                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
-                    _canvasGroup.alpha = 0; 
                     _isVisible = false;
+                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
+                    _canvasGroup.alpha = 0;
+                    /*
+                    transform.DOScale(0f, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
+                    {
+                        _canvasGroup.alpha = 0;
+                    }); */
                 }
 
             }

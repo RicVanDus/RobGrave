@@ -59,8 +59,11 @@ public class Grave : Interactable
             playerIsDigging = false;
 
         }
-
-        _gravedirt.ChangeDirtColor(PlayerCanInteract);
+    
+        if (!graveIsDug)
+            _gravedirt.ChangeDirtColor(PlayerCanInteract);
+        else
+            _gravedirt.ChangeDirtColor(false);
 
         PlayerIsDiggingOrNot();
     }
