@@ -234,7 +234,7 @@ public class Lamppost : MonoBehaviour
     private void SetLightSize()
     {
         int size = _lightStage + 2;
-        float triggerSize = _baseTriggerSize * size;
+        float triggerSize = size;
         float spotlightSize = _baseSpotlightSize * size;
         float coneSize = _baseConeSize * size;
 

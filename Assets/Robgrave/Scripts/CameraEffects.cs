@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
-public class CameraEffects : MonoBehaviour
+
+[ExecuteInEditMode, ImageEffectAllowedInSceneView]
+public class CameraEffects : RenderObjects
 {
     public Material _mat;
 
