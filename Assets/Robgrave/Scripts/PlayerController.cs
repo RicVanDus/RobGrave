@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
 
     private float idleTimer;
 
+    private float _flashlightHitDistance = 0f;
+
     public delegate void OnGettingCaught();
     public event OnGettingCaught GettingCaught;
 
@@ -199,6 +201,8 @@ public class PlayerController : MonoBehaviour
         {
             // EFFECT ON FLASHLIGHT? // COLOR CHANGE?
         }
+        
+        Debug.Log("Flashlight dist: " + _flashlightHitDistance);
     }
 
     private void FixedUpdate()
@@ -686,6 +690,8 @@ public class PlayerController : MonoBehaviour
                 seesEnemy = true;
                 hit.collider.GetComponent<Enemy>().CaughtInLight();
             }
+
+            _flashlightHitDistance = hit.distance;
         }
         else
         {
