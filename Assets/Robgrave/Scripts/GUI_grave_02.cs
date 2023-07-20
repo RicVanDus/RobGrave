@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GUI_grave_02 : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class GUI_grave_02 : MonoBehaviour
     public bool GraveDefiling;
 
     private bool startedRedBlinking = false;
+    private bool _isVisible = true;
 
     private Image _radialFill;
     private Image _circle1;
@@ -23,6 +26,11 @@ public class GUI_grave_02 : MonoBehaviour
     private Color _noColor = new Color(0.75f, 0.75f, 0.75f);
     private Color _redColor = new Color(1f, 0f, 0f);
 
+    private Vector3 _localPos;
+    private Quaternion _localRot;
+    private Vector3 _newPos;
+    private Vector3 _defaultScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +39,12 @@ public class GUI_grave_02 : MonoBehaviour
         _circle2 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle2").GetComponent<Image>();
         _circle3 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle3").GetComponent<Image>();
         _circle4 = transform.Find("RadialFill").Find("Base").Find("Circle").Find("Circle4").GetComponent<Image>();
+
+        _localPos = transform.localPosition;
+        _localRot = transform.localRotation;
+        _defaultScale = transform.localScale;
+        _newPos = _localPos;
+        _newPos.y -= 1f;
     }
 
     // Update is called once per frame
@@ -44,13 +58,31 @@ public class GUI_grave_02 : MonoBehaviour
             if (PlayerCanInteract || GraveDefiling || _grave.diggingProgress > 0f)
             {
                 UpdateUI();
-                CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
-                _canvasGroup.alpha = 1;
+
+                if (!_isVisible)
+                {
+                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
+                    _canvasGroup.alpha = 1;
+                    
+                    _isVisible = true;
+                    transform.localScale = Vector3.zero;
+                    transform.DOScale(_defaultScale, 0.5f).SetEase(Ease.OutBounce);
+                }
+
             }
             else
             {
-                CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
-                _canvasGroup.alpha = 0;
+                if (_isVisible)
+                {
+                    _isVisible = false;
+                    CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
+                    _canvasGroup.alpha = 0;
+                    /*
+                    transform.DOScale(0f, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
+                    {
+                        _canvasGroup.alpha = 0;
+                    }); */
+                }
             }
         }
     }

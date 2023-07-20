@@ -81,7 +81,6 @@ public class GUI_grave_01 : MonoBehaviour
                         _canvasGroup.alpha = 0;
                     }); */
                 }
-
             }
         }        
     }

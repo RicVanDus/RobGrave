@@ -12,12 +12,14 @@ public class Gravedirt : MonoBehaviour
     private bool _changeDirt = false;
     private Color _dirtColorDefault = new Color(0.2830189f / 1.2f, 0.2144298f / 1.2f, 0.1559273f / 1.2f);
     private Color _dirtColorInteract = new Color(0.2830189f * 1.2f, 0.2144298f * 1.2f, 0.1559273f * 1.2f);
+    private int _colorId;
 
 
     // Start is called before the first frame update
     void Start()
     {
         graveDirt = gameObject.GetComponent<Renderer>().material;
+        _colorId = Shader.PropertyToID("_Color");
         _buldgeHeight = 30f;
     }
 
@@ -83,11 +85,11 @@ public class Gravedirt : MonoBehaviour
     {
         if (CanInteract)
         {
-            graveDirt.SetColor("_Color", _dirtColorInteract);
+            graveDirt.SetColor(_colorId, _dirtColorInteract);
         }
         else
         {
-            graveDirt.SetColor("_Color", _dirtColorDefault);
+            graveDirt.SetColor(_colorId, _dirtColorDefault);
         }
     }
 }
