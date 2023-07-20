@@ -35,11 +35,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fresnel_strength: 0.2
-    - _Length: 0.63
+    - _BeamWidth: 0
+    - _Fresnel_strength: 0.29
+    - _Length: 0.2
+    - _Opacity: 0.236
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Transparency: 0.17
+    - _Transparency: 0.64
     m_Colors:
     - _Color: {r: 0.9433962, g: 0.8969249, b: 0.6986472, a: 0}
   m_BuildTextureStacks: []
