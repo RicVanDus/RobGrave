@@ -184,10 +184,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lamp1: {fileID: 4288148613931798847}
   _lamp2: {fileID: 6418756493581934490}
+  _lampbase: {fileID: 8732669853432478256}
   _cone: {fileID: 196165922569648428}
   _spotLight: {fileID: 5671724590219137762}
   _collider: {fileID: 848436919}
   _UI: {fileID: 2993950234679286110}
+  _highlightColor: {r: 0.02745098, g: 0.023529412, b: 0.003921569, a: 1}
 --- !u!65 &5671724589945308914
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,8 +250,8 @@ Light:
   m_Color: {r: 0.9622642, g: 0.915079, b: 0.7761659, a: 1}
   m_Intensity: 30
   m_Range: 11.1
-  m_SpotAngle: 159.21019
-  m_InnerSpotAngle: 150.85506
+  m_SpotAngle: 126.57999
+  m_InnerSpotAngle: 110.45576
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0

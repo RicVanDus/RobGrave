@@ -8,18 +8,24 @@ using UnityEngine.UIElements;
 
 public class Lamppost : MonoBehaviour
 {
-
     [SerializeField] private GameObject _lamp1;
     [SerializeField] private GameObject _lamp2;
+    [SerializeField] private GameObject _lampbase;
     [SerializeField] private GameObject _cone;
     [SerializeField] private Light _spotLight;
     [SerializeField] SphereCollider _collider;
     [SerializeField] private GameObject _UI;
+
+    [SerializeField] private Color _highlightColor;
     
     private Material _lamp1Mat;
     private Material _lamp2Mat;
+    private Material _lampbaseMat;
     private GUI_lamppost _GUI_lamppost;
+    
     private bool _guiVisible = false;
+    private bool _isHighlighted = false;
+    
     private Vector3 _guiDefaultScale;
 
     private float _lightTimer;
@@ -35,20 +41,23 @@ public class Lamppost : MonoBehaviour
     private float _baseConeSize;
     private float _baseSpotlightSize;
     private float _baseTriggerSize;
-    
-    
+
+    private int _emissionColorId;
 
     // Start is called before the first frame update
     void Start()
     {
-        _lamp1Mat = _lamp1.GetComponent<Renderer>().material;
-        _lamp2Mat = _lamp2.GetComponent<Renderer>().material;
+        _lamp1Mat = _lamp1.GetComponent<Renderer>().materials[0];
+        _lamp2Mat = _lamp2.GetComponent<Renderer>().materials[0];
+        _lampbaseMat = _lampbase.GetComponent<Renderer>().materials[0];
         _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
         _guiDefaultScale = _UI.transform.localScale;
 
         _baseConeSize = _cone.transform.localScale.x / 5;
         _baseTriggerSize = _collider.radius / 5;
         _baseSpotlightSize = _spotLight.range / 5;
+
+        _emissionColorId = Shader.PropertyToID("_EmissionColor");
     }
 
     private void Update()
@@ -78,11 +87,19 @@ public class Lamppost : MonoBehaviour
                 SetGUIVisible(true);           
             }
 
+            if (!_isHighlighted)
+            {
+                ToggleHighlight(true);
+            }
+
         }
         else
         {
+            TimerChange(false);
+            
+            if (_isHighlighted)
             {
-                TimerChange(false);
+                ToggleHighlight(false);
             }
         }
 
@@ -217,16 +234,12 @@ public class Lamppost : MonoBehaviour
             _GUI_lamppost.ShowGraphic = true;
             _UI.transform.localScale = Vector3.zero;
 
-            _UI.transform.DOScale(_guiDefaultScale, 0.3f).SetEase(Ease.InExpo);
+            _UI.transform.DOScale(_guiDefaultScale, 0.5f).SetEase(Ease.OutBounce);
             _guiVisible = true;
         }
         else
         {
-            _UI.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InExpo).OnComplete(()=>
-            {
-                _GUI_lamppost.ShowGraphic = false;
-            });
-            
+            _GUI_lamppost.ShowGraphic = false;
             _guiVisible = false;
         }
     }
@@ -241,5 +254,23 @@ public class Lamppost : MonoBehaviour
         _collider.radius = triggerSize;
         _cone.transform.localScale = new Vector3(coneSize, coneSize, 5f);
         _spotLight.range = spotlightSize;
+    }
+
+    private void ToggleHighlight(bool toggle)
+    {
+        if (toggle)
+        {
+            _lamp1Mat.SetColor(_emissionColorId, _highlightColor);
+            _lamp2Mat.SetColor(_emissionColorId, _highlightColor);
+            _lampbaseMat.SetColor(_emissionColorId, _highlightColor);
+            _isHighlighted = true;
+        }
+        else
+        {
+            _lamp1Mat.SetColor(_emissionColorId, Color.black);
+            _lamp2Mat.SetColor(_emissionColorId, Color.black);
+            _lampbaseMat.SetColor(_emissionColorId, Color.black);
+            _isHighlighted = false;            
+        }
     }
 }
