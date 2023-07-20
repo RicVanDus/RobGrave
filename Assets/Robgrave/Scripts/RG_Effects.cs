@@ -10,8 +10,6 @@ public class RG_Effects : MonoBehaviour
     [SerializeField] private VisualEffect _dirtFromShovel;
     [SerializeField] private GameObject _dirtOnShovel;
     
-    
-    
     // Start is called before the first frame update
     void Start()
     {

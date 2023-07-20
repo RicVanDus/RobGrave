@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour
     private InputAction attack;
     private InputAction pause;
 
+    private WaitForSeconds _wait01 = new(0.1f);
+    private WaitForSeconds _wait02 = new(0.2f);
+    
+
     public static PlayerController Instance { get; private set; }
 
     private void OnEnable()
@@ -358,7 +362,7 @@ public class PlayerController : MonoBehaviour
             }
             
 
-            yield return new WaitForSeconds(.2f);
+            yield return _wait02;
         }
 
         _playerMesh.enabled = true;
@@ -497,7 +501,7 @@ public class PlayerController : MonoBehaviour
                 _counter += (int)_amountToScore;
                 CheckIfGoalAchieved();
 
-                yield return new WaitForSeconds(0.1f);
+                yield return _wait01;
             }
         }
         else

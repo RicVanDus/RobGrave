@@ -46,11 +46,12 @@ Material:
     - _Normal_Strength: 6.84
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SuckingUpProgress: 0
     - _Vertex_deform_strength: -2.23
     - _Visibility: 1
     m_Colors:
     - _Color: {r: 0.08276451, g: 1, b: 0, a: 0}
-    - _SuckingUpPosition: {r: 0, g: 0, b: 0, a: 0}
+    - _SuckingUpPosition: {r: -10.39, g: 2.79, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2363433921872645210
 MonoBehaviour:
