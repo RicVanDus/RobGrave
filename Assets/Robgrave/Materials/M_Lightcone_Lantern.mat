@@ -36,14 +36,16 @@ Material:
     m_Ints: []
     m_Floats:
     - _BeamWidth: 0
+    - _Flashlight: 0
     - _Fresnel_strength: 2
     - _Length: 0.88
-    - _Opacity: 0.117
+    - _Opacity: 0.015
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Transparency: 0.06
     m_Colors:
     - _Color: {r: 0.9433962, g: 0.8969249, b: 0.6986472, a: 0}
+    - _Smoothstep_Edge: {r: 0.5, g: 0.6, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6076383232668469843
 MonoBehaviour:
