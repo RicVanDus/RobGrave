@@ -19,12 +19,13 @@ public class PlayerController : MonoBehaviour
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
     public float digSpeedMultiplier = 3.0f;
-    public float flashLightReach = 18f;
+    public float flashLightReach = 10f;
     public int currentLives = 3;
     public int maxLives = 3;
     public int score = 0;
     public float invulnerableTime = 3f;
     [NonSerialized] public int preScore;
+    [SerializeField] private LayerMask _flashlightHits;
 
     [Header("Camera")]
     public Camera cam;
@@ -55,6 +56,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MeshRenderer _torchHip;
     [SerializeField] private MeshRenderer _shovelHand;
     [SerializeField] private MeshRenderer _shovelBack;
+    [SerializeField] private GameObject _flashLightCone;
+    private Material _flashlightConeMat;
+    private Color _defaultFlashlightColor;
+    private Color _enemyFlashlightColor;
+    private int _colorId;
 
     [NonSerialized] public bool movementDisabled = false;
     [NonSerialized] public bool playerInteracting = false;
@@ -154,6 +160,10 @@ public class PlayerController : MonoBehaviour
     {
         _defaultShader = _playerCapMesh.material.shader;
          _playerMeshMaterials = _playerMesh.materials;
+         
+         _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
+         _colorId = Shader.PropertyToID("_Color");
+         _defaultFlashlightColor = _flashlightConeMat.GetColor(_colorId);
         
         if (Instance == null)
         {
@@ -197,12 +207,12 @@ public class PlayerController : MonoBehaviour
 
         CheckAddedScore();
 
-        if (LookForEnemy())
+        if (FlashlightHit())
         {
             // EFFECT ON FLASHLIGHT? // COLOR CHANGE?
         }
         
-        Debug.Log("Flashlight dist: " + _flashlightHitDistance);
+        FlashlightConeVisual();
     }
 
     private void FixedUpdate()
@@ -672,7 +682,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool LookForEnemy()
+    private bool FlashlightHit()
     {
         bool seesEnemy = false;
 
@@ -681,24 +691,59 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.SphereCast(drawFromPosition, 0.5f, transform.TransformDirection(Vector3.forward), out hit, flashLightReach))
+        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward) * 100f, out hit, _flashlightHits))
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-
+            
             if (hit.collider.CompareTag("Enemy"))   
             {
                 seesEnemy = true;
                 hit.collider.GetComponent<Enemy>().CaughtInLight();
+                int _ghostType = hit.collider.GetComponent<Enemy>().ghostType;
+
+                if (_ghostType == 0)
+                {
+                    _enemyFlashlightColor = EnemyManager.Instance.GhostType1;    
+                }
+                else if (_ghostType == 1)
+                {
+                    _enemyFlashlightColor =  EnemyManager.Instance.GhostType2;
+                }
+                else if (_ghostType == 2)
+                {
+                    _enemyFlashlightColor =  EnemyManager.Instance.GhostType3;
+                }
+                else
+                {
+                    _enemyFlashlightColor = _defaultFlashlightColor;
+                }
+                
+                _flashlightConeMat.SetColor(_colorId, _enemyFlashlightColor);
             }
+            else
+            {
+                _flashlightConeMat.SetColor(_colorId, _defaultFlashlightColor);
+            }
+            
+            Debug.Log("Hitting: " + hit.collider);
 
             _flashlightHitDistance = hit.distance;
         }
         else
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * flashLightReach, Color.white);
+            _flashlightConeMat.SetColor(_colorId, _defaultFlashlightColor);
         }
 
         return seesEnemy;
+    }
+
+    private void FlashlightConeVisual()
+    {
+        Vector3 oldscale = _flashLightCone.transform.localScale;
+        Vector3 newscale = oldscale;
+        newscale.z = Math.Clamp(_flashlightHitDistance * 1.3f, 0f, flashLightReach);
+        _flashLightCone.transform.localScale = newscale;
     }
 
     private void WhenPaused()
