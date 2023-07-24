@@ -141,8 +141,6 @@ public class Lamppost : MonoBehaviour
         _collider.enabled = toggle;
         _spotLight.enabled = toggle;
         _cone.SetActive(toggle);
-        _lamp1.SetActive(toggle);
-        _lamp2.SetActive(toggle);
     }
 
     private IEnumerator FlashingLight()

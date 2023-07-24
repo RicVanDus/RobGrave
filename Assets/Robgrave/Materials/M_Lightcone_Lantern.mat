@@ -39,7 +39,7 @@ Material:
     - _Flashlight: 0
     - _Fresnel_strength: 2
     - _Length: 0.88
-    - _Opacity: 0.015
+    - _Opacity: 0.006
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Transparency: 0.06
