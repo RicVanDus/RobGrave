@@ -1,15 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-using Unity.VisualScripting;
-using UnityEngine.Events;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Users;
-using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -75,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     private float _flashlightHitDistance = 0f;
 
+    private Color[] _ghostColors;
+
     public delegate void OnGettingCaught();
     public event OnGettingCaught GettingCaught;
 
@@ -125,7 +122,6 @@ public class PlayerController : MonoBehaviour
         GameOverseer.Instance.Playing += WhenPlaying;
         GameOverseer.Instance.StartGame += DataFromGO;
         GameOverseer.Instance.Extract += DataToGO;
-        
 
         // changing input device, make a state that can be checked for UI changes
         InputUser.onChange += (user, change, device) =>
@@ -192,6 +188,10 @@ public class PlayerController : MonoBehaviour
         _shovelHand.gameObject.SetActive(false);
 
         if (GameOverseer.Instance.currentLevel > 0) DataFromGO();
+
+        _ghostColors[0] = EnemyManager.Instance.GhostType1;
+        _ghostColors[1] = EnemyManager.Instance.GhostType2;
+        _ghostColors[2] = EnemyManager.Instance.GhostType3;
     }
 
     private void Update()
@@ -207,10 +207,7 @@ public class PlayerController : MonoBehaviour
 
         CheckAddedScore();
 
-        if (FlashlightHit())
-        {
-            // EFFECT ON FLASHLIGHT? // COLOR CHANGE?
-        }
+        CheckFlashlightHit();
         
         FlashlightConeVisual();
     }
@@ -682,7 +679,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool FlashlightHit()
+    private void CheckFlashlightHit()
     {
         bool seesEnemy = false;
 
@@ -691,39 +688,9 @@ public class PlayerController : MonoBehaviour
 
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward) * 100f, out hit, _flashlightHits))
+        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward) * 100f, out hit, 100f, _flashlightHits))
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            
-            if (hit.collider.CompareTag("Enemy"))   
-            {
-                seesEnemy = true;
-                hit.collider.GetComponent<Enemy>().CaughtInLight();
-                int _ghostType = hit.collider.GetComponent<Enemy>().ghostType;
-
-                if (_ghostType == 0)
-                {
-                    _enemyFlashlightColor = EnemyManager.Instance.GhostType1;    
-                }
-                else if (_ghostType == 1)
-                {
-                    _enemyFlashlightColor =  EnemyManager.Instance.GhostType2;
-                }
-                else if (_ghostType == 2)
-                {
-                    _enemyFlashlightColor =  EnemyManager.Instance.GhostType3;
-                }
-                else
-                {
-                    _enemyFlashlightColor = _defaultFlashlightColor;
-                }
-                
-                _flashlightConeMat.SetColor(_colorId, _enemyFlashlightColor);
-            }
-            else
-            {
-                _flashlightConeMat.SetColor(_colorId, _defaultFlashlightColor);
-            }
             
             Debug.Log("Hitting: " + hit.collider);
 
@@ -731,11 +698,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * flashLightReach, Color.white);
+            Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * 100f, Color.white);
             _flashlightConeMat.SetColor(_colorId, _defaultFlashlightColor);
         }
-
-        return seesEnemy;
     }
 
     private void FlashlightConeVisual()
@@ -744,6 +709,28 @@ public class PlayerController : MonoBehaviour
         Vector3 newscale = oldscale;
         newscale.z = Math.Clamp(_flashlightHitDistance * 1.3f, 0f, flashLightReach);
         _flashLightCone.transform.localScale = newscale;
+    }
+
+    public void FlashlightColor(int ghostType)
+    {
+        if (ghostType == 0)
+        {
+            _enemyFlashlightColor = _ghostColors[0];    
+        }
+        else if (ghostType == 1)
+        {
+            _enemyFlashlightColor = _ghostColors[1];
+        }
+        else if (ghostType == 2)
+        {
+            _enemyFlashlightColor = _ghostColors[2];
+        }
+        else
+        {
+            _enemyFlashlightColor = _defaultFlashlightColor;
+        }
+                
+        _flashlightConeMat.SetColor(_colorId, _enemyFlashlightColor);
     }
 
     private void WhenPaused()
@@ -795,7 +782,6 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = newPos.position;
         transform.localRotation = newPos.rotation;
-        
     }
 
     public void CryptTeleport(Crypt toCrypt)
@@ -811,6 +797,5 @@ public class PlayerController : MonoBehaviour
             movementDisabled = false;
             _isTeleporting = false;
         });
-
     }
 }
