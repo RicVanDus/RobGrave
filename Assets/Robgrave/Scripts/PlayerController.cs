@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private float _flashlightHitDistance = 0f;
 
-    private Color[] _ghostColors;
+    private Color[] _ghostColors = new Color[3];
 
     public delegate void OnGettingCaught();
     public event OnGettingCaught GettingCaught;
