@@ -439,6 +439,18 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            if (ghostType == 3)
+            {
+                GreedyGhostGotCaught();
+            }
+            else
+            {
+                PlayerController.Instance.EnemyHitsPlayer(ghostType);
+            }
+        }
+        
         Debug.Log("ENEMY: " + other);
     }
 
@@ -447,7 +459,6 @@ public class Enemy : MonoBehaviour
         _lightTriggered = true;
         _lightTriggerTimer = 0f;
     }
-
 
     public void CaughtPlayer()
     {

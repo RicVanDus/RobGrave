@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
 
     private WaitForSeconds _wait01 = new(0.1f);
     private WaitForSeconds _wait02 = new(0.2f);
-    
 
     public static PlayerController Instance { get; private set; }
 
@@ -264,38 +263,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*
-        if (other.CompareTag("Enemy") && isInvulnerable == false)
-        {
-            Enemy nme = other.GetComponent<Enemy>();
-
-            if (nme.ghostType == 3)
-            {
-                nme.GreedyGhostGotCaught();
-            }
-            else
-            {
-                // Move all this to a public function
-                Ghosted(nme.ghostType);
-                isInvulnerable = true;
-                movementDisabled = true;
-                _isCaught = true;
-                currentLives -= 1;
-                GettingCaught?.Invoke();
-
-                if (currentLives <= 0)
-                {
-                    GameOverseer.Instance.SetGameState(GameState.GameOver);
-                }
-                else
-                {
-                    StartCoroutine(LosingLoot(nme.ghostType));
-                }
-            
-                RGAnimator.SetBool("Caught", true);
-            }
-        } */
-
         if (other.CompareTag("Grave"))
         {
             _canInteract = true;
@@ -330,6 +297,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void EnemyHitsPlayer(int enemyType)
+    {
+        Ghosted(enemyType);
+        isInvulnerable = true;
+        movementDisabled = true;
+        _isCaught = true;
+        currentLives -= 1;
+        GettingCaught?.Invoke();
+
+        if (currentLives <= 0)
+        {
+            GameOverseer.Instance.SetGameState(GameState.GameOver);
+        }
+        else
+        {
+            StartCoroutine(LosingLoot(enemyType));
+        }
+
+        RGAnimator.SetBool("Caught", true);
+    } 
+    
     private void Respawning()
     {
         Respawned?.Invoke();
@@ -373,7 +361,6 @@ public class PlayerController : MonoBehaviour
                 _playerMesh.enabled = true;
                 _playerCapMesh.enabled = true;
             }
-            
 
             yield return _wait02;
         }
@@ -424,7 +411,7 @@ public class PlayerController : MonoBehaviour
             _newScale = 0.018f;
         }
 
-            GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
+        GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
         _popupText.transform.localScale = _newScale * Vector3.one;
         ValuePopup _thisPopup = _popupText.GetComponent<ValuePopup>();
         _thisPopup.PopUpScore(value, value>0);
@@ -443,7 +430,6 @@ public class PlayerController : MonoBehaviour
             IsDigging(false);
         }
     }
-
 
     private void OnAttack(InputAction.CallbackContext context)
     {
