@@ -4,29 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
-using Unity.VisualScripting;
-using UnityEngine.Experimental.GlobalIllumination;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    private NavMeshAgent navAgent;
-    private GameObject player;
+    private NavMeshAgent _navAgent;
+    private GameObject _player;
 
-    private Material myMaterial;
+    private Material _myMaterial;
 
     [SerializeField] private GameObject _debugSphere;
     private GameObject _debugger;
 
-    private bool debugVisuals = false;
-    private LineRenderer pathLine;
+    private bool _debugVisuals = false;
+    private LineRenderer _pathLine;
     public Light ghostLight; 
-    private float ghostLightIntensity = 1.5f;
+    private readonly float _ghostLightIntensity = 1.5f;
 
     [Header("AI attributes")]
     [SerializeField] public int ghostType = 0;
     [SerializeField] private float searchAreaSize = 5f;
-    private int currentGhostType;
+    private int _currentGhostType;
     public int EnemyId;
 
     public int score = 0;
@@ -38,16 +36,16 @@ public class Enemy : MonoBehaviour
     private float _ghostEvolveScore;
 
     [SerializeField] private float moveSpeed = 5f;
-    private float huntTimer;
-    private float huntTime = 3.0f;
-    private bool huntingPlayer;
+    private float _huntTimer;
+    private float _huntTime = 3.0f;
+    private bool _huntingPlayer;
 
     private float _distanceToPlayer;
 
     private float _visibility = 1f;
     private bool _visible = true;
 
-    private float _searchPrecision = 0.5f;
+    private readonly float _searchPrecision = 0.5f;
 
     private bool _searchingNewDestination = false;
     private bool _reachedDestination = false;
@@ -61,7 +59,7 @@ public class Enemy : MonoBehaviour
     private bool _lightTriggered = false;
 
     private float _greedyGhostTimer = 0f;
-    private float _greedyGhostTime = 60f;
+    private readonly float _greedyGhostTime = 60f;
     private bool _blinkingGhost = false;
 
     private WaitForSeconds _wait05 = new(0.5f);
@@ -78,24 +76,18 @@ public class Enemy : MonoBehaviour
         PlayerController.Instance.Respawned -= PlayerRespawned;
     }
     
-    // Start is called before the first frame update
-    void Awake()
-    {
-
-    }
-
     private void Start()
     {
        _debugger = Instantiate<GameObject>(_debugSphere);
-       player = GameObject.FindGameObjectWithTag("Player");
-       navAgent = GetComponent<NavMeshAgent>();
+       _player = GameObject.FindGameObjectWithTag("Player");
+       _navAgent = GetComponent<NavMeshAgent>();
         
-       pathLine = GetComponent<LineRenderer>();
-       myMaterial = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().GetComponent<Renderer>().material;       
+       _pathLine = GetComponent<LineRenderer>();
+       _myMaterial = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().GetComponent<Renderer>().material;       
 
         if (GameManager.Instance.debugMode)
         {
-            debugVisuals = GameManager.Instance.showAIpath;
+            _debugVisuals = GameManager.Instance.showAIpath;
         }
 
         SetGhostType(ghostType);
@@ -104,13 +96,12 @@ public class Enemy : MonoBehaviour
         _oldSearchAreaSize = searchAreaSize;
     }
 
-    // Update is called once per frame
     void Update()
     {
         DistanceToPlayer();
         GhostMovement();
 
-        myMaterial.SetFloat("_Visibility", _visibility);
+        _myMaterial.SetFloat("_Visibility", _visibility);
 
         if (_visibility > 0f)
         {
@@ -126,11 +117,11 @@ public class Enemy : MonoBehaviour
         {
             if (_lightTriggerTimer < 0.5f)
             {
-                myMaterial.SetFloat("_Base_Transparency", 0.7f);
+                _myMaterial.SetFloat("_Base_Transparency", 0.7f);
             }
             else
             {
-                myMaterial.SetFloat("_Base_Transparency", 0.2f);
+                _myMaterial.SetFloat("_Base_Transparency", 0.2f);
             }
             _lightTriggerTimer += Time.deltaTime;
             if (_lightTriggerTimer > _lightTriggerTime)
@@ -165,9 +156,9 @@ public class Enemy : MonoBehaviour
             _reachedDestination = false;
             _setLookAround = false;
             Vector3 newDestination = GetNewDestination();
-            navAgent.SetDestination(newDestination);
+            _navAgent.SetDestination(newDestination);
 
-            if (debugVisuals)
+            if (_debugVisuals)
             {
                 _debugger.transform.position = newDestination;
             }
@@ -175,14 +166,14 @@ public class Enemy : MonoBehaviour
             _searchingNewDestination = false;
         }
 
-        if (navAgent.remainingDistance <= 0.1f)
+        if (_navAgent.remainingDistance <= 0.1f)
         {
             _reachedDestination = true;
         }
 
         if (_reachedDestination)
         {
-            if (huntingPlayer || _distanceToPlayer > 20f)
+            if (_huntingPlayer || _distanceToPlayer > 20f)
             {
                 _searchingNewDestination = true;
             }
@@ -210,48 +201,48 @@ public class Enemy : MonoBehaviour
         }
 
         // DEBUG VISUALS
-        if (debugVisuals)
+        if (_debugVisuals)
         {
             ShowDebugPath();
         }
         else
         {
-            pathLine.enabled = false;
+            _pathLine.enabled = false;
         }
 
         // Raycast forward to look for the player
-        if (huntingPlayer)
+        if (_huntingPlayer)
         {
-            huntTimer += Time.deltaTime;
+            _huntTimer += Time.deltaTime;
             //Debug.Log("Ghost (" + gameObject.name + ") is hunting you for " + huntTimer + " seconds");
 
-            if (huntTimer > huntTime)
+            if (_huntTimer > _huntTime)
             {
                 searchAreaSize = _oldSearchAreaSize;
-                huntingPlayer = false;
+                _huntingPlayer = false;
             }
         }
         else
         {
             if (LookForPlayer())
             {
-                huntingPlayer = true;                
-                huntTimer = 0;
+                _huntingPlayer = true;                
+                _huntTimer = 0;
                 searchAreaSize = 2f;
 
                 Vector3 newDestination = GetNewDestination();
-                navAgent.SetDestination(newDestination);
+                _navAgent.SetDestination(newDestination);
             }
         }
     }
     
      private void ShowDebugPath()
     {
-        if (navAgent.hasPath)
+        if (_navAgent.hasPath)
         {
-            pathLine.positionCount = navAgent.path.corners.Length;
-            pathLine.SetPositions(navAgent.path.corners);
-            pathLine.enabled = true;
+            _pathLine.positionCount = _navAgent.path.corners.Length;
+            _pathLine.SetPositions(_navAgent.path.corners);
+            _pathLine.enabled = true;
         }
     }
 
@@ -262,30 +253,30 @@ public class Enemy : MonoBehaviour
         switch (_ghostType)
         {
             case 0:
-                huntTime = 10f;
+                _huntTime = 10f;
                 moveSpeed = 3f;
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType1);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType1);
                 ghostLight.color = EnemyManager.Instance.GhostType1;
                 break;
 
             case 1:
-                huntTime= 20f;
+                _huntTime= 20f;
                 moveSpeed = 3.5f;
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType2);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType2);
                 ghostLight.color = EnemyManager.Instance.GhostType2;
                 break;
 
             case 2:
-                huntTime = 30f;
+                _huntTime = 30f;
                 moveSpeed = 4f;
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
                 ghostLight.color = EnemyManager.Instance.GhostType3;
                 break;
 
             case 3:
-                huntTime = 30f;
+                _huntTime = 30f;
                 moveSpeed = 4.5f;
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
                 ghostLight.color = EnemyManager.Instance.GhostType4;
                 _greedyGhostTimer = 0f;
                 break;
@@ -296,7 +287,7 @@ public class Enemy : MonoBehaviour
         }
 
         EnemyManager.Instance.UpdateUI();
-        navAgent.speed = moveSpeed;
+        _navAgent.speed = moveSpeed;
     }
     
     private void DistanceToPlayer()
@@ -326,7 +317,7 @@ public class Enemy : MonoBehaviour
     //Gets a random position on the Nav Mesh in a random search area between enemy and player
     private Vector3 GetNewDestination()
     {
-        Vector3 _originRadius = Vector3.Lerp(transform.position, player.transform.position, _searchPrecision);
+        Vector3 _originRadius = Vector3.Lerp(transform.position, _player.transform.position, _searchPrecision);
 
         Vector3 _newPosition = new Vector3();
         Vector3 _randomRadius = Random.insideUnitSphere * searchAreaSize;
@@ -340,13 +331,13 @@ public class Enemy : MonoBehaviour
 
     private void PlayerIsCaught()
     {
-        navAgent.speed = 0;
+        _navAgent.speed = 0;
      //   transform.SetPositionAndRotation(GameManager.Instance.EnemySpawn.position, GameManager.Instance.EnemySpawn.rotation);
     }
 
     private void PlayerRespawned()
     {
-        navAgent.speed = _oldMoveSpeed;
+        _navAgent.speed = _oldMoveSpeed;
     }
 
     private bool LookForPlayer()
@@ -363,7 +354,7 @@ public class Enemy : MonoBehaviour
 
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        if (Physics.Raycast(drawFromPosition, transform.TransformDirection(Vector3.forward), out hit, 100f))
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
@@ -427,7 +418,7 @@ public class Enemy : MonoBehaviour
         if (show)
         {
             DOTween.To(()=> _visibility, x=> _visibility = x, 1f, 0.7f);
-            ghostLight.DOIntensity(ghostLightIntensity, 1f);
+            ghostLight.DOIntensity(_ghostLightIntensity, 1f);
             _visible = true;
         }
         else
@@ -446,11 +437,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ENEMY: " + other);
+    }
+
     public void CaughtInLight()
     {
         _lightTriggered = true;
         _lightTriggerTimer = 0f;
-        
     }
 
 
@@ -501,13 +496,13 @@ public class Enemy : MonoBehaviour
     {
         while (ghostType == 3)
         {
-            if (myMaterial.GetColor("_Color") == EnemyManager.Instance.GhostType4)
+            if (_myMaterial.GetColor("_Color") == EnemyManager.Instance.GhostType4)
             {
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType3);
             }
             else
             {
-                myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
+                _myMaterial.SetColor("_Color", EnemyManager.Instance.GhostType4);
             }
 
             yield return _wait05;

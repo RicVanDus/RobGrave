@@ -264,17 +264,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy" && isInvulnerable == false)
+        /*
+        if (other.CompareTag("Enemy") && isInvulnerable == false)
         {
-            Enemy _nme = other.GetComponent<Enemy>();
+            Enemy nme = other.GetComponent<Enemy>();
 
-            if (_nme.ghostType == 3)
+            if (nme.ghostType == 3)
             {
-                _nme.GreedyGhostGotCaught();
+                nme.GreedyGhostGotCaught();
             }
             else
             {
-                Ghosted(_nme.ghostType);
+                // Move all this to a public function
+                Ghosted(nme.ghostType);
                 isInvulnerable = true;
                 movementDisabled = true;
                 _isCaught = true;
@@ -287,24 +289,24 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(LosingLoot(_nme.ghostType));
+                    StartCoroutine(LosingLoot(nme.ghostType));
                 }
             
                 RGAnimator.SetBool("Caught", true);
             }
-        }
+        } */
 
-        if (other.tag == "Grave")
+        if (other.CompareTag("Grave"))
         {
             _canInteract = true;
         }
 
-        if (other.tag == "Exit")
+        if (other.CompareTag("Exit"))
         {
             _canInteract = true;
         }
         
-        if (other.tag == "Lamppost")
+        if (other.CompareTag("Lamppost"))
         {
             _canInteract = true;
         }        
@@ -312,17 +314,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Grave")
+        if (other.CompareTag("Grave"))
         {
             _canInteract = false;
         }
 
-        if (other.tag == "Exit")
+        if (other.CompareTag("Exit"))
         {
             _canInteract = false;
         }
 
-        if (other.tag == "Lamppost")
+        if (other.CompareTag("Lamppost"))
         {
             _canInteract = false;
         }
@@ -692,7 +694,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.DrawRay(drawFromPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             
-            Debug.Log("Hitting: " + hit.collider);
+            //Debug.Log("Hitting: " + hit.collider);
 
             _flashlightHitDistance = hit.distance;
         }

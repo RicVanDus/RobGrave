@@ -8,11 +8,12 @@ public class FlashlightCone : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        var nme = other.GetComponent<Enemy>();
-        nme.CaughtInLight();
-        PlayerController.Instance.FlashlightColor(nme.ghostType);
-        
-        Debug.Log("Flashlight hitting: " + other);
+        if (other.CompareTag("Enemy"))
+        {
+            var nme = other.GetComponent<Enemy>();
+            nme.CaughtInLight();
+            PlayerController.Instance.FlashlightColor(nme.ghostType);
+        }
     }
 
     private void OnTriggerExit(Collider other)

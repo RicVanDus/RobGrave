@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1422580802}
   - component: {fileID: -6266188055521508084}
   - component: {fileID: 103716182}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: enemy_ghost
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 3374241886413506281}
   - component: {fileID: 2716200025299986778}
   - component: {fileID: 2139632988989870351}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,8 +253,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
-  m_Range: 7.54
+  m_Intensity: 1
+  m_Range: 3.09
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -394,6 +394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ghost_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8c8c591b5dd140746bd24578e4ec1270,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c8c591b5dd140746bd24578e4ec1270, type: 3}
