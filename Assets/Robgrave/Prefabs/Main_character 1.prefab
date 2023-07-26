@@ -3250,20 +3250,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dirtFromShovel: {fileID: 8904337549022961001}
   _dirtOnShovel: {fileID: 558694098145452029}
---- !u!114 &3260994818645121125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287359761772262197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 194231e5f3a8d00469d8de29089f4818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dirtFromShovel: {fileID: 0}
-  _dirtOnShovel: {fileID: 1199230156}
 --- !u!4 &628032807555131791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38ec3ebd97c759e48a0849f084045605,
