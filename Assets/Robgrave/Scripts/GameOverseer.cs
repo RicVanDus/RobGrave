@@ -172,7 +172,6 @@ public class GameOverseer : MonoBehaviour
             {
                 _isUnloaded = true;
                 LoadScene(sceneName, isLevel, setActive);
-                loadingScreen.SetActive(false);
             }
 
             yield return null;
@@ -190,6 +189,7 @@ public class GameOverseer : MonoBehaviour
     
     private void LoadGame()
     {
+        loadingScreen.SetActive(true);
         UnloadAllScenes();
         StartCoroutine(QueueScene("Graveyard_01", true, true));
     }

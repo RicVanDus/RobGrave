@@ -417,8 +417,8 @@ public class Enemy : MonoBehaviour
     {
         if (show)
         {
-            DOTween.To(()=> _visibility, x=> _visibility = x, 1f, 0.7f);
-            ghostLight.DOIntensity(_ghostLightIntensity, 1f);
+            DOTween.To(()=> _visibility, x=> _visibility = x, 1f, 0.2f);
+            ghostLight.DOIntensity(_ghostLightIntensity, 0.5f);
             _visible = true;
         }
         else
