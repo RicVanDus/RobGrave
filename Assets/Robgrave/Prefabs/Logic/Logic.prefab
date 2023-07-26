@@ -937,47 +937,47 @@ PrefabInstance:
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType0Color.b
-      value: 0.3032663
+      value: 0.2242791
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType0Color.g
-      value: 0.4433962
+      value: 0.4528302
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType0Color.r
-      value: 0.31105128
+      value: 0.23697639
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType1Color.b
-      value: 0.4811321
+      value: 0.5377358
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType1Color.g
-      value: 0.39077798
+      value: 0.40454617
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType1Color.r
-      value: 0.2746084
+      value: 0.23082057
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType2Color.b
-      value: 0.42566064
+      value: 0.45916793
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType2Color.g
-      value: 0.2845319
+      value: 0.23362406
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
       propertyPath: graveType2Color.r
-      value: 0.4339623
+      value: 0.4716981
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}
@@ -998,6 +998,21 @@ PrefabInstance:
         type: 3}
       propertyPath: graveDefaultColor.r
       value: 0.2735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
+        type: 3}
+      propertyPath: graveWarningColor.b
+      value: 0.17354932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
+        type: 3}
+      propertyPath: graveWarningColor.g
+      value: 0.17354932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
+        type: 3}
+      propertyPath: graveWarningColor.r
+      value: 0.5660378
       objectReference: {fileID: 0}
     - target: {fileID: 6543004079920586258, guid: 461a9573dc9ab8f4fb238267376aacc3,
         type: 3}

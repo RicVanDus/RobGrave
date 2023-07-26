@@ -301,23 +301,28 @@ public class PlayerController : MonoBehaviour
 
     public void EnemyHitsPlayer(int enemyType)
     {
-        Ghosted(enemyType);
-        isInvulnerable = true;
-        movementDisabled = true;
-        _isCaught = true;
-        currentLives -= 1;
-        GettingCaught?.Invoke();
-
-        if (currentLives <= 0)
+        if (!isInvulnerable)
         {
-            GameOverseer.Instance.SetGameState(GameState.GameOver);
-        }
-        else
-        {
-            StartCoroutine(LosingLoot(enemyType));
-        }
+            Ghosted(enemyType);
+            isInvulnerable = true;
+            movementDisabled = true;
+            _isCaught = true;
+            currentLives -= 1;
+            GettingCaught?.Invoke();
+            GameManager.Instance.ApplyCamZoom(11f, 0.5f);
+            GameManager.Instance.ApplyCamShake(1f, 1.3f);
 
-        RGAnimator.SetBool("Caught", true);
+            if (currentLives <= 0)
+            {
+                GameOverseer.Instance.SetGameState(GameState.GameOver);
+            }
+            else
+            {
+                StartCoroutine(LosingLoot(enemyType));
+            }
+
+            RGAnimator.SetBool("Caught", true);            
+        }
     } 
     
     private void Respawning()
@@ -630,8 +635,9 @@ public class PlayerController : MonoBehaviour
 
             NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, _radius, NavMesh.AllAreas);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             RGAnimator.SetBool("Floating", true);
+            GameManager.Instance.ResetCamZoom(2f);
             
 
             Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);

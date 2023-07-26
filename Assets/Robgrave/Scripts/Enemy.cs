@@ -450,8 +450,6 @@ public class Enemy : MonoBehaviour
                 PlayerController.Instance.EnemyHitsPlayer(ghostType);
             }
         }
-        
-        Debug.Log("ENEMY: " + other);
     }
 
     public void CaughtInLight()

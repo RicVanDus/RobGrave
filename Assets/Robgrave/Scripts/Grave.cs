@@ -21,11 +21,11 @@ public class Grave : Interactable
 
     [SerializeField] private Text _depthNumber;
 
-    Gravedirt _gravedirt;    
+    public Gravedirt _gravedirt;
 
     public bool playerIsDigging = false;
     public bool graveIsDifiling = false;
-    private bool graveIsDug = false;
+    public bool graveIsDug = false;
     private bool graveTouched = false;
     private bool graveDefiled = false;
     private bool _rotatedPlayer = false;
@@ -33,6 +33,9 @@ public class Grave : Interactable
     private GameObject _coffinLid;
     [HideInInspector] public GameObject _graveStone;
     private bool _gravestoneIsShaking = false;
+    [SerializeField] private GameObject _graveExplosion;
+    [SerializeField] private Transform _graveExplosionPos;
+    
 
     private Color _currentGraveStoneColor;
 
@@ -145,15 +148,20 @@ public class Grave : Interactable
                 _gravedirt.DirtHeight(currentDepth);
                 if (currentDepth >= maxDepth)
                 {
+                    Instantiate(_graveExplosion, _graveExplosionPos.position, Quaternion.identity, transform);
                     _coffinLid.SetActive(false);
                     PlayerController.Instance.IsDigging(false);
-                    graveIsDug = true;
+                    GameManager.Instance.ApplyCamShake(0.15f * maxDepth, 0.5f);
                     
-                    Color _defaultColor = GameManager.Instance.graveDefaultColor;
-                    SetGraveStoneColor(_defaultColor);
+                    GraveNotAvailable();
+                    
                     _gravedirt.DirtHeight(6);
 
                     SpawnLoot();
+                }
+                else
+                {
+                    GameManager.Instance.ApplyCamShake(0.033f * currentDepth, 0.2f);
                 }
             }
         }
@@ -168,7 +176,14 @@ public class Grave : Interactable
         diggingProgress = Mathf.Clamp(diggingProgress, 0.0f, diggingtTime);
     }
 
-
+    private void GraveNotAvailable()
+    {
+        graveIsDug = true;
+        Color _defaultColor = GameManager.Instance.graveDefaultColor;
+        SetGraveStoneColor(_defaultColor);
+    }
+    
+    
     private void SpawnLoot()
     {
         int spawnNr = Random.Range(17, 26);
@@ -214,6 +229,7 @@ public class Grave : Interactable
                 if (_rnd1 == _rnd2)
                 {
                     graveDefiled = true;
+                    GraveNotAvailable();
                     EnemyManager.Instance.SpawnEnemy(graveType);
                 }
 

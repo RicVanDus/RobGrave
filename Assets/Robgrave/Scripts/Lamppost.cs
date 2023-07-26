@@ -185,7 +185,7 @@ public class Lamppost : MonoBehaviour
             _playerIsInteracting = false;
             if (_lightStage > 0)
             {
-                _lightTimer -= Time.deltaTime/4;
+                _lightTimer -= Time.deltaTime/3;
                 if (_lightTimer > 0f)
                 {
                     if (_lightStage > (int)Mathf.Ceil(_lightTimer / _maxLightTime))

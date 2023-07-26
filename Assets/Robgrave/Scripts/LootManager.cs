@@ -28,7 +28,6 @@ public class LootManager : MonoBehaviour
     private List<GameObject> debugObjects = new List<GameObject>();
     
     public List<ValuableTemplate> valuables = new List<ValuableTemplate>();
-    [SerializeField] private GameObject _giftBox;
 
     [Header("Giftbox prefabs")] 
     [SerializeField] private GameObject _greenGiftbox;
@@ -277,7 +276,7 @@ public class LootManager : MonoBehaviour
     private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position, int id)
     {
         Vector3 _newPosition = position;
-        _newPosition.y = Random.Range(1f, 4f);
+        _newPosition.y = Random.Range(7f, 10f);
 
         Vector3 _newRotationEuler = new Vector3();
 

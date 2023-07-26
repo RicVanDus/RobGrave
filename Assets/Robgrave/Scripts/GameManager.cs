@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public Transform PlayerSpawn;
     public GameObject[] graves;
     public GameObject exitTrigger;
+    public CamControl CamControl;
     
     private float _gameTimeSeconds;
     private int _gameTimeMinutes;
@@ -362,5 +363,20 @@ public class GameManager : MonoBehaviour
         GameOverseer.Instance.currentLevel++;
         PlayerController.Instance.score -= thisLevel.valuablesRequired;
         GameOverseer.Instance.SetGameState(GameState.Extract);
+    }
+
+    public void ApplyCamShake(float strength, float duration)
+    {
+        CamControl.CamShake(duration, strength);
+    }
+
+    public void ApplyCamZoom(float fov, float duration)
+    {
+        CamControl.CameraZoom(fov, duration);
+    }
+    
+    public void ResetCamZoom(float duration)
+    {
+        CamControl.ResetCameraZoom(duration);
     }
 }

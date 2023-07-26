@@ -53,7 +53,7 @@ public class GUI_grave_01 : MonoBehaviour
             PlayerCanInteract = _grave.PlayerCanInteract;
             GraveDefiling = _grave.graveIsDifiling;
 
-            if (PlayerCanInteract || GraveDefiling || _grave.diggingProgress > 0f)
+            if (PlayerCanInteract && !_grave.graveIsDug || GraveDefiling || _grave.diggingProgress > 0f)
             {
                 UpdateUI();
 
@@ -66,7 +66,6 @@ public class GUI_grave_01 : MonoBehaviour
                     transform.localScale = Vector3.zero;
                     transform.DOScale(_defaultScale, 0.5f).SetEase(Ease.OutBounce);
                 }
-
             }
             else
             {
@@ -75,11 +74,6 @@ public class GUI_grave_01 : MonoBehaviour
                     _isVisible = false;
                     CanvasGroup _canvasGroup = transform.GetComponent<CanvasGroup>();
                     _canvasGroup.alpha = 0;
-                    /*
-                    transform.DOScale(0f, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
-                    {
-                        _canvasGroup.alpha = 0;
-                    }); */
                 }
             }
         }        

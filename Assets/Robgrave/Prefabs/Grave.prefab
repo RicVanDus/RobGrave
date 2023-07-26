@@ -122,6 +122,7 @@ Transform:
   - {fileID: 5991457716682259972}
   - {fileID: 8172804789391149097}
   - {fileID: 2430449618506658082}
+  - {fileID: 2354708757905735510}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -173,10 +174,17 @@ MonoBehaviour:
   defileTime: 5
   defileProgress: 0
   valuables: 0
+  hasGiftbox: 0
   _depthNumber: {fileID: 30400795296920960}
+  _gravedirt: {fileID: 5752513658659026849}
   playerIsDigging: 0
   graveIsDifiling: 0
+  graveIsDug: 0
   _coffin: {fileID: 3094361765532855192}
+  _graveStone: {fileID: 0}
+  _graveExplosion: {fileID: 5998318060681843128, guid: 3a35c3b6bccf4704d9fb2481250a629a,
+    type: 3}
+  _graveExplosionPos: {fileID: 2354708757905735510}
 --- !u!222 &5009355636719466912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -185,6 +193,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903353516931311575}
   m_CullTransparentMesh: 1
+--- !u!1 &938210154691845891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2354708757905735510}
+  m_Layer: 0
+  m_Name: graveExplosionPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2354708757905735510
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938210154691845891}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.29, z: -0.291}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2120800616688441079}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1254215546566375061
 GameObject:
   m_ObjectHideFlags: 0

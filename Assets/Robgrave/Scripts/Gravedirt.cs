@@ -10,8 +10,8 @@ public class Gravedirt : MonoBehaviour
     private float _dirtChangeSpeed = 0.5f;
     private float _dirtTimer = 0f;
     private bool _changeDirt = false;
-    private Color _dirtColorDefault = new Color(0.2830189f / 1.2f, 0.2144298f / 1.2f, 0.1559273f / 1.2f);
-    private Color _dirtColorInteract = new Color(0.2830189f * 1.2f, 0.2144298f * 1.2f, 0.1559273f * 1.2f);
+    private Color _dirtColorDefault;
+    private Color _dirtColorInteract;
     private int _colorId;
 
 
@@ -21,6 +21,9 @@ public class Gravedirt : MonoBehaviour
         graveDirt = gameObject.GetComponent<Renderer>().material;
         _colorId = Shader.PropertyToID("_Color");
         _buldgeHeight = 30f;
+
+        _dirtColorDefault = graveDirt.GetColor(_colorId);
+        _dirtColorInteract = _dirtColorDefault * 2;
     }
 
     // Update is called once per frame
