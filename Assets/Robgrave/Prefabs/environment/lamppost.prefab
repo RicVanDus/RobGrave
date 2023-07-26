@@ -189,7 +189,7 @@ MonoBehaviour:
   _spotLight: {fileID: 5671724590219137762}
   _collider: {fileID: 848436919}
   _UI: {fileID: 2993950234679286110}
-  _highlightColor: {r: 0.0039215684, g: 0.012791587, b: 0.02745098, a: 1}
+  _highlightColor: {r: 0.017142856, g: 0.02, b: 0.02, a: 1}
 --- !u!65 &5671724589945308914
 BoxCollider:
   m_ObjectHideFlags: 0

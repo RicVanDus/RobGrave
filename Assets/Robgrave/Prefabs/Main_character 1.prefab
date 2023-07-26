@@ -1237,14 +1237,14 @@ MonoBehaviour:
   grip: 10
   rotationSpeed: 20
   digSpeedMultiplier: 2
-  flashLightReach: 5
+  flashLightReach: 8
   currentLives: 3
   maxLives: 3
   score: 0
   invulnerableTime: 3
   _flashlightHits:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 256
   cam: {fileID: 0}
   goalAchieved: 0
   _playerMesh: {fileID: 6247912888295573260}
@@ -2213,7 +2213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8650861109941338116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 3.7, z: 0.01}
+  m_LocalPosition: {x: -0.02, y: 3.7, z: 2.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2232,7 +2232,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.97058326, b: 0.8254717, a: 1}
-  m_Intensity: 16.51
+  m_Intensity: 32
   m_Range: 8.27
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3391,6 +3391,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 2952c77455e068040b80986048ce11d5,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2952c77455e068040b80986048ce11d5,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 66bfc848372b7064084176609d5dd892, type: 2}
@@ -3398,6 +3403,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: cone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2952c77455e068040b80986048ce11d5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2952c77455e068040b80986048ce11d5, type: 3}
@@ -3407,3 +3417,29 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5425681432732789397}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1376021585
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155088123355813828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 2952c77455e068040b80986048ce11d5, type: 3}
+--- !u!114 &1376021586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155088123355813828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf711e59200e78488da8d09f5a1ed3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

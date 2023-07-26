@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private Color _defaultFlashlightColor;
     private Color _enemyFlashlightColor;
     private int _colorId;
+    private int _opacityId;
 
     [NonSerialized] public bool movementDisabled = false;
     [NonSerialized] public bool playerInteracting = false;
@@ -158,6 +159,7 @@ public class PlayerController : MonoBehaviour
          
          _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
          _colorId = Shader.PropertyToID("_Color");
+         _opacityId = Shader.PropertyToID("_Opacity");
          _defaultFlashlightColor = _flashlightConeMat.GetColor(_colorId);
         
         if (Instance == null)
@@ -701,17 +703,22 @@ public class PlayerController : MonoBehaviour
 
     public void FlashlightColor(int ghostType)
     {
+        float opacity = 0.2f;
+        
         if (ghostType == 0)
         {
-            _enemyFlashlightColor = _ghostColors[0];    
+            _enemyFlashlightColor = _ghostColors[0];
+            opacity = 0.7f;
         }
         else if (ghostType == 1)
         {
             _enemyFlashlightColor = _ghostColors[1];
+            opacity = 0.9f;
         }
         else if (ghostType == 2)
         {
             _enemyFlashlightColor = _ghostColors[2];
+            opacity = 0.9f;
         }
         else
         {
@@ -719,6 +726,7 @@ public class PlayerController : MonoBehaviour
         }
                 
         _flashlightConeMat.SetColor(_colorId, _enemyFlashlightColor);
+        _flashlightConeMat.SetFloat(_opacityId, opacity);
     }
 
     private void WhenPaused()

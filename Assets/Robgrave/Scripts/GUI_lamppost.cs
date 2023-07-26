@@ -18,7 +18,7 @@ public class GUI_lamppost : MonoBehaviour
     private Image _circle3;
 
     private Color _filledColor = new Color(0.9f, 1f, 0f);
-    private Color _defaultColor = new Color(0.75f, 0.75f, 0.75f);
+    private Color _defaultColor = new Color(0.70f, 0.75f, 0.3f);
     private Color _redColor = new Color(1f, 0f, 0f);
 
     [HideInInspector] public bool ShowGraphic = false;
