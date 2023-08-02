@@ -426,15 +426,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed && _canInteract)
+        if (!_isCaught)
         {
-            _interacting = true;
-        }
-        else if (context.canceled)
-        {
-            _interacting = false;
-            movementDisabled = false;
-            IsDigging(false);
+            if (context.performed && _canInteract)
+            {
+                _interacting = true;
+            }
+            else if (context.canceled)
+            {
+                _interacting = false;
+                movementDisabled = false;
+                IsDigging(false);
+            }    
         }
     }
 

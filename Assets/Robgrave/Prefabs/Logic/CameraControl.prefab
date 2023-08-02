@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 921928609}
   - component: {fileID: 921928606}
   - component: {fileID: 921928607}
+  - component: {fileID: 7956097887900582456}
   m_Layer: 0
   m_Name: WorldUI-cam
   m_TagString: Untagged
@@ -109,6 +110,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &7956097887900582456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921928605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3830c7e3a593e5499f1a1893bd1a23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainCam: {fileID: 6019174979236985444}
 --- !u!1 &6019174978684379468
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +236,7 @@ Camera:
   m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4063
+    m_Bits: 36831
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
