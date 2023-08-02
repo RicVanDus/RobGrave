@@ -11,6 +11,8 @@ public class Pickup : MonoBehaviour
     [Header("Light")]
     [SerializeField] private GameObject _pointLight;
     [SerializeField] private float _lightHeight;
+    [SerializeField] private GameObject _pickupFX;
+    
     private Vector3 _lightPos;
     private Rigidbody _rigidbody;
     private bool _physicsEnabled = true;
@@ -60,15 +62,21 @@ public class Pickup : MonoBehaviour
         {
             PlayerController.Instance.AddScore(value);
             LootManager.Instance.ClearLootSpot(id);
+            Instantiate(_pickupFX, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            
         }
         else if (other.tag == "Enemy")
         {
             Enemy _enemy = other.GetComponent<Enemy>();
             _enemy.PickUpValuable(value);
             LootManager.Instance.ClearLootSpot(id);
+            Instantiate(_pickupFX, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+            
         }
+
+        
     }
 
     private void PositionPointLight()

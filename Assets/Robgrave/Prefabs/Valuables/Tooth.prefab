@@ -105,6 +105,8 @@ MonoBehaviour:
   objectName: 
   _pointLight: {fileID: 0}
   _lightHeight: 0.3
+  _pickupFX: {fileID: 1167818640760515615, guid: fdd10ed6268d1e741b5bbbb7cfa4fd03,
+    type: 3}
 --- !u!54 &5156250944449183570
 Rigidbody:
   m_ObjectHideFlags: 0
