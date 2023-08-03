@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     public float invulnerableTime = 3f;
     [NonSerialized] public int preScore;
     [SerializeField] private LayerMask _flashlightHits;
+    private int _scoreMultiplier = 0;
+    private int _scorePickupCounter = 0;
+    
 
     [Header("Camera")]
     public Camera cam;
@@ -383,7 +386,11 @@ public class PlayerController : MonoBehaviour
 
     public void AddScore(int value)
     {
-        preScore += value;
+        //multiplier
+        float multiplier = 1f + (0.1f * _scoreMultiplier);
+        int newValue = (int)MathF.Ceiling(value * multiplier); 
+        preScore += newValue;
+        
         scoreAddingTimer = 0f;
         Vector3 _spawnPos = new Vector3(transform.position.x, transform.position.y + 3f, transform.position.z);
 
@@ -421,7 +428,14 @@ public class PlayerController : MonoBehaviour
         GameObject _popupText = Instantiate(valuePopup, _spawnPos, Quaternion.identity);
         _popupText.transform.localScale = _newScale * Vector3.one;
         ValuePopup _thisPopup = _popupText.GetComponent<ValuePopup>();
-        _thisPopup.PopUpScore(value, value>0);
+        _thisPopup.PopUpScore(newValue, value>0, _scoreMultiplier);
+
+        _scorePickupCounter++;
+        if (_scorePickupCounter >= 5)
+        {
+            _scoreMultiplier++;
+            _scorePickupCounter = 0;
+        }
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -478,6 +492,8 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(AddingPreScoreToScore(preScore));
                 preScore = 0;
+                _scorePickupCounter = 0;
+                _scoreMultiplier = 0;
             }
         }
         else if (preScore < 0)

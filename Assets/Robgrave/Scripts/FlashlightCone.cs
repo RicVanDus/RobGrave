@@ -11,7 +11,6 @@ public class FlashlightCone : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             var nme = other.GetComponent<Enemy>();
-            nme.CaughtInLight();
             PlayerController.Instance.FlashlightColor(nme.ghostType);
         }
     }

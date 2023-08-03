@@ -3395,6 +3395,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2952c77455e068040b80986048ce11d5,
+        type: 3}
+      propertyPath: m_TagString
+      value: LightCollider
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2952c77455e068040b80986048ce11d5, type: 3}
 --- !u!1 &5155088123355813828 stripped

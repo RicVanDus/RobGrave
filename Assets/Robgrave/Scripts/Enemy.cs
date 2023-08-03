@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
     
     private void Start()
     {
-       _debugger = Instantiate<GameObject>(_debugSphere);
+       //_debugger = Instantiate<GameObject>(_debugSphere);
        _player = GameObject.FindGameObjectWithTag("Player");
        _navAgent = GetComponent<NavMeshAgent>();
         

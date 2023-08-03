@@ -9,20 +9,7 @@ public class ValuePopup : MonoBehaviour
    
     public Text valueText;
     
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void PopUpScore(int score, bool isPositive)
+    public void PopUpScore(int score, bool isPositive, int multiplier)
     {
         string _text;
         Color _color = new Color(1f, 1f, 0f);
@@ -39,6 +26,11 @@ public class ValuePopup : MonoBehaviour
 
         _text += score.ToString();
 
+        if (multiplier > 0)
+        {
+            _text += " (+" + multiplier.ToString() + "0%)";
+        }
+
         valueText.text = _text;
         valueText.color = _color;
 
@@ -52,9 +44,6 @@ public class ValuePopup : MonoBehaviour
 
     private void Kill()
     {
-        
         Destroy(gameObject);
-
-       
     }
 }
