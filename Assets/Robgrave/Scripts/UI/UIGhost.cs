@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+
+// do all ghost type shit here, check 
 
 public class UIGhost : MonoBehaviour
 {
@@ -12,28 +15,110 @@ public class UIGhost : MonoBehaviour
     private Material _ghostMat;
     private int _baseColorId;
 
+    public int _ghostType = 999;
+    public Enemy enemy;
+
     private readonly float _progressScaleMinY = 0.1f;
     private readonly float _progressScaleMaxY = 1.35f;
     private readonly float _progressPosMinY = 0.68f;
-    private readonly float _progressPosMaxY = 1f;
+    private readonly float _progressPosMaxY = 0f;
+
+    private bool _enemyIsSet = false;
+
+    private WaitForSeconds _wait02 = new(0.2f);
 
     private void Awake()
     {
         _ghostMat = _mesh.GetComponent<Renderer>().materials[1];
         _baseColorId = Shader.PropertyToID("_BaseColor");
     }
-    
-    //create methods for making progress bar fill and create method for changing into new form (when rotated backwards: change color of light and mat)
-    // 
-    
-    
-    void Start()
+
+    private void Start()
     {
-        
+        StartCoroutine(SoftTick());
     }
 
-    void Update()
+    private IEnumerator SoftTick()
     {
+        do
+        {
+            if (ChangedGhostType())
+            {
+                ChangeGhostType();
+            }
+            
+            UpdateProgressBar();
+
+            yield return _wait02;
+        } while (_enemyIsSet);
+    }
+
+    private bool ChangedGhostType()
+    {
+        if (enemy.ghostType == _ghostType)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void SetGhost(Enemy nme)
+    {
+        enemy = nme;
+        _enemyIsSet = true;
+    }
+
+    private void ChangeGhostType()
+    {
+        // animate and change color
+        _ghostType = enemy.ghostType;
         
+        
+        ChangeGhostColor();
+    }
+    
+    
+    private void ChangeGhostColor()
+    {
+        Color newColor = Color.black;
+
+        switch (_ghostType)
+        {
+            case 0 :
+                newColor = EnemyManager.Instance.GhostType1;
+                break;
+            case 1 :
+                newColor = EnemyManager.Instance.GhostType2;
+                break;
+            case 2 :
+                newColor = EnemyManager.Instance.GhostType3;
+                break;
+            case 3 :
+                newColor = EnemyManager.Instance.GhostType4;
+                break;
+        }
+        
+        _ghostMat.SetColor(_baseColorId, newColor);
+        _pointLight.color = newColor;
+    }
+
+    private void UpdateProgressBar()
+    {
+        Vector3 Pos = _progress.transform.localPosition;
+        Vector3 Scale = _progress.transform.localScale;
+
+        float nmeProgress = enemy.ghostEvolveProgress;
+
+        float yScale = Mathf.Lerp(_progressScaleMinY, _progressScaleMaxY, nmeProgress);
+        float yPos = Mathf.Lerp(_progressPosMinY, _progressPosMaxY, nmeProgress);
+
+        Pos.y = yPos;
+        Scale.y = yScale;
+
+        _progress.transform.localPosition = Pos;
+        _progress.transform.localScale = Scale;
     }
 }

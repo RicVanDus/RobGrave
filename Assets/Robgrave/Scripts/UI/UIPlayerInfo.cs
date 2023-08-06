@@ -24,14 +24,14 @@ public class UIPlayerInfo : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.Instance.GettingCaught += UpdateLives;
-        EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
+        //EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
         GameOverseer.Instance.Playing += UpdateAll;
     }
 
     private void OnDisable()
     {
         PlayerController.Instance.GettingCaught -= UpdateLives;
-        EnemyManager.Instance.EnemyUpdate -= UpdateGhosts;
+        //EnemyManager.Instance.EnemyUpdate -= UpdateGhosts;
         GameOverseer.Instance.Playing -= UpdateAll;
     }
 
@@ -46,6 +46,7 @@ public class UIPlayerInfo : MonoBehaviour
         UpdateTime();
     }
 
+    /*
     public void UpdateGhosts()
     {
         int nbChildren = graphicGhostsTarget.childCount;
@@ -87,7 +88,7 @@ public class UIPlayerInfo : MonoBehaviour
             _ghostFill.fillAmount = _ghost.ghostEvolveProgress;
         }
     }
-
+*/
     public void UpdateScore()
     {
         score.text = PlayerController.Instance.score.ToString();
@@ -177,7 +178,7 @@ public class UIPlayerInfo : MonoBehaviour
     public void UpdateAll()
     {
         UpdateLives();
-        UpdateGhosts();
+       // UpdateGhosts();
         UpdateScore();
     }
 }
