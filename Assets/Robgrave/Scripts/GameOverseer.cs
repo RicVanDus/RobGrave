@@ -33,6 +33,9 @@ public class GameOverseer : MonoBehaviour
     [SerializeField] private GameObject extractScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseMenu;
+    
+    public LevelProperties[] levels;
+    public LevelProperties thisLevel;
 
     public int score = 0;
     public int currentLives = 0;
@@ -183,15 +186,16 @@ public class GameOverseer : MonoBehaviour
     {
         DisableAllOverlays();
         UnloadAllScenes();
-        
-    StartCoroutine(QueueScene("MainMenu", true, false));
+        StartCoroutine(QueueScene("MainMenu", true, false));
     }
     
     private void LoadGame()
     {
         loadingScreen.SetActive(true);
         UnloadAllScenes();
-        StartCoroutine(QueueScene("Graveyard_01", true, true));
+        thisLevel = levels[currentLevel];
+        
+        StartCoroutine(QueueScene(thisLevel.map.ToString(), true, true));
     }
     
     //Unloads all scenes except GAME scene

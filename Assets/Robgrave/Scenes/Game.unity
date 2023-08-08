@@ -3149,6 +3149,10 @@ MonoBehaviour:
   extractScreen: {fileID: 1493793234}
   gameOverScreen: {fileID: 449341372}
   pauseMenu: {fileID: 1374860231}
+  levels:
+  - {fileID: 11400000, guid: 34edcf8fe9236224baf303c204b15fc1, type: 2}
+  - {fileID: 11400000, guid: af54f76dd1228c04fb7f7e5d4b04c79c, type: 2}
+  thisLevel: {fileID: 0}
   score: 0
   currentLives: 0
   maxLives: 0

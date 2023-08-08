@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Level attributes")]
     public int currentLevel;
-    public LevelProperties[] levels;
     public LevelProperties thisLevel;
     public Grave cryptKeyGrave;
     
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        thisLevel = levels[GameOverseer.Instance.currentLevel];
+        thisLevel = GameOverseer.Instance.thisLevel;
 
         _gameTimeHours = thisLevel.startHours;
         _gameTimeMinutes = thisLevel.startMinutes;

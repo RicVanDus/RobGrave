@@ -22,7 +22,7 @@ MonoBehaviour:
   graveType2: 3
   timeBetweenLightning: 30
   startHours: 11
-  startMinutes: 50
+  startMinutes: 52
   startSeconds: 0
   weather: 0
   map: 0
