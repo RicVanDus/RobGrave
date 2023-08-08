@@ -18,7 +18,7 @@ public class UIGhost : MonoBehaviour
     public int _ghostType = 999;
     public Enemy enemy;
 
-    private readonly float _progressScaleMinY = 0.1f;
+    private readonly float _progressScaleMinY = 0f;
     private readonly float _progressScaleMaxY = 1.35f;
     private readonly float _progressPosMinY = 0.68f;
     private readonly float _progressPosMaxY = 0f;
@@ -75,12 +75,19 @@ public class UIGhost : MonoBehaviour
     {
         // animate and change color
         _ghostType = enemy.ghostType;
+
+        Vector3 defaultRotation = transform.eulerAngles;
+        Vector3 newRotation = defaultRotation;
+        newRotation.y += 180f;
         
-        
-        ChangeGhostColor();
+        transform.DORotate(newRotation, 0.7f).SetEase(Ease.InBounce).OnComplete(() =>
+        {
+            newRotation.y += 180f; 
+            ChangeGhostColor();
+            transform.DORotate(newRotation, 0.7f).SetEase(Ease.InBounce);
+        });    
     }
-    
-    
+
     private void ChangeGhostColor()
     {
         Color newColor = Color.black;

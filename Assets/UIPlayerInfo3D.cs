@@ -14,11 +14,6 @@ public class UIPlayerInfo3D : MonoBehaviour
     private int _ghostCount = 0;
 
     
-
-    private void Start()
-    {
-    }
-
     private void OnEnable()
     {
         //PlayerController.Instance.GettingCaught += UpdateLives;
@@ -53,7 +48,7 @@ public class UIPlayerInfo3D : MonoBehaviour
 
         for (int i = 0; i < _ghosts.Count; i++)
         {
-            _ghostGraphicPosition.x = -180f +  (-0.75f * i);
+            _ghostGraphicPosition.x = -180f +  (-0.55f * i);
             var _ghostGraph = Instantiate(_ghostGraphic, _ghostParent);
             _ghostGraph.transform.localPosition = _ghostGraphicPosition;
             var ghostIcon = _ghostGraph.GetComponent<UIGhost>();

@@ -410,7 +410,7 @@ public class Enemy : MonoBehaviour
 
         ghostEvolveProgress = score / _ghostEvolveScore;
 
-        EnemyManager.Instance.UpdateUI();
+        //EnemyManager.Instance.UpdateUI();
     }
 
     private void ShowEnemy(bool show)
