@@ -286,7 +286,6 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        EnemyManager.Instance.UpdateUI();
         _navAgent.speed = moveSpeed;
     }
     
@@ -296,10 +295,15 @@ public class Enemy : MonoBehaviour
         Vector3 myPos = transform.position;
         
         _distanceToPlayer = Vector3.Distance(myPos, playerPos);
-
-        if (_lightTriggered && _visible == false || ghostType == 3)
+        
+        
+        //This is wrong.
+        // it should check for lighttriggered
+        
+        if (_lightTriggered || ghostType == 3)
         {
-            ShowEnemy(true);
+            if (!_visible)
+                ShowEnemy(true);
         }
         else
         {

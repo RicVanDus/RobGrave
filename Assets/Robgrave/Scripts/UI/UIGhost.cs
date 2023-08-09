@@ -91,6 +91,7 @@ public class UIGhost : MonoBehaviour
     private void ChangeGhostColor()
     {
         Color newColor = Color.black;
+        float lightIntensity = 0.17f;
 
         switch (_ghostType)
         {
@@ -99,6 +100,7 @@ public class UIGhost : MonoBehaviour
                 break;
             case 1 :
                 newColor = EnemyManager.Instance.GhostType2;
+                lightIntensity = 0.34f;
                 break;
             case 2 :
                 newColor = EnemyManager.Instance.GhostType3;
@@ -110,6 +112,7 @@ public class UIGhost : MonoBehaviour
         
         _ghostMat.SetColor(_baseColorId, newColor);
         _pointLight.color = newColor;
+        _pointLight.intensity = lightIntensity;
     }
 
     private void UpdateProgressBar()
