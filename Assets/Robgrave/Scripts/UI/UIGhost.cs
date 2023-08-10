@@ -79,13 +79,19 @@ public class UIGhost : MonoBehaviour
         Vector3 defaultRotation = transform.eulerAngles;
         Vector3 newRotation = defaultRotation;
         newRotation.y += 180f;
-        
-        transform.DORotate(newRotation, 0.7f).SetEase(Ease.InBounce).OnComplete(() =>
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.SetDelay(1f);
+        seq.Delay();
+        seq.Append(transform.DORotate(newRotation, 0.7f).SetEase(Ease.InBounce).OnComplete(() =>
         {
-            newRotation.y += 180f; 
+            newRotation.y += 180f;
             ChangeGhostColor();
-            transform.DORotate(newRotation, 0.7f).SetEase(Ease.InBounce);
-        });    
+            transform.DORotate(newRotation, 0.7f).SetEase(Ease.OutBounce);
+        }));
+
+        seq.Play();
     }
 
     private void ChangeGhostColor()

@@ -12,7 +12,6 @@ public class UIPlayerInfo3D : MonoBehaviour
     private List<Enemy> _ghosts = new ();
 
     private int _ghostCount = 0;
-
     
     private void OnEnable()
     {
@@ -32,27 +31,24 @@ public class UIPlayerInfo3D : MonoBehaviour
     {
         _ghosts = EnemyManager.Instance.enemies;
         
-        //clear
         int nbChildren = _ghostParent.childCount;
 
-        if (nbChildren > 0)
+        if (nbChildren != _ghosts.Count)
         {
-            for (int i = nbChildren - 1; i >= 0; i--)
-            {
-                Destroy(_ghostParent.GetChild(i).gameObject);
-            }    
-        }
-        
-        //new icons
-        Vector3 _ghostGraphicPosition = new (-180f, 4.7f, 11f);
+            //new icons
+            Vector3 _ghostGraphicPosition = new (-180f, 4.7f, 11f);
 
-        for (int i = 0; i < _ghosts.Count; i++)
-        {
-            _ghostGraphicPosition.x = -180f +  (-0.55f * i);
-            var _ghostGraph = Instantiate(_ghostGraphic, _ghostParent);
-            _ghostGraph.transform.localPosition = _ghostGraphicPosition;
-            var ghostIcon = _ghostGraph.GetComponent<UIGhost>();
-            ghostIcon.SetGhost(_ghosts[i]);
+            for (int i = 0; i < _ghosts.Count; i++)
+            {
+                if (i >= nbChildren)
+                {
+                    _ghostGraphicPosition.x = -180f +  (-0.55f * i);
+                    var _ghostGraph = Instantiate(_ghostGraphic, _ghostParent);
+                    _ghostGraph.transform.localPosition = _ghostGraphicPosition;
+                    var ghostIcon = _ghostGraph.GetComponent<UIGhost>();
+                    ghostIcon.SetGhost(_ghosts[i]);    
+                }
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Users;
 using Random = UnityEngine.Random;
 
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private float vMovement;
     [NonSerialized] public bool _interacting = false;
     [NonSerialized] public bool _using = false;
+    [SerializeField] private Transform _cameraBounds;
     
     private float scoreAddingTimer = 0f;
     private float scoreAddingTime = 3f;
@@ -100,6 +102,9 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance { get; private set; }
 
+    private Vector2 _camBoundsX;
+    private Vector2 _camBoundsY;
+    
     private void OnEnable()
     {
         move = playerInputs.Player.Move;
@@ -196,6 +201,12 @@ public class PlayerController : MonoBehaviour
         _ghostColors[0] = EnemyManager.Instance.GhostType1;
         _ghostColors[1] = EnemyManager.Instance.GhostType2;
         _ghostColors[2] = EnemyManager.Instance.GhostType3;
+        
+        _camBoundsX.x = (_cameraBounds.transform.localScale.x / 2) + _cameraBounds.transform.position.x;
+        _camBoundsX.y = (_cameraBounds.transform.localScale.x / 2 * -1) + _cameraBounds.transform.position.x;
+
+        _camBoundsY.x = (_cameraBounds.transform.localScale.z / 2) + _cameraBounds.transform.position.z - 10f;
+        _camBoundsY.y = (_cameraBounds.transform.localScale.z / 2 * -1) + _cameraBounds.transform.position.z;        
     }
 
     private void Update()
@@ -636,28 +647,33 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < _times; i++)
         {
             Vector3 _newPosition = new Vector3();
-            Vector3 _randomRadius = new Vector3();
-            
+            Vector2 _randomRadius = new Vector2();
+            Vector2 _playerPos;
+            _playerPos.x = Mathf.Clamp(transform.position.x, _camBoundsX.x, _camBoundsX.y);
+            _playerPos.y = Mathf.Clamp(transform.position.z, _camBoundsY.x, _camBoundsY.y);
+
             do
             {
-                _randomRadius = Random.insideUnitSphere * _radius + (Vector3.one * _innerRadius);
-                if (Vector3.Distance(transform.position, _randomRadius) > _innerRadius && Vector3.Distance(_randomRadius, GameManager.Instance.PlayerSpawn.position) > _innerRadius) 
+                _randomRadius = Random.insideUnitCircle * _radius + _playerPos;
+                _newPosition.x = _randomRadius.x;
+                _newPosition.z = _randomRadius.y;
+                float distanceFromPlayer = Vector3.Distance(transform.position, _newPosition);
+                float distanceFromSpawn = Vector3.Distance(GameManager.Instance.PlayerSpawn.position, _newPosition);
+                    
+                if (distanceFromPlayer > _innerRadius && distanceFromSpawn > _innerRadius) 
                 {
                     Debug.Log("Distance from player pos: "+ Vector3.Distance(transform.position, _randomRadius)+ "-- Spawn point ");
                     _approvedSpot = true;    
                 }
             } while (_approvedSpot == false);
-
-            _newPosition = transform.position + _randomRadius;
             
             _newPosition.y = 0f;
 
-            NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, _radius, NavMesh.AllAreas);
+            NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas);
 
             yield return new WaitForSeconds(2f);
             RGAnimator.SetBool("Floating", true);
             GameManager.Instance.ResetCamZoom(2f);
-            
 
             Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
 
