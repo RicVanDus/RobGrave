@@ -1246,6 +1246,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   cam: {fileID: 0}
+  _cameraBounds: {fileID: 0}
   goalAchieved: 0
   _playerMesh: {fileID: 6247912888295573260}
   _playerCapMesh: {fileID: 2710953266310807703}
@@ -3408,20 +3409,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5425681432732789397}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1376021585
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5155088123355813828}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2534964839176971238, guid: 2952c77455e068040b80986048ce11d5, type: 3}
 --- !u!114 &1376021586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3434,3 +3421,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf711e59200e78488da8d09f5a1ed3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1098176819084599093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155088123355813828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4741923, y: 0.94838387, z: 0.92517835}
+  m_Center: {x: 0.23709613, y: 0.00000002261756, z: 0.4648778}

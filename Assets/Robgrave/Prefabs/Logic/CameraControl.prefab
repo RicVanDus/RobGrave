@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  camSpeed: 3
+  camSpeed: 2.3
   CameraBounds: {fileID: 0}
 --- !u!1 &6019174979236985442
 GameObject:
