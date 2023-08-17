@@ -36,7 +36,7 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.transform.position.y < 2f)
+        if (this.gameObject.transform.position.y < 1f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
             physicsDisableTimer += Time.deltaTime;
@@ -45,6 +45,7 @@ public class Pickup : MonoBehaviour
                 _physicsEnabled = false;
                 _rigidbody.freezeRotation = true;
                 _rigidbody.useGravity = false;
+                _rigidbody.isKinematic = true;
             }
         }
         
@@ -73,10 +74,7 @@ public class Pickup : MonoBehaviour
             LootManager.Instance.ClearLootSpot(id);
             Instantiate(_pickupFX, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
-            
         }
-
-        
     }
 
     private void PositionPointLight()
