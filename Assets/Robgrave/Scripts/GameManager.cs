@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public string gameTime;
     private bool _witchingHour = false;
 
-    public Grave[] birdGraves = new Grave[2];
+    public Grave[] birdGraves;
     
     private void OnEnable()
     {
@@ -65,6 +65,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        birdGraves = new Grave[3];
     }
 
     private void Start()
@@ -352,17 +354,16 @@ public class GameManager : MonoBehaviour
             if (!thisGrave.hasGiftbox)
             {
                 cryptKeyGrave = thisGrave;
+                birdGraves[2] = thisGrave;
                 _assigned = true;
-                birdGraves[2] = cryptKeyGrave;
             }
 
         } while (!_assigned);
 
-
-        int birdGraveInd = 2;
-        
         //assign other birdgraves
         _assigned = false;
+        int birdGraveInd = 2;
+        
         do
         {
             int rndIndex = Random.Range(0, graves.Length);
@@ -372,7 +373,7 @@ public class GameManager : MonoBehaviour
             float distance =
                 Vector3.Distance(thisGrave.transform.position, birdGraves[birdGraveInd].transform.position); 
 
-            if (distance > 20f)
+            if (distance > 30f)
             {
                 birdGraveInd--;
                 birdGraves[birdGraveInd] = thisGrave;
@@ -384,7 +385,6 @@ public class GameManager : MonoBehaviour
             }
 
         } while (!_assigned);
-        
     }
 
     public void PlayerExtract()

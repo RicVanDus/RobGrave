@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _camBoundsX;
     private Vector2 _camBoundsY;
+
+    [SerializeField] private GameObject _coinParticles; 
     
     private void OnEnable()
     {
