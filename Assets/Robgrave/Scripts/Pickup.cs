@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour
     private float physicsDisableTime = 2f;
 
     private bool _noLight;
+    private bool _visible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +37,14 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.gameObject.transform.position.y < 1f)
+        if (!_visible && transform.position.y < 1f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
-            physicsDisableTimer += Time.deltaTime;
+            _visible = true;
+        }
+        
+        if (_visible) {
+             physicsDisableTimer += Time.deltaTime;
             if (physicsDisableTimer > physicsDisableTime && _physicsEnabled)
             {
                 _physicsEnabled = false;

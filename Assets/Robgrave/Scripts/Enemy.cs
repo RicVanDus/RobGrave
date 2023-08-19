@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 public class Enemy : MonoBehaviour
 {
@@ -173,7 +175,7 @@ public class Enemy : MonoBehaviour
 
         if (_reachedDestination)
         {
-            if (_huntingPlayer || _distanceToPlayer > 20f)
+            if (_huntingPlayer || _distanceToPlayer > 20f || ghostType == 3)
             {
                 _searchingNewDestination = true;
             }
@@ -328,8 +330,16 @@ public class Enemy : MonoBehaviour
         _newPosition = _originRadius + _randomRadius;
         _newPosition.y = 0f;
 
-        NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, searchAreaSize, NavMesh.AllAreas);
-
+        float searchAreaSize2 = searchAreaSize;
+        
+        if (ghostType == 3)
+        {
+            _newPosition = Vector3.zero;
+            searchAreaSize2 = 100f;
+        }
+        
+        NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, searchAreaSize, NavMesh.AllAreas);    
+        
         return hit.position;
     }
 
