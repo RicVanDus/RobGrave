@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 // TODO: make UI variable and handle visibility from this script (including Tween anim)
@@ -35,7 +37,7 @@ public class Grave : Interactable
     private bool _gravestoneIsShaking = false;
     [SerializeField] private GameObject _graveExplosion;
     [SerializeField] private Transform _graveExplosionPos;
-    
+    [NonSerialized] public Transform birdPos;
 
     private Color _currentGraveStoneColor;
 
@@ -50,8 +52,6 @@ public class Grave : Interactable
         _gravedirt = GetComponentInChildren<Gravedirt>();
         _coffinLid = _coffin.transform.GetChild(0).gameObject;
         _graveStone = transform.Find("gravestone").gameObject;
-        
-
     }
 
     protected override void Update()

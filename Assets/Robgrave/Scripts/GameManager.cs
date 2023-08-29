@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [Header("Misc objects")] 
     public GameObject steppingStone;
     public Transform envStones;
+    public GraveBird graveBird;
 
     [Header("Player attributes")]
     public Transform PlayerSpawn;
@@ -50,13 +51,6 @@ public class GameManager : MonoBehaviour
 
     public Grave[] birdGraves;
     
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
-    {
-    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -85,8 +79,7 @@ public class GameManager : MonoBehaviour
             GameTime();
         }
     }
-
-
+    
     // Assign more purple and blue graves if the score threshold calls for it (total nr of graves / threshold value)
     // Number of purple and blue graves that gets assigned to random graves. However: the graves closer to the north wall have a higher chance of becoming a blue/purple grave!
     // For instance: graves ID1 & ID2 have a 10% chance of becoming a purple grave
@@ -183,24 +176,26 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < graves.Length; i++)
         {
             Grave _grave = graves[i].GetComponent<Grave>();
-            GameObject _graveStone = graves[i].transform.Find("gravestone").gameObject;            
-
-
+            GameObject _graveStone = graves[i].transform.Find("gravestone").gameObject;
+            
             //Pick a random mesh
             GameObject _randomGraveStone = graveStones[Random.Range(0, graveStones.Length)];
-            Mesh _randomMesh = _randomGraveStone.GetComponent<MeshFilter>().sharedMesh;
             Material _randomMeshMaterial = _randomGraveStone.GetComponent<MeshRenderer>().sharedMaterial;
             Color _graveColor = graveType0Color;
-
+            
             Vector3 _gravePos = new Vector3(_graveStone.transform.position.x, -0.5f, _graveStone.transform.position.z);
             Vector3 _graveSize = new Vector3(1.3f, 1.3f, 1.3f);
             Vector3 _graveRotation = new Vector3(Random.Range(-3.0f, 3.0f), 0f, Random.Range(-6.0f, 6.0f));
 
-            _graveStone.GetComponent<MeshFilter>().mesh = _randomMesh;
-            _graveStone.GetComponent<MeshRenderer>().material = _randomMeshMaterial;
-            _graveStone.transform.position = _gravePos;
-            _graveStone.transform.localScale = _graveSize;
-            _graveStone.transform.Rotate(_graveRotation);
+            var _newGraveStone = Instantiate(_randomGraveStone, _gravePos, _graveStone.transform.rotation, _grave.transform);
+            _newGraveStone.transform.Rotate(_graveRotation);
+            _newGraveStone.transform.localScale = _graveSize;
+            _newGraveStone.GetComponent<MeshRenderer>().material = _randomMeshMaterial;
+            
+            //destroy placeholder, set values with new gravestone
+            Destroy(_graveStone);
+            _grave._graveStone = _newGraveStone;
+            _grave.birdPos = _newGraveStone.transform.GetChild(0).transform;
             
             switch (_grave.graveType)
             {
@@ -215,8 +210,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            _graveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _graveColor);
-
+            _newGraveStone.GetComponent<MeshRenderer>().material.SetColor("_Color", _graveColor);
 
             // Add the GraveUI & buttonPrompt
 
@@ -360,7 +354,7 @@ public class GameManager : MonoBehaviour
 
         } while (!_assigned);
 
-        //assign other birdgraves
+        //assign other birdgraves with a certain minimal distance to the last
         _assigned = false;
         int birdGraveInd = 2;
         
@@ -373,7 +367,7 @@ public class GameManager : MonoBehaviour
             float distance =
                 Vector3.Distance(thisGrave.transform.position, birdGraves[birdGraveInd].transform.position); 
 
-            if (distance > 30f)
+            if (distance > 40f)
             {
                 birdGraveInd--;
                 birdGraves[birdGraveInd] = thisGrave;
@@ -385,6 +379,12 @@ public class GameManager : MonoBehaviour
             }
 
         } while (!_assigned);
+
+        if (graveBird)
+        {
+            graveBird.birdGraves = birdGraves;
+            graveBird.SetBirdStartingPosition();
+        }
     }
 
     public void PlayerExtract()

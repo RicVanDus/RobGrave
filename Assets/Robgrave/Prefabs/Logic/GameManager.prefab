@@ -111,15 +111,39 @@ MonoBehaviour:
   debugMode: 0
   showAIpath: 1
   currentLevel: 1
-  levels: []
   thisLevel: {fileID: 0}
+  cryptKeyGrave: {fileID: 0}
   graveType0Color: {r: 0.3332973, g: 0.49056602, b: 0.33043787, a: 0}
   graveType1Color: {r: 0.27981487, g: 0.43822756, b: 0.5660378, a: 0}
   graveType2Color: {r: 0.5377358, g: 0.34699178, b: 0.53326523, a: 0}
   graveDefaultColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 0}
   graveWarningColor: {r: 0.5377358, g: 0.23031326, b: 0.23031326, a: 0}
   graveStones:
-  - {fileID: 919132149155446097, guid: 5d91640c61dedbb40b9cbdd7a5994b79, type: 3}
-  - {fileID: 919132149155446097, guid: 5e5835c0f07082b429361f3c76cf7b5c, type: 3}
+  - {fileID: 5536796196516276427, guid: 9203a533feac5034ea2563df64038cb8, type: 3}
+  - {fileID: 7403218206968944202, guid: ec1a66e2063cf294e8b0edf502afd803, type: 3}
+  - {fileID: 3044044890517903890, guid: 251ebd2f17568f346aa862db9a1c056f, type: 3}
+  - {fileID: 4525911584050221282, guid: 437251c7e8c19034da335be77771f951, type: 3}
+  - {fileID: 1679752909886055961, guid: ec4507488f0ad274da100187e6eb5d1b, type: 3}
+  - {fileID: 4172947196458658431, guid: a8e0b66ec42d3ec4b8b68020c0473636, type: 3}
+  - {fileID: 8982069168371988362, guid: 8adfe14c27191814baa216a4d91fe1f1, type: 3}
+  - {fileID: 2341198661933486203, guid: 5d3b79822b9cece41963ea5a1d726878, type: 3}
+  - {fileID: 6630538072271900709, guid: 64c6fd0d54246a641a0c485601cc92d9, type: 3}
+  - {fileID: 8930843754151213001, guid: ec28e2664f48b8f41900ca13950a5947, type: 3}
+  - {fileID: 6923540628752144746, guid: c954efedea9132941bddc3a710cd32cd, type: 3}
+  - {fileID: 5619012351660962921, guid: 807cfdd35f9fddb4da26d28d55dba3c3, type: 3}
+  - {fileID: 5272450647853757185, guid: d2fcaaaec6322b444ad319cc4f3a46b6, type: 3}
+  - {fileID: 6978446235362104216, guid: b4349e05e2d6e40498aa4982c1fbf988, type: 3}
+  - {fileID: 1089216565235173058, guid: e8dc88e0a2daa2d48853cde8b0b615e8, type: 3}
+  GraveUI: {fileID: 0}
+  GraveUI2: {fileID: 0}
+  GraveUI3: {fileID: 0}
+  ButtonPrompt: {fileID: 0}
+  steppingStone: {fileID: 0}
+  envStones: {fileID: 0}
+  graveBird: {fileID: 0}
   PlayerSpawn: {fileID: 6543004079648792358}
   graves: []
+  exitTrigger: {fileID: 0}
+  CamControl: {fileID: 0}
+  gameTime: 
+  birdGraves: []
