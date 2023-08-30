@@ -11,6 +11,9 @@ public class Crypt : MonoBehaviour
     [SerializeField] public Transform _moveTo;
     [SerializeField] private GameObject _blocker;
     [SerializeField] private GameObject _lock;
+    [SerializeField] private GameObject _lightcone;
+    [SerializeField] private GameObject _doorR;
+    [SerializeField] private GameObject _doorL;
 
 
     private void OnEnable()
@@ -29,6 +32,11 @@ public class Crypt : MonoBehaviour
         {
             TeleportPlayer();
         }
+    }
+
+    private void Start()
+    {
+        _lightcone.SetActive(false);
     }
 
     private void TeleportPlayer()
@@ -51,5 +59,8 @@ public class Crypt : MonoBehaviour
     {
         _blocker.SetActive(false);
         _lock.SetActive(false);
+        _doorL.transform.localEulerAngles = new Vector3(0f,-130f,0f);
+        _doorR.transform.localEulerAngles = new Vector3(0f,-20f,0f);
+        _lightcone.SetActive(true);
     }
 }
