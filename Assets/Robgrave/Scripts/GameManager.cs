@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
     private bool _witchingHour = false;
 
     public Grave[] birdGraves;
+
+    public Action cryptKeyObtained;
     
 
     // Start is called before the first frame update

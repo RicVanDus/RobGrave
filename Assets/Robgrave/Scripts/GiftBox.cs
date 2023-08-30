@@ -57,9 +57,17 @@ public class GiftBox : MonoBehaviour
             }
             else
             {
-                giftBoxData.Apply();
-                LootManager.Instance.ClearLootSpot(lootId);
-                Destroy(gameObject);
+                if (giftBoxData.giftType == GiftType.CryptKey)
+                {
+                    GameManager.Instance.cryptKeyObtained?.Invoke();
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    giftBoxData.Apply();
+                    LootManager.Instance.ClearLootSpot(lootId);
+                    Destroy(gameObject);                
+                }
             }
         }
     }

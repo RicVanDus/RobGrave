@@ -9,6 +9,19 @@ public class Crypt : MonoBehaviour
     public Crypt[] linkedCrypts;
     [SerializeField] public Transform _spawnPoint;
     [SerializeField] public Transform _moveTo;
+    [SerializeField] private GameObject _blocker;
+    [SerializeField] private GameObject _lock;
+
+
+    private void OnEnable()
+    {
+        GameManager.Instance.cryptKeyObtained += OpenCrypt;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.cryptKeyObtained -= OpenCrypt;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,5 +45,11 @@ public class Crypt : MonoBehaviour
             Debug.Log("No linked crypts to teleport to!");
         }
         
+    }
+
+    private void OpenCrypt()
+    {
+        _blocker.SetActive(false);
+        _lock.SetActive(false);
     }
 }

@@ -17,6 +17,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GiftBox_Key Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4861059513783183694, guid: 4be9882f2f148774ca85853a22be800e,
+        type: 3}
+      propertyPath: giftBoxData
+      value: 
+      objectReference: {fileID: 11400000, guid: 034d48d07b8e0ab4c9f0f181338fdebf,
+        type: 2}
     - target: {fileID: 6673350321053547455, guid: 4be9882f2f148774ca85853a22be800e,
         type: 3}
       propertyPath: m_RootOrder

@@ -20,7 +20,7 @@ public enum GiftType
     Timed,
     ToolsUpgrade,
     CharacterUpgrade,
-    
+    CryptKey
 }
 
 public enum Rarity
