@@ -105,7 +105,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 _camBoundsX;
     private Vector2 _camBoundsY;
 
-    [SerializeField] private GameObject _coinParticles; 
+    [SerializeField] private GameObject _coinParticles;
+
+    private int _playerPosId;
+    private Vector4 _playerPosV4;
+    
+    
     
     private void OnEnable()
     {
@@ -188,6 +193,8 @@ public class PlayerController : MonoBehaviour
         //playerMeshMaterial = playerMesh.GetComponent<Renderer>().material;
 
         gameObject.tag = "Player";
+
+        _playerPosId = Shader.PropertyToID("_PlayerPos");
     }
 
     private void Start()
@@ -227,6 +234,14 @@ public class PlayerController : MonoBehaviour
         CheckFlashlightHit();
         
         FlashlightConeVisual();
+
+        _playerPosV4.x = transform.position.x;
+        _playerPosV4.y = transform.position.y;
+        _playerPosV4.z = transform.position.z;
+        _playerPosV4.w = 0f;
+        Shader.SetGlobalVector(_playerPosId, _playerPosV4);
+        
+        Debug.Log(Shader.GetGlobalVector(_playerPosId));
     }
 
     private void FixedUpdate()
