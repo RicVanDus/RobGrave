@@ -10,6 +10,7 @@
         [SerializeField] private Transform _ghostParent;
         [SerializeField] private GameObject _heartGraphic;
         [SerializeField] private Transform _heartParent;
+        [SerializeField] private GameObject _scoreBoard;
         
         private List<Enemy> _ghosts = new ();
 
@@ -96,5 +97,10 @@
                     thisHeart.TurnOff();
                 }
             }
+        }
+
+        private void UpdateScoreBoard()
+        {
+            
         }
     }
