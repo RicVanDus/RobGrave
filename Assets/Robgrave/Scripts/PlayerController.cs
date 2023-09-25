@@ -241,7 +241,6 @@ public class PlayerController : MonoBehaviour
         _playerPosV4.w = 0f;
         Shader.SetGlobalVector(_playerPosId, _playerPosV4);
         
-        Debug.Log(Shader.GetGlobalVector(_playerPosId));
     }
 
     private void FixedUpdate()
@@ -339,6 +338,8 @@ public class PlayerController : MonoBehaviour
             movementDisabled = true;
             _isCaught = true;
             currentLives -= 1;
+            DataToGO();
+            
             GettingCaught?.Invoke();
             GameManager.Instance.ApplyCamZoom(11f, 0.5f);
             GameManager.Instance.ApplyCamShake(1f, 1.3f);

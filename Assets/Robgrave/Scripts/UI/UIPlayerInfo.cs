@@ -23,21 +23,21 @@ public class UIPlayerInfo : MonoBehaviour
     
     private void OnEnable()
     {
-        PlayerController.Instance.GettingCaught += UpdateLives;
+        //PlayerController.Instance.GettingCaught += UpdateLives;
         //EnemyManager.Instance.EnemyUpdate += UpdateGhosts;
         GameOverseer.Instance.Playing += UpdateAll;
     }
 
     private void OnDisable()
     {
-        PlayerController.Instance.GettingCaught -= UpdateLives;
+        //PlayerController.Instance.GettingCaught -= UpdateLives;
         //EnemyManager.Instance.EnemyUpdate -= UpdateGhosts;
         GameOverseer.Instance.Playing -= UpdateAll;
     }
 
     private void Start()
     {
-        UpdateLives();
+        //UpdateLives();
     }
  
     void Update()

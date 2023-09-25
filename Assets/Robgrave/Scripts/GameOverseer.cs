@@ -38,8 +38,8 @@ public class GameOverseer : MonoBehaviour
     public LevelProperties thisLevel;
 
     public int score = 0;
-    public int currentLives = 0;
-    public int maxLives = 0;
+    [NonSerialized] public int currentLives = 3;
+    [NonSerialized] public int maxLives = 3;
     public int currentLevel = 0;
 
     public int upgradeTools;
