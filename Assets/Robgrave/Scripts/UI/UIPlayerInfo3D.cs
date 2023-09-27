@@ -10,7 +10,10 @@
         [SerializeField] private Transform _ghostParent;
         [SerializeField] private GameObject _heartGraphic;
         [SerializeField] private Transform _heartParent;
-        [SerializeField] private GameObject _scoreBoard;
+        [SerializeField] private GameObject _scoreBoardObj;
+
+        private UIScore _scoreBoard;
+        private int _oldScore = 0;
         
         private List<Enemy> _ghosts = new ();
 
@@ -20,6 +23,8 @@
         {
             PlayerController.Instance.GettingCaught += UpdateLives;
             EnemyManager.Instance.EnemyUpdate += UpdateGhostCount;
+            PlayerController.Instance.updatePreScore += UpdatePreScore;
+            PlayerController.Instance.updateScore += UpdateScore;
             //GameOverseer.Instance.Playing += UpdateAll;
         }
 
@@ -27,11 +32,14 @@
         {
             PlayerController.Instance.GettingCaught -= UpdateLives;
             EnemyManager.Instance.EnemyUpdate -= UpdateGhostCount;
+            PlayerController.Instance.updatePreScore -= UpdatePreScore;
+            PlayerController.Instance.updateScore -= UpdateScore;
             //GameOverseer.Instance.Playing -= UpdateAll;
         }
 
         private void Start()
         {
+            _scoreBoard = _scoreBoardObj.GetComponent<UIScore>(); 
             UpdateLives();
         }
 
@@ -99,8 +107,19 @@
             }
         }
 
-        private void UpdateScoreBoard()
+        private void UpdateScore()
         {
+            int currentScore = PlayerController.Instance.score;
+
+            int scoreAdded = currentScore - _oldScore;
             
+            _scoreBoard.UpdateScore(scoreAdded, _oldScore);
+
+            _oldScore = currentScore;
+        }
+
+        private void UpdatePreScore()
+        {
+            _scoreBoard.UpdatePreScore();
         }
     }

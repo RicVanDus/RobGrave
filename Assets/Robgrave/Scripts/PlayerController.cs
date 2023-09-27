@@ -109,7 +109,9 @@ public class PlayerController : MonoBehaviour
 
     private int _playerPosId;
     private Vector4 _playerPosV4;
-    
+
+    public Action updateScore;
+    public Action updatePreScore;
     
     
     private void OnEnable()
@@ -465,6 +467,8 @@ public class PlayerController : MonoBehaviour
             _scoreMultiplier++;
             _scorePickupCounter = 0;
         }
+        
+        updatePreScore?.Invoke();
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -519,7 +523,7 @@ public class PlayerController : MonoBehaviour
 
             if (scoreAddingTimer >= scoreAddingTime)
             {
-                StartCoroutine(AddingPreScoreToScore(preScore));
+                AddPreScoreToScoreDirectly(preScore);
                 preScore = 0;
                 _scorePickupCounter = 0;
                 _scoreMultiplier = 0;
@@ -527,7 +531,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (preScore < 0)
         {
-            StartCoroutine(AddingPreScoreToScore(preScore));
+            AddPreScoreToScoreDirectly(preScore);
             preScore = 0;
         }
     }
@@ -563,6 +567,12 @@ public class PlayerController : MonoBehaviour
             score += preScore;
             CheckIfGoalAchieved();
         }
+    }
+
+    private void AddPreScoreToScoreDirectly(int preScore)
+    {
+        score += preScore;
+        updateScore?.Invoke();
     }
 
     public void RotateToObject(GameObject obj)
