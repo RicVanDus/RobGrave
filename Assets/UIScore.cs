@@ -44,7 +44,7 @@ public class UIScore : MonoBehaviour
         if (_preScoreOut)
         {
             _preScoreOut = false;
-            _preScoreObj.transform.DOLocalMoveZ(5f, 0.7f).SetEase(Ease.InExpo);
+            _preScoreObj.transform.DOLocalMoveZ(5f, 0.5f).SetEase(Ease.InExpo);
         }
 
         if (scoreAdded != 0)
@@ -98,7 +98,7 @@ public class UIScore : MonoBehaviour
             if (!_preScoreOut)
             {
                 _preScoreOut = true;
-                _preScoreObj.transform.DOLocalMoveZ(6.89f, 0.7f).SetEase(Ease.InExpo);
+                _preScoreObj.transform.DOLocalMoveZ(6.89f, 0.4f).SetEase(Ease.InExpo);
             }
 
             if (preScore > 0)
@@ -126,6 +126,6 @@ public class UIScore : MonoBehaviour
 
         Debug.Log("Rotating X: " + 36f * amount + " || Score: " + PlayerController.Instance.score );
 
-        NrRotator.transform.DOLocalRotate(rot, 3f, RotateMode.LocalAxisAdd).SetEase(Ease.OutExpo);
+        NrRotator.transform.DOLocalRotate(rot, 2f, RotateMode.LocalAxisAdd).SetEase(Ease.OutExpo);
     }
 }
