@@ -53,23 +53,25 @@ public class UIScore : MonoBehaviour
 
             if (score > 9 || oldScore > 9)
             {
-                int rot = scoreAdded + (oldScore % 10); 
-                RotateNumber(_nrRotator2, rot/10);                
+                int rot = Mathf.FloorToInt((score / 10) - (oldScore / 10));
+                RotateNumber(_nrRotator2, rot);
             }
             if (score > 99 || oldScore > 99)
             {
-                int rot = scoreAdded + (oldScore % 100); 
-                RotateNumber(_nrRotator3, rot/100);
+                
+                int rot = Mathf.FloorToInt((score / 100) - (oldScore / 100));
+                RotateNumber(_nrRotator3, rot);
+                
             }
             if (score > 999 || oldScore > 999)
             {
-                int rot = scoreAdded + (oldScore % 1000); 
-                RotateNumber(_nrRotator4, rot/1000);
+                int rot = Mathf.FloorToInt((score / 1000) - (oldScore / 1000));
+                RotateNumber(_nrRotator4, rot);             
             }
             if (score > 9999 || oldScore > 9999)
             {
-                int rot = scoreAdded + (oldScore % 10000); 
-                RotateNumber(_nrRotator5, rot/10000);
+                int rot = Mathf.FloorToInt((score / 10000) - (oldScore / 10000));
+                RotateNumber(_nrRotator5, rot);
             }
         }
         else
@@ -116,7 +118,16 @@ public class UIScore : MonoBehaviour
 
     private void ReqScoreToggle(bool isMet)
     {
-        // toggle the light and textcolor
+        if (isMet)
+        {
+            _reqScoreLight.color = _greenColor;
+            _reqScoreText.color = _greenColor;
+        }
+        else
+        {
+            _reqScoreLight.color = _redColor;
+            _reqScoreText.color = _redColor;
+        }
     }
 
     private void RotateNumber(GameObject NrRotator, int amount)
@@ -126,6 +137,13 @@ public class UIScore : MonoBehaviour
 
         Debug.Log("Rotating X: " + 36f * amount + " || Score: " + PlayerController.Instance.score );
 
-        NrRotator.transform.DOLocalRotate(rot, 2f, RotateMode.LocalAxisAdd).SetEase(Ease.OutExpo);
+        
+        Sequence seq = DOTween.Sequence();
+
+        seq.SetDelay(0.5f);
+        seq.Delay();
+        seq.Append( NrRotator.transform.DOLocalRotate(rot, 2f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBounce));
+
+        seq.Play();
     }
 }

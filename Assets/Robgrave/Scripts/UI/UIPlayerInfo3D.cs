@@ -83,7 +83,7 @@
                 {
                     if (i > nbChildren || nbChildren == 0)
                     {
-                        heartGraphicPos.x = -197.8f + (0.6f * i);
+                        heartGraphicPos.x = -197.8f + (0.45f * i);
                 
                         var liveHeart = Instantiate(_heartGraphic, _heartParent);
                         liveHeart.transform.localPosition = heartGraphicPos;                        

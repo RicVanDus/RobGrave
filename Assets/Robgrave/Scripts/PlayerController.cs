@@ -340,6 +340,7 @@ public class PlayerController : MonoBehaviour
             movementDisabled = true;
             _isCaught = true;
             currentLives -= 1;
+            scoreAddingTimer = scoreAddingTime;
             DataToGO();
             
             GettingCaught?.Invoke();
