@@ -42,11 +42,11 @@ public class GameManager : MonoBehaviour
     public GameObject exitTrigger;
     public CamControl CamControl;
     
-    private float _gameTimeSeconds;
-    private int _gameTimeMinutes;
-    private int _gameTimeHours;
+    [NonSerialized] public float gameTimeSeconds;
+    [NonSerialized] public int gameTimeMinutes;
+    [NonSerialized] public int gameTimeHours;
     private bool _gameStarted;
-    public string gameTime;
+    [NonSerialized] public string gameTime;
     private bool _witchingHour = false;
 
     public Grave[] birdGraves;
@@ -69,9 +69,9 @@ public class GameManager : MonoBehaviour
     {
         thisLevel = GameOverseer.Instance.thisLevel;
 
-        _gameTimeHours = thisLevel.startHours;
-        _gameTimeMinutes = thisLevel.startMinutes;
-        _gameTimeSeconds = thisLevel.startSeconds;
+        gameTimeHours = thisLevel.startHours;
+        gameTimeMinutes = thisLevel.startMinutes;
+        gameTimeSeconds = thisLevel.startSeconds;
     }
 
     private void Update()
@@ -295,23 +295,28 @@ public class GameManager : MonoBehaviour
 
     private void GameTime()
     {
-        _gameTimeSeconds += Time.deltaTime;
+        gameTimeSeconds += Time.deltaTime;
 
-        if (_gameTimeSeconds >= 60f)
+        if (gameTimeSeconds >= 60f)
         {
-            _gameTimeMinutes++;
-            _gameTimeSeconds = 0f;
+            gameTimeMinutes++;
+            gameTimeSeconds = 0f;
         }
 
-        if (_gameTimeMinutes >= 60)
+        if (gameTimeMinutes >= 60)
         {
-            _gameTimeHours++;
-            _gameTimeMinutes = 0;
+            gameTimeHours++;
+            gameTimeMinutes = 0;
         }
 
-        if (_gameTimeHours == 0 && _witchingHour == false) _witchingHour = true;
+        if (gameTimeHours >= 12)
+        {
+            gameTimeHours = 0;
+        }
+        
+        if (gameTimeHours == 0 && _witchingHour == false) _witchingHour = true;
 
-        gameTime = _gameTimeHours + ":" + _gameTimeMinutes + "'" + _gameTimeSeconds;
+        gameTime = gameTimeHours + ":" + gameTimeMinutes + "'" + gameTimeSeconds;
     }
 
     private void AssignGiftboxes()

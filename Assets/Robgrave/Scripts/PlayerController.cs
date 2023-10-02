@@ -578,7 +578,15 @@ public class PlayerController : MonoBehaviour
 
     public void RotateToObject(GameObject obj)
     {
-        rigidB.DORotate(obj.transform.rotation.eulerAngles, 0.3f, RotateMode.Fast);
+        Vector3 dir = transform.position - obj.transform.position;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        
+        
+        
+        Vector3 newDir = rot.eulerAngles;
+        newDir.y += 180f;
+        
+        rigidB.DORotate(newDir, 0.3f, RotateMode.Fast);
     }
 
     public void IsDigging(bool digging)

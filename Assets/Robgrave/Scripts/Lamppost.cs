@@ -41,6 +41,7 @@ public class Lamppost : MonoBehaviour
     private float _baseConeSize;
     private float _baseSpotlightSize;
     private float _baseTriggerSize;
+    private bool _playerInteracting = false;
 
     private int _emissionColorId;
 
@@ -76,9 +77,20 @@ public class Lamppost : MonoBehaviour
             if (PlayerController.Instance._interacting)
             {
                 TimerChange(true);
+                if (!_playerInteracting)
+                {
+                    _playerInteracting = true;
+                    PlayerController.Instance.RotateToObject(this.gameObject);
+                    PlayerController.Instance.movementDisabled = true;
+                }
             }
             else
             {
+                if (_playerInteracting)
+                {
+                    _playerInteracting = false;
+                    PlayerController.Instance.movementDisabled = false;                    
+                }
                 TimerChange(false);
             }
 
