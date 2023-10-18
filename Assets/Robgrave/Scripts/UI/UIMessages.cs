@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,17 @@ public class UIMessages : MonoBehaviour
 
     public float messageStayTime;
     public Image iconGreenGhost;
-    
+
+    public static UIMessages Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         UIMessage newGhost = new UIMessage();
@@ -22,8 +33,9 @@ public class UIMessages : MonoBehaviour
         newGhost.mainText = "Additional ghost spawned!";
         newGhost.icon = iconGreenGhost;
     }
-
-    void Update()
+    
+    
+    public void CreateMessage()
     {
         
     }

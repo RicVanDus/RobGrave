@@ -21,11 +21,7 @@
 
         private void OnEnable()
         {
-            PlayerController.Instance.GettingCaught += UpdateLives;
-            EnemyManager.Instance.EnemyUpdate += UpdateGhostCount;
-            PlayerController.Instance.updatePreScore += UpdatePreScore;
-            PlayerController.Instance.updateScore += UpdateScore;
-            //GameOverseer.Instance.Playing += UpdateAll;
+
         }
 
         private void OnDisable()
@@ -39,6 +35,11 @@
 
         private void Start()
         {
+            PlayerController.Instance.GettingCaught += UpdateLives;
+            PlayerController.Instance.updatePreScore += UpdatePreScore;
+            PlayerController.Instance.updateScore += UpdateScore;
+            //GameOverseer.Instance.Playing += UpdateAll;
+            EnemyManager.Instance.EnemyUpdate += UpdateGhostCount;
             _scoreBoard = _scoreBoardObj.GetComponent<UIScore>(); 
             UpdateLives();
         }

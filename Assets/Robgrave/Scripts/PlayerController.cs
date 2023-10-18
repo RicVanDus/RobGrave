@@ -171,6 +171,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        
         _defaultShader = _playerCapMesh.material.shader;
          _playerMeshMaterials = _playerMesh.materials;
          
@@ -179,11 +184,6 @@ public class PlayerController : MonoBehaviour
          _opacityId = Shader.PropertyToID("_Opacity");
          _defaultFlashlightColor = _flashlightConeMat.GetColor(_colorId);
         
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
         playerInputs = new RGInputs();
         
         rigidB = GetComponent<Rigidbody>();

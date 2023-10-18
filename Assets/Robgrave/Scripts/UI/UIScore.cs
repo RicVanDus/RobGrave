@@ -30,7 +30,7 @@ public class UIScore : MonoBehaviour
 
     void Start()
     {
-        _reqScore = GameManager.Instance.thisLevel.valuablesRequired;
+        _reqScore = GameOverseer.Instance.thisLevel.valuablesRequired;
         _preScoreObjInPos = _preScoreObj.transform.position;
         _preScoreObjOutPos = _preScoreObjInPos;
         _preScoreObjOutPos.z = 6.89f;
