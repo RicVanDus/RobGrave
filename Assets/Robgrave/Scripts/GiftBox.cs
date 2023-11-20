@@ -28,7 +28,7 @@ public class GiftBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_visible && transform.position.y < 3f)
+        if (!_visible && transform.position.y < 3f && giftBoxData.giftType != GiftType.CryptKey)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
             _visible = true;
@@ -44,7 +44,6 @@ public class GiftBox : MonoBehaviour
                 _rigidbody.isKinematic = true;
             }
         }
-        
     }
 
     private void OnTriggerEnter(Collider other)

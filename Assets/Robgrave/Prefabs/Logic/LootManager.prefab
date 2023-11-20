@@ -58,12 +58,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5807a2a94a46e54fb47f55ced6f8a49, type: 2}
   - {fileID: 11400000, guid: ec15ab2a08fd5c64d90ff70d93f9f577, type: 2}
   - {fileID: 11400000, guid: 45d8c51da61cbca4dae43abea1edf2d2, type: 2}
-  _giftBox: {fileID: 0}
-  _greenGiftbox: {fileID: 1885772128636807677, guid: 4f5fa77fe439af74cbb13be545e65d81,
+  _greenGiftbox: {fileID: 1459849705684158309, guid: 707899e7e8e929f45b0a6fe60d1dd435,
     type: 3}
-  _blueGiftbox: {fileID: 3091689693595454360, guid: 615df6968bdaaa84d9e554eef55a147c,
+  _blueGiftbox: {fileID: 1459849705684158309, guid: 1f4e574b6fd440d40a859f6927456f41,
     type: 3}
-  _purpleGiftbox: {fileID: 3086175987215229346, guid: 4be9882f2f148774ca85853a22be800e,
+  _purpleGiftbox: {fileID: 1459849705684158309, guid: ecc0fb8a0b28d6b41938578400634f41,
     type: 3}
-  _cryptKey: {fileID: 6686451955449611979, guid: 285ca527f4a0b554d99aa8176b8a5aaf,
+  _cryptKey: {fileID: 6288032402262319393, guid: 285ca527f4a0b554d99aa8176b8a5aaf,
     type: 3}
