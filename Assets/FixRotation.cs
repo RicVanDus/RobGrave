@@ -16,7 +16,7 @@ public class FixRotation : MonoBehaviour
 
         var children = transform.GetComponentsInChildren<Transform>();
         
-        foreach (Transform child in children)
+        /* foreach (Transform child in children)
         {
             float _rotAmountX = child.eulerAngles.x / _degrees;
             float _rotAmountY = child.eulerAngles.y / _degrees;
@@ -30,7 +30,33 @@ public class FixRotation : MonoBehaviour
             Vector3 _newRotation = new Vector3(_rotAmountX, _rotAmountY, _rotAmountZ);
 
             child.eulerAngles = _newRotation;
+        } */
+
+        foreach (Transform child in children)
+        {
+            var checkChild = child.GetComponentsInChildren<Transform>();
+
+            if (checkChild.Length == 2)
+            {
+                Debug.Log(child + " : " + child.eulerAngles + " ---- " + checkChild.Length);    
+
+                float _rotAmountX = child.eulerAngles.x / _degrees;
+                float _rotAmountY = child.eulerAngles.y / _degrees;
+                float _rotAmountZ = child.eulerAngles.z / _degrees;
+            
+
+                _rotAmountX = MathF.Round(_rotAmountX) * _degrees;
+                _rotAmountY = MathF.Round(_rotAmountY) * _degrees;
+                _rotAmountZ = MathF.Round(_rotAmountZ) * _degrees;
+
+                Vector3 _newRotation = new Vector3(_rotAmountX, _rotAmountY, _rotAmountZ);
+
+                child.eulerAngles = _newRotation;
+                
+            } 
+            
         }
+            
     }
 }
 
