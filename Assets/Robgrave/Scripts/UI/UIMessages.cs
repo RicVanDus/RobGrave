@@ -15,6 +15,8 @@ public class UIMessages : MonoBehaviour
 
     public float messageStayTime;
     public Image iconGreenGhost;
+    public List<UIMessage> visibleMessages;
+    public List<UIMessage> messageArchive;
 
     public static UIMessages Instance { get; private set; }
 
@@ -34,8 +36,14 @@ public class UIMessages : MonoBehaviour
         newGhost.icon = iconGreenGhost;
     }
     
-    
+    // creates new instance UIMessage, adds it to the queue and messageArchive
     public void CreateMessage()
+    {
+        
+    }
+
+    // hides it. Removes it from the queue, makes it invisible 
+    public void HideMessage(UIMessage message)
     {
         
     }
@@ -49,10 +57,3 @@ public enum UIMessageType
 }
 
 
-public class UIMessage
-{
-    public Image icon;
-    public string mainText;
-    public string subText;
-    public UIMessageType type;
-}
