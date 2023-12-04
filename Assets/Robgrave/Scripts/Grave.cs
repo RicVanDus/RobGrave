@@ -147,6 +147,7 @@ public class Grave : Interactable
                 SetDepthText();
                 _gravedirt.DirtHeight(currentDepth);
                 if (currentDepth >= maxDepth)
+                    // GRAVE IS DUG!
                 {
                     Instantiate(_graveExplosion, _graveExplosionPos.position, Quaternion.identity, transform);
                     _coffinLid.SetActive(false);
@@ -158,6 +159,7 @@ public class Grave : Interactable
                     _gravedirt.DirtHeight(6);
 
                     SpawnLoot();
+                    UIMessages.Instance.CreateMessage("Grave is dug", "Collect your loot, boyo", UIMessageType.Bad ,MessageIcon.BlueGhost);
                 }
                 else
                 {
