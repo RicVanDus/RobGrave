@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class UIMessage : MonoBehaviour
@@ -39,6 +37,22 @@ public class UIMessage : MonoBehaviour
         UpdateMessage();        
     }
 
+    //check for position in queue & update Timer
+    void Update()
+    {
+        if (_currentPosition != newPosition)
+        {
+            StartCoroutine(ToPosition(newPosition));
+            _currentPosition = newPosition;
+        }
+
+        _messageTimer += Time.deltaTime;
+
+        if (_messageTimer > UIMessages.Instance.messageStayTime)
+        {
+            HideMessage();
+        }
+    }
 
     private void UpdateMessage()
     {
@@ -58,9 +72,9 @@ public class UIMessage : MonoBehaviour
             _tmpTitle.color = yellowColor;
         }
 
-        _tmpText.text = titleText;
+        _tmpTitle.text = titleText;
         _tmpText.text = subText;
-        Material mat = GetComponent<Renderer>().material;
+        Material mat = _iconQuad.GetComponent<Renderer>().material;
 
         //icon
         Texture2D iconTexture;
@@ -72,13 +86,15 @@ public class UIMessage : MonoBehaviour
                 break;
         }
         
-        mat.SetTexture("Albedo", iconTexture);
+        mat.SetTexture("_EmissionMap", iconTexture);
+        mat.SetTexture("_BaseMap", iconTexture);
 
         //position
         Vector3 newPosition = _defaultPos;
 
         float posY = 1.1f * _currentPosition;
-        newPosition.y += posY;         
+        newPosition.y += posY;
+        transform.localPosition = newPosition;
         
         //rotation
         Vector3 rotationStart = transform.eulerAngles;
@@ -89,32 +105,8 @@ public class UIMessage : MonoBehaviour
 
         transform.DORotate(rotationEnd, 0.5f).SetEase(Ease.OutBounce);
     }
-    
-    //check for position in queue & update Timer
-    void Update()
-    {
-        if (_currentPosition != newPosition)
-        {
-            StartCoroutine(ToPosition(newPosition));
-            _currentPosition = newPosition;
-        }
 
-        _messageTimer += Time.deltaTime;
-
-        if (_messageTimer > UIMessages.Instance.messageStayTime)
-        {
-            transform.gameObject.SetActive(false);
-            UIMessages.Instance.HideMessage(this);
-        }
-    }
-
-    // tween an animation at the right spot
-    private void SpawnMessage()
-    {
-        
-    }
-    
-    
+    // moves to next spot if position changes
     private IEnumerator ToPosition(int newIndex)
     {
         Vector3 targetPosition = _defaultPos;
@@ -122,24 +114,30 @@ public class UIMessage : MonoBehaviour
         float posY = 1.1f * newIndex;
         targetPosition.y += posY;
 
-        float t = 0.1f;
+        float t = 0.5f;
         
         while (_isVisible)
         {
-            Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, t);
+            Vector3 newPosition = Vector3.Lerp(transform.localPosition, targetPosition, t);
             
-            transform.position = newPosition;
+            transform.localPosition = newPosition;
             
             yield return _wait01;    
         }
     }
 
     // send to the underworld and hide
-    private IEnumerator HidingMessage()
+    private void HideMessage()
     {
-        yield break;
-    }
-    
+        Vector3 newRotation = transform.eulerAngles;
+        newRotation.x = 90f;
+        
+        transform.DORotate(newRotation, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
+        {
+            transform.gameObject.SetActive(false);
+            UIMessages.Instance.HideMessage(this);            
+        });
+    } 
 }
 
 
