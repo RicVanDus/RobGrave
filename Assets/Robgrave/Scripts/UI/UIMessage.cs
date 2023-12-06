@@ -110,19 +110,24 @@ public class UIMessage : MonoBehaviour
     private IEnumerator ToPosition(int newIndex)
     {
         Vector3 targetPosition = _defaultPos;
+        Vector3 currentPos = transform.localPosition;
 
         float posY = 1.1f * newIndex;
         targetPosition.y += posY;
 
-        float t = 0.5f;
+        float t = 0f;
+        bool moving = true;
         
-        while (_isVisible)
+        while (moving)
         {
-            Vector3 newPosition = Vector3.Lerp(transform.localPosition, targetPosition, t);
-            
+            Vector3 newPosition = Vector3.Lerp(currentPos, targetPosition, t);
+            t += 0.2f;
             transform.localPosition = newPosition;
+
+            if (t >= 1f) 
+                moving = false;
             
-            yield return _wait01;    
+            yield return _wait01;
         }
     }
 
@@ -135,7 +140,8 @@ public class UIMessage : MonoBehaviour
         transform.DORotate(newRotation, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
         {
             transform.gameObject.SetActive(false);
-            UIMessages.Instance.HideMessage(this);            
+            UIMessages.Instance.HideMessage(this);
+            _isVisible = false;
         });
     } 
 }

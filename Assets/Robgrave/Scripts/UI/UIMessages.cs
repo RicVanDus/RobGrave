@@ -58,7 +58,7 @@ public class UIMessages : MonoBehaviour
         visibleMessages.Add(newUIMessage);
         messageArchive.Add(newUIMessage);
         
-        newUIMessage.newPosition = visibleMessages.Count;
+        newUIMessage.newPosition = visibleMessages.Count - 1;
     }
 
     // hides it. Removes it from the queue, makes it invisible 
