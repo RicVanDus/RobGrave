@@ -53,11 +53,16 @@ public class GraveBird : MonoBehaviour
         _target = target.position;
         _anim.SetBool("TakingOff", true);
         _birdIsFlying = true;
-        Vector3 rotateTowards = Vector3.RotateTowards(transform.eulerAngles, _target, 10f, 10f);
-        rotateTowards.x = transform.eulerAngles.x;
-        rotateTowards.z = transform.eulerAngles.z;
+
+        Vector3 dir = transform.position - _target;
+        Quaternion rot = Quaternion.LookRotation(dir);
+
+        Vector3 newDir = rot.eulerAngles;
         
-        transform.DORotate(rotateTowards, 0.7f);
+        newDir.x = transform.eulerAngles.x;
+        newDir.z = transform.eulerAngles.z;
+        
+        transform.DORotate(newDir, 0.7f);
     }
 
     private void Flying()
