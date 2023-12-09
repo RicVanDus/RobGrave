@@ -406,6 +406,10 @@ public class LootManager : MonoBehaviour
         _spawnPos.y = Random.Range(10f, 13f);
         
         Quaternion _spawnRot = Quaternion.identity;
+        Vector3 _spawnRotEuler = _spawnRot.eulerAngles;
+        _spawnRotEuler.y = Random.Range(0f, 360f);
+        _spawnRotEuler.x = Random.Range(2f, 20f);
+        _spawnRot  = Quaternion.Euler(_spawnRotEuler);
         
         GameObject _prefab = _greenGiftbox;
 

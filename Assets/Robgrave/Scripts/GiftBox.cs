@@ -59,6 +59,7 @@ public class GiftBox : MonoBehaviour
                 if (giftBoxData.giftType == GiftType.CryptKey)
                 {
                     GameManager.Instance.cryptKeyObtained?.Invoke();
+                    UIMessages.Instance.CreateMessage("The crypt is open!", "A shortcut to another place", UIMessageType.Good ,MessageIcon.CryptKey);
                     Destroy(gameObject);
                 }
                 else

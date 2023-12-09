@@ -159,7 +159,6 @@ public class Grave : Interactable
                     _gravedirt.DirtHeight(6);
 
                     SpawnLoot();
-                    UIMessages.Instance.CreateMessage("Grave is dug", "Collect your loot, boyo", UIMessageType.Bad ,MessageIcon.BlueGhost);
                 }
                 else
                 {
