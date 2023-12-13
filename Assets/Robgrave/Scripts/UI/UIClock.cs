@@ -35,7 +35,7 @@ public class UIClock : MonoBehaviour
             
             sRotate.y = 6f * s;
             mRotate.y = 6f * m;
-            hRotate.y = 30f * h;
+            hRotate.y = 30f * h + 0.5f * m;
 
             _seconds.transform.localEulerAngles = sRotate;
             _minutes.transform.localEulerAngles = mRotate;
