@@ -112,6 +112,9 @@ public class PlayerController : MonoBehaviour
 
     public Action updateScore;
     public Action updatePreScore;
+
+    [Header("SOUND")] 
+    [SerializeField] private AudioClip[] _deathSounds;
     
     
     private void OnEnable()
@@ -355,6 +358,8 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(LosingLoot(enemyType));
             }
+            
+            AudioManager.Instance.PlayRandomSoundEffect(_deathSounds);
 
             RGAnimator.SetBool("Caught", true);            
         }

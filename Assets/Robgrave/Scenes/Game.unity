@@ -1022,6 +1022,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _music: {fileID: 800056773}
   _soundEffects: {fileID: 1040738246}
+  _spatialSndEffect: {fileID: 762202871270882398, guid: e5cc9f25d42117e46b183c40e21cf0c8,
+    type: 3}
 --- !u!4 &697966038
 Transform:
   m_ObjectHideFlags: 0
@@ -1730,7 +1732,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0
   Loop: 0
   Mute: 0
   Spatialize: 0

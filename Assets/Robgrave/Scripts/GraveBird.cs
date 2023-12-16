@@ -26,6 +26,10 @@ public class GraveBird : MonoBehaviour
     private WaitForSeconds _softTick = new (0.5f);
     private Animator _anim;
 
+    [Header("SOUND")] 
+    [SerializeField] private AudioClip[] idleSounds;
+    [SerializeField] private AudioClip[] flyingSounds;
+
     private void Awake()
     {
         _anim = GetComponent<Animator>();
