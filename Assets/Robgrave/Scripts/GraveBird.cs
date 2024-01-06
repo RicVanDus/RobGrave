@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GraveBird : MonoBehaviour
 {
@@ -26,20 +27,38 @@ public class GraveBird : MonoBehaviour
     private WaitForSeconds _softTick = new (0.5f);
     private Animator _anim;
 
+    [FormerlySerializedAs("_randomIdleSoundTime")]
     [Header("SOUND")] 
+    [SerializeField] private float _IdleSoundTime;
     [SerializeField] private AudioClip[] idleSounds;
     [SerializeField] private AudioClip[] flyingSounds;
 
+    private float _idleSoundTimer;
+    
     private void Awake()
     {
         _anim = GetComponent<Animator>();
     }
+
+    private void Start()
+    {
+        
+    }
+
 
     private void Update()
     {
         if (_birdIsFlying)
         {
             Flying();
+        }
+
+        _idleSoundTimer += Time.deltaTime;
+
+        if (_idleSoundTimer > _IdleSoundTime)
+        {
+            AudioManager.Instance.PlayRandomSpatialSoundEffect(idleSounds, transform.position, false);
+            _idleSoundTimer = 0f;
         }
     }
 
@@ -114,4 +133,7 @@ public class GraveBird : MonoBehaviour
             yield return _softTick;
         } while (!_birdIsDone);
     }
+    
+    
+    
 }

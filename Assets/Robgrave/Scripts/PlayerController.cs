@@ -346,6 +346,8 @@ public class PlayerController : MonoBehaviour
             scoreAddingTimer = scoreAddingTime;
             DataToGO();
             
+            AudioManager.Instance.PlayRandomSoundEffect(_deathSounds);
+            
             GettingCaught?.Invoke();
             GameManager.Instance.ApplyCamZoom(11f, 0.5f);
             GameManager.Instance.ApplyCamShake(1f, 1.3f);
@@ -358,8 +360,6 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(LosingLoot(enemyType));
             }
-            
-            AudioManager.Instance.PlayRandomSoundEffect(_deathSounds);
 
             RGAnimator.SetBool("Caught", true);            
         }
