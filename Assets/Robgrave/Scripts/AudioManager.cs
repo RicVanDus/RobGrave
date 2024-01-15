@@ -26,7 +26,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-
     public void PlayMusic(AudioClip music)
     {
         _music.loop = true;
@@ -42,11 +41,10 @@ public class AudioManager : MonoBehaviour
     {
         int rndIndex = Random.Range(0, sound.Length-1);
         
-        Debug.Log("RANDOM INDEX: " + rndIndex);
         PlaySoundEffect(sound[rndIndex]);
     }
 
-    public void PlaySpatialSoundEffect(AudioClip sound, Vector3 position, bool randomPitch)
+    public void PlaySpatialSoundEffect(AudioClip sound, Vector3 position, bool randomPitch, float maxDistance)
     {
         var obj = Instantiate(_spatialSndEffect, position, Quaternion.identity);
         AudioSource source = obj.GetComponent<AudioSource>();
@@ -54,16 +52,16 @@ public class AudioManager : MonoBehaviour
         
         if (randomPitch) source.pitch = rndPitch;
         source.clip = sound;
+        source.maxDistance = maxDistance;
         
         source.Play();
         Destroy(obj, source.clip.length);
     }
 
-    public void PlayRandomSpatialSoundEffect(AudioClip[] sound, Vector3 position, bool randomPitch)
+    public void PlayRandomSpatialSoundEffect(AudioClip[] sound, Vector3 position, bool randomPitch, float maxDistance)
     {
         int rndIndex = Random.Range(0, sound.Length);
         
-        Debug.Log("RANDOM INDEX: " + rndIndex);
-        PlaySpatialSoundEffect(sound[rndIndex], position, randomPitch);
+        PlaySpatialSoundEffect(sound[rndIndex], position, randomPitch, maxDistance);
     }
 }

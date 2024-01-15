@@ -5,6 +5,7 @@ using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class Lamppost : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Lamppost : MonoBehaviour
     [SerializeField] private GameObject _lampbase;
     [SerializeField] private GameObject _cone;
     [SerializeField] private Light _spotLight;
+    [SerializeField] private Light _softSpotLight;
     [SerializeField] SphereCollider _collider;
     [SerializeField] private GameObject _UI;
 
@@ -20,6 +22,8 @@ public class Lamppost : MonoBehaviour
     
     private Material _lamp1Mat;
     private Material _lamp2Mat;
+    private Material _lamp1BulbMat;
+    private Material _lamp2BulbMat;
     private Material _lampbaseMat;
     private GUI_lamppost _GUI_lamppost;
     
@@ -31,6 +35,7 @@ public class Lamppost : MonoBehaviour
     private float _lightTimer;
     private float _maxLightTime = 2f;
     private bool _lightIsOn = true;
+    private bool _IdleLightIsOn = false;
     private int _lightStage;
     private int _maxLightStages = 3;
 
@@ -45,11 +50,19 @@ public class Lamppost : MonoBehaviour
 
     private int _emissionColorId;
 
+    private Color _bulbColor = new Color(0.75f, 0.7f, 0.17f);
+
+    private WaitForSeconds _wait01 = new (0.1f);
+    
+    
+    
     // Start is called before the first frame update
     void Start()
     {
         _lamp1Mat = _lamp1.GetComponent<Renderer>().materials[0];
         _lamp2Mat = _lamp2.GetComponent<Renderer>().materials[0];
+        _lamp1BulbMat = _lamp1.GetComponent<Renderer>().materials[2];
+        _lamp2BulbMat = _lamp2.GetComponent<Renderer>().materials[2];
         _lampbaseMat = _lampbase.GetComponent<Renderer>().materials[0];
         _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
         _guiDefaultScale = _UI.transform.localScale;
@@ -153,8 +166,39 @@ public class Lamppost : MonoBehaviour
         _collider.enabled = toggle;
         _spotLight.enabled = toggle;
         _cone.SetActive(toggle);
+
+        if (toggle)
+        {
+            _lamp1BulbMat.SetColor(_emissionColorId, _bulbColor);
+            _lamp2BulbMat.SetColor(_emissionColorId, _bulbColor);
+            StopCoroutine(IdleState());
+        }
+        else
+        {
+            _lamp1BulbMat.SetColor(_emissionColorId, Color.black);
+            _lamp2BulbMat.SetColor(_emissionColorId, Color.black);
+            StartCoroutine(IdleState());
+        }
     }
 
+    private void ToggleIdleLight(bool toggle)
+    {
+        _IdleLightIsOn = toggle;
+        _softSpotLight.enabled = toggle;
+
+        if (toggle)
+        {
+            _lamp1BulbMat.SetColor(_emissionColorId, _bulbColor);
+            _lamp2BulbMat.SetColor(_emissionColorId, _bulbColor);
+        }
+        else
+        {
+            _lamp1BulbMat.SetColor(_emissionColorId, Color.black);
+            _lamp2BulbMat.SetColor(_emissionColorId, Color.black);   
+        }
+    }
+    
+    
     private IEnumerator FlashingLight()
     {
         _lightIsflashing = true;
@@ -282,5 +326,29 @@ public class Lamppost : MonoBehaviour
             _lampbaseMat.SetColor(_emissionColorId, Color.black);
             _isHighlighted = false;            
         }
+    }
+
+
+    private IEnumerator IdleState()
+    {
+        do
+        {
+            
+            int RandomChance = Random.Range(1, 10);
+            
+            if (_IdleLightIsOn)
+            {
+                ToggleIdleLight(false);
+            }
+            else
+            {
+                if (RandomChance > 8)
+                {
+                    ToggleIdleLight(true);     
+                }
+            }
+
+            yield return _wait01;
+        } while (!_lightIsOn);
     }
 }

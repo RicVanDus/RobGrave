@@ -40,12 +40,6 @@ public class GraveBird : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-        
-    }
-
-
     private void Update()
     {
         if (_birdIsFlying)
@@ -57,7 +51,7 @@ public class GraveBird : MonoBehaviour
 
         if (_idleSoundTimer > _IdleSoundTime)
         {
-            AudioManager.Instance.PlayRandomSpatialSoundEffect(idleSounds, transform.position, false);
+            AudioManager.Instance.PlayRandomSpatialSoundEffect(idleSounds, transform.position, false, 25f);
             _idleSoundTimer = 0f;
         }
     }
