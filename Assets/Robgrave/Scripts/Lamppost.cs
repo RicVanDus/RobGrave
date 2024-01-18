@@ -25,6 +25,8 @@ public class Lamppost : MonoBehaviour
     private Material _lamp1BulbMat;
     private Material _lamp2BulbMat;
     private Material _lampbaseMat;
+    private Material _lamp1Glass;
+    private Material _lamp2Glass;
     private GUI_lamppost _GUI_lamppost;
     
     private bool _guiVisible = false;
@@ -53,7 +55,11 @@ public class Lamppost : MonoBehaviour
     private Color _bulbColor = new Color(0.75f, 0.7f, 0.17f);
 
     private WaitForSeconds _wait01 = new (0.1f);
+
+    private Material[] _wiggleMats = new Material[6];
     
+    
+    // Starts a coroutine: sets the dir.vector, loops through a deforming value, which gets halfed each cycle (back/forth)
     
     
     // Start is called before the first frame update
@@ -61,11 +67,22 @@ public class Lamppost : MonoBehaviour
     {
         _lamp1Mat = _lamp1.GetComponent<Renderer>().materials[0];
         _lamp2Mat = _lamp2.GetComponent<Renderer>().materials[0];
+        _lamp1Glass = _lamp1.GetComponent<Renderer>().materials[1];
+        _lamp2Glass = _lamp2.GetComponent<Renderer>().materials[1];
         _lamp1BulbMat = _lamp1.GetComponent<Renderer>().materials[2];
         _lamp2BulbMat = _lamp2.GetComponent<Renderer>().materials[2];
         _lampbaseMat = _lampbase.GetComponent<Renderer>().materials[0];
         _GUI_lamppost = _UI.GetComponent<GUI_lamppost>();
         _guiDefaultScale = _UI.transform.localScale;
+        
+        // filling wiggle array
+        _wiggleMats[0] = _lamp1Mat;
+        _wiggleMats[1] = _lamp2Mat;
+        _wiggleMats[2] = _lamp1Glass;
+        _wiggleMats[3] = _lamp2Glass;
+        _wiggleMats[4] = _lamp1BulbMat;
+        _wiggleMats[5] = _lamp2BulbMat;
+        _wiggleMats[6] = _lampbaseMat;
 
         _baseConeSize = _cone.transform.localScale.x / 5;
         _baseTriggerSize = _collider.radius / 5;
@@ -350,5 +367,22 @@ public class Lamppost : MonoBehaviour
 
             yield return _wait01;
         } while (!_lightIsOn);
+    }
+
+    
+    private IEnumerator Wiggle(float power)
+    {
+        // set direction
+        Vector3 dir = transform.position - PlayerController.Instance.transform.position;
+        dir = dir.normalized;
+        
+        // loop through all mats to set dir
+
+        float wiggleAmount = power;
+        
+        // loop a wiggle with the deform power through all materials (make array) and set values.
+        
+        
+        yield break;
     }
 }
