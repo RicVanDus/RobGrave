@@ -57,7 +57,7 @@ public class Lamppost : MonoBehaviour
     private WaitForSeconds _wait01 = new (0.1f);
 
     private Material[] _wiggleMats = new Material[6];
-    
+    private int _wiggleDeformId;
     
     // Starts a coroutine: sets the dir.vector, loops through a deforming value, which gets halfed each cycle (back/forth)
     
@@ -89,6 +89,7 @@ public class Lamppost : MonoBehaviour
         _baseSpotlightSize = _spotLight.range / 5;
 
         _emissionColorId = Shader.PropertyToID("_EmissionColor");
+        _wiggleDeformId = Shader.PropertyToID("_Deform");
     }
 
     private void Update()
@@ -375,13 +376,17 @@ public class Lamppost : MonoBehaviour
         // set direction
         Vector3 dir = transform.position - PlayerController.Instance.transform.position;
         dir = dir.normalized;
+        Vector4 dirv4 = new Vector4(dir.x, dir.y, dir.z, 0f);
         
         // loop through all mats to set dir
+        for (int i = 0; i < _wiggleMats.Length; i++)
+        {
+            _wiggleMats[i].SetVector("_DeformDirection", dirv4);
+        }
 
         float wiggleAmount = power;
         
         // loop a wiggle with the deform power through all materials (make array) and set values.
-        
         
         yield break;
     }
