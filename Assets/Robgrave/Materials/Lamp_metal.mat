@@ -112,6 +112,7 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _UVSec: 0
+    - _WiggleDeform: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
@@ -119,6 +120,7 @@ Material:
     - _Color: {r: 0.22552505, g: 0.23759562, b: 0.2641509, a: 1}
     - _DeformDirection: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _NewEmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4429110506228725092

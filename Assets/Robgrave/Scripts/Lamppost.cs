@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
@@ -56,13 +57,20 @@ public class Lamppost : MonoBehaviour
 
     private WaitForSeconds _wait01 = new (0.1f);
 
-    private Material[] _wiggleMats = new Material[6];
+    private Material[] _wiggleMats = new Material[7];
     private int _wiggleDeformId;
+    private int _deformDirId;
+    private bool _bWiggling;
     
     // Starts a coroutine: sets the dir.vector, loops through a deforming value, which gets halfed each cycle (back/forth)
-    
-    
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        _emissionColorId = Shader.PropertyToID("_NewEmissionColor");
+        _wiggleDeformId = Shader.PropertyToID("_WiggleDeform");
+        _deformDirId = Shader.PropertyToID("_DeformDirection");
+    }
+
     void Start()
     {
         _lamp1Mat = _lamp1.GetComponent<Renderer>().materials[0];
@@ -87,9 +95,8 @@ public class Lamppost : MonoBehaviour
         _baseConeSize = _cone.transform.localScale.x / 5;
         _baseTriggerSize = _collider.radius / 5;
         _baseSpotlightSize = _spotLight.range / 5;
-
-        _emissionColorId = Shader.PropertyToID("_EmissionColor");
-        _wiggleDeformId = Shader.PropertyToID("_Deform");
+        
+        ToggleHighlight(false);
     }
 
     private void Update()
@@ -242,6 +249,7 @@ public class Lamppost : MonoBehaviour
                 {
                     _lightStage = (int)(_lightTimer / _maxLightTime);
                     SetLightSize();
+                    StartWiggle(0.7f);
                 }
 
             }
@@ -370,23 +378,70 @@ public class Lamppost : MonoBehaviour
         } while (!_lightIsOn);
     }
 
+    public void StartWiggle(float power)
+    {
+        _bWiggling = true;
+        StartCoroutine(Wiggle(power));
+    }
     
     private IEnumerator Wiggle(float power)
     {
         // set direction
         Vector3 dir = transform.position - PlayerController.Instance.transform.position;
         dir = dir.normalized;
-        Vector4 dirv4 = new Vector4(dir.x, dir.y, dir.z, 0f);
+        Vector4 dirv4 = new Vector4(dir.x, 0f, dir.z, 0f);
+        
+        float wiggleAmount = 0f;
+        float limit = power;
+        float speed = 8f;
+        float t = 0.5f;
+        bool bForward = true;
         
         // loop through all mats to set dir
         for (int i = 0; i < _wiggleMats.Length; i++)
         {
-            _wiggleMats[i].SetVector("_DeformDirection", dirv4);
+            _wiggleMats[i].SetVector(_deformDirId, dirv4);
         }
-
-        float wiggleAmount = power;
         
-        // loop a wiggle with the deform power through all materials (make array) and set values.
+        Debug.Log("Dir:" + dirv4);
+        
+        //Doesn't build up
+        do
+        {
+            t += Time.deltaTime * speed;
+
+            wiggleAmount = Mathf.Lerp(-power, power, t);
+            
+            for (int n = 0; n < _wiggleMats.Length; n++)
+            {
+                _wiggleMats[n].SetFloat(_wiggleDeformId, wiggleAmount);
+            }
+
+            if (wiggleAmount >= limit && bForward)
+            {
+                bForward = false;
+                limit = limit / 2;
+                speed *= -1f;
+            }
+            else if (wiggleAmount <= -limit && !bForward)
+            {
+                bForward = true;
+                limit = limit / 2;
+                speed *= -1f;
+            }
+
+            // When does it stop. maybe reset values as well?
+            if (limit < 0.01f)
+            {
+                _bWiggling = false;
+                for (int n = 0; n < _wiggleMats.Length; n++)
+                {
+                    _wiggleMats[n].SetFloat(_wiggleDeformId, 0f);
+                }
+            }
+            
+            yield return null;
+        } while (_bWiggling);
         
         yield break;
     }
