@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Meshes")]
     [SerializeField] private SkinnedMeshRenderer _playerMesh;
-    [SerializeField] private MeshRenderer _playerCapMesh;
+    //[SerializeField] private MeshRenderer _playerCapMesh;
     private Material[] _playerMeshMaterials;
 
     private Material playerMeshMaterial;
@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
             Instance = this;
         }
         
-        _defaultShader = _playerCapMesh.material.shader;
+        //_defaultShader = _playerCapMesh.material.shader;
          _playerMeshMaterials = _playerMesh.materials;
          
          _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
@@ -377,7 +377,7 @@ public class PlayerController : MonoBehaviour
         RGAnimator.SetBool("Caught", false);
         _isCaught = false;
         
-        _playerCapMesh.material.shader = _defaultShader;
+        //_playerCapMesh.material.shader = _defaultShader;
 
         if (_playerMeshMaterials.Length > 0)
         {
@@ -401,19 +401,19 @@ public class PlayerController : MonoBehaviour
             if (_playerMesh.enabled)
             {
                 _playerMesh.enabled = false;
-                _playerCapMesh.enabled = false;
+                //_playerCapMesh.enabled = false;
             }
             else
             {
                 _playerMesh.enabled = true;
-                _playerCapMesh.enabled = true;
+                //_playerCapMesh.enabled = true;
             }
 
             yield return _wait02;
         }
 
         _playerMesh.enabled = true;
-        _playerCapMesh.enabled = true;
+        //_playerCapMesh.enabled = true;
         _shovelBack.enabled = true;
         _shovelHand.enabled = true;
         _torchHand.enabled = true;
@@ -645,8 +645,8 @@ public class PlayerController : MonoBehaviour
         _torchHand.enabled = false;
         
         // change shaders
-        _playerCapMesh.material.shader = _ghostShader;
-        _playerCapMesh.material.SetColor("_Color", _clr);
+        //_playerCapMesh.material.shader = _ghostShader;
+        //_playerCapMesh.material.SetColor("_Color", _clr);
         
         if (_playerMeshMaterials.Length > 0)
         {
