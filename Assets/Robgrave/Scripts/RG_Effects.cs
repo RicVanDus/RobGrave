@@ -45,6 +45,7 @@ public class RG_Effects : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         _dirtFromShovel.transform.localRotation = Quaternion.Euler(oldRot);
+        HideDirtOnShovel();
         
         _dirtFromShovel.Stop();
     }
