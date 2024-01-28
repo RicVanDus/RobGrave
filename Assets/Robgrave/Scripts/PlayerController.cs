@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
             Instance = this;
         }
         
-        //_defaultShader = _playerCapMesh.material.shader;
+         _defaultShader = _playerMesh.materials[0].shader;
          _playerMeshMaterials = _playerMesh.materials;
          
          _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
@@ -376,8 +376,6 @@ public class PlayerController : MonoBehaviour
         RGAnimator.SetBool("Floating", false);
         RGAnimator.SetBool("Caught", false);
         _isCaught = false;
-        
-        //_playerCapMesh.material.shader = _defaultShader;
 
         if (_playerMeshMaterials.Length > 0)
         {
@@ -709,7 +707,7 @@ public class PlayerController : MonoBehaviour
                 }
             } while (_approvedSpot == false);
             
-            _newPosition.y = 0f;
+            _newPosition.y = 1f;
 
             NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas);
 
