@@ -659,8 +659,8 @@ public class PlayerController : MonoBehaviour
     private IEnumerator LosingLoot(int GhostType)
     {
         int _times = GhostType + 1;
-        float _radius = 40f;
-        float _innerRadius = 20f;
+        float _radius = 30f;
+        float _innerRadius = 10f;
         bool _approvedSpot = false;
         int _scoreToDrop = 0;
         int _amountOfDrops = 0;
@@ -689,14 +689,16 @@ public class PlayerController : MonoBehaviour
             Vector3 _newPosition = new Vector3();
             Vector2 _randomRadius = new Vector2();
             Vector2 _playerPos;
-            _playerPos.x = Mathf.Clamp(transform.position.x, _camBoundsX.x, _camBoundsX.y);
-            _playerPos.y = Mathf.Clamp(transform.position.z, _camBoundsY.x, _camBoundsY.y);
+            _playerPos.x = transform.position.x;
+            _playerPos.y = transform.position.z;
 
             do
             {
                 _randomRadius = Random.insideUnitCircle * _radius + _playerPos;
-                _newPosition.x = _randomRadius.x;
-                _newPosition.z = _randomRadius.y;
+                Debug.Log("_randomRadius" + _randomRadius);
+                _newPosition.x = Mathf.Clamp(_randomRadius.x, _camBoundsX.y, _camBoundsX.x);
+                _newPosition.z = Mathf.Clamp(_randomRadius.y, _camBoundsY.y, _camBoundsY.x);   
+                Debug.Log("After Clamp: " + _newPosition);
                 float distanceFromPlayer = Vector3.Distance(transform.position, _newPosition);
                 float distanceFromSpawn = Vector3.Distance(GameManager.Instance.PlayerSpawn.position, _newPosition);
                     
@@ -706,16 +708,19 @@ public class PlayerController : MonoBehaviour
                     _approvedSpot = true;    
                 }
             } while (_approvedSpot == false);
-            
-            _newPosition.y = 1f;
 
-            NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas);
+            _newPosition.y = 0f;
+
+            // -- dont get hit result anymore?
+            //NavMesh.SamplePosition(_newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas);
 
             yield return new WaitForSeconds(2f);
             RGAnimator.SetBool("Floating", true);
             GameManager.Instance.ResetCamZoom(2f);
 
-            Vector3 _newPos = new Vector3(hit.position.x, 5f, hit.position.z);
+            Vector3 _newPos = new Vector3(_newPosition.x, 5f, _newPosition.z);
+            
+            Debug.Log("Position to go to: " + _newPos);
 
             transform.DORotate(new Vector3(0f, Random.Range(0f, 720f), 0f), 3f, RotateMode.FastBeyond360).SetEase(Ease.OutBounce);
             transform.DOMove(_newPos, 2f, false).SetEase(Ease.OutSine).OnComplete(() =>
