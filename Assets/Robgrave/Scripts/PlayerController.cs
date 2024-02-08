@@ -12,19 +12,22 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Attributes")]
     public float moveSpeed = 10.0f;
+    [NonSerialized] public float moveSpeedMult = 1.0f;
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
-    public float digSpeedMultiplier = 3.0f;
+    [NonSerialized] public float digSpeedMult = 1.0f;
+    [NonSerialized] public float hitSpeedMult = 1.0f;
     public float flashLightReach = 10f;
+    [NonSerialized] public float flashLightReachMult = 1f;
+    [NonSerialized] public float scoreMultiplierAdd = 0f;
+    public float invulnerableTime = 3f;
     public int currentLives = 3;
     public int maxLives = 3;
     public int score = 0;
-    public float invulnerableTime = 3f;
     [NonSerialized] public int preScore;
-    [SerializeField] private LayerMask _flashlightHits;
     private int _scoreMultiplier = 0;
+    [SerializeField] private LayerMask _flashlightHits;
     private int _scorePickupCounter = 0;
-    
 
     [Header("Camera")]
     public Camera cam;
@@ -42,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Meshes")]
     [SerializeField] private SkinnedMeshRenderer _playerMesh;
-    //[SerializeField] private MeshRenderer _playerCapMesh;
     private Material[] _playerMeshMaterials;
 
     private Material playerMeshMaterial;
@@ -179,13 +181,13 @@ public class PlayerController : MonoBehaviour
             Instance = this;
         }
         
-         _defaultShader = _playerMesh.materials[0].shader;
-         _playerMeshMaterials = _playerMesh.materials;
+        _defaultShader = _playerMesh.materials[0].shader;
+        _playerMeshMaterials = _playerMesh.materials;
          
-         _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
-         _colorId = Shader.PropertyToID("_Color");
-         _opacityId = Shader.PropertyToID("_Opacity");
-         _defaultFlashlightColor = _flashlightConeMat.GetColor(_colorId);
+        _flashlightConeMat = _flashLightCone.GetComponent<Renderer>().material;
+        _colorId = Shader.PropertyToID("_Color");
+        _opacityId = Shader.PropertyToID("_Opacity");
+        _defaultFlashlightColor = _flashlightConeMat.GetColor(_colorId);
         
         playerInputs = new RGInputs();
         
@@ -617,7 +619,25 @@ public class PlayerController : MonoBehaviour
 
     public void IsHitting(bool hitting)
     {
-        // SET STUFF FOR ANIMATION AND VISUALS
+        bool _currentHit = RGAnimator.GetBool("Hitting");
+        
+        if (hitting && !_currentHit)
+        {
+            RGAnimator.SetBool("Hitting", true);
+            _torchHand.gameObject.SetActive(false);
+            _torchHip.gameObject.SetActive(true);
+            _shovelBack.gameObject.SetActive(false);
+            _shovelHand.gameObject.SetActive(true);
+            
+        }
+        else if (!hitting && _currentHit)
+        {
+            RGAnimator.SetBool("Hitting", false);
+            _torchHand.gameObject.SetActive(true);
+            _torchHip.gameObject.SetActive(false);
+            _shovelBack.gameObject.SetActive(true);
+            _shovelHand.gameObject.SetActive(false);
+        }
     }
 
     private void Ghosted(int GhostType)

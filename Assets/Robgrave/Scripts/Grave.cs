@@ -129,7 +129,7 @@ public class Grave : Interactable
             PlayerController.Instance.movementDisabled = true;
             PlayerController.Instance.IsDigging(true);
             
-            diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMultiplier);
+            diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMult);
             if (defileProgress > 0f)
             {
                 defileProgress -= Time.deltaTime;
@@ -183,7 +183,6 @@ public class Grave : Interactable
         Color _defaultColor = GameManager.Instance.graveDefaultColor;
         SetGraveStoneColor(_defaultColor);
     }
-    
     
     private void SpawnLoot()
     {
