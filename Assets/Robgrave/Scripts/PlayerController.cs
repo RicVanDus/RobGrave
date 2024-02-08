@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("SOUND")] 
     [SerializeField] private AudioClip[] _deathSounds;
+
+    [NonSerialized] public Lamppost targetLamppost;
     
     
     private void OnEnable()
@@ -640,6 +642,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void HitsLamppost()
+    {
+        if (targetLamppost != null)
+        {
+            targetLamppost.StartWiggle(0.5f);
+        }
+    }
+
     private void Ghosted(int GhostType)
     {
         Color _clr = Color.black;
@@ -758,7 +768,6 @@ public class PlayerController : MonoBehaviour
         }
         Invoke("Respawning", 1f);
     }
-
     
     // functions subscribed to gamestate
     private void OnPause(InputAction.CallbackContext context)

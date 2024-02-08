@@ -199,7 +199,6 @@ public class LootManager : MonoBehaviour
             case 5:
                 randomIndex = Random.Range(3, 6);
                 break;
-
         }
 
         if (Debug_Lootmanager)
@@ -269,7 +268,6 @@ public class LootManager : MonoBehaviour
         {
             var SpawnObject = Instantiate(debugObject, selectedPositions[i].GridPosition, debugObject.transform.rotation);
             SpawnObject.name = "lootPos-" + i;
-
         }
     }
 
@@ -345,7 +343,6 @@ public class LootManager : MonoBehaviour
     public void ShowDebugLootGrid()
     {
         GameObject _debugObject;
-
 
         if (debugObjects.Count > 0)
         {

@@ -13,7 +13,9 @@ public enum GameState
     Pause,
     Extract,
     Shop,
-    GameOver
+    GameOver,
+    BeforeStart,
+    Casino
 }
 
 public class GameOverseer : MonoBehaviour

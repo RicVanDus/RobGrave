@@ -182,7 +182,6 @@ public class Lamppost : MonoBehaviour
             _GUI_lamppost.currentLightStages = _lightStage;
             _GUI_lamppost.FillAmount = (_lightTimer % _maxLightTime) / _maxLightTime;
         }
-
     }
 
     private void ToggleLight(bool toggle)
@@ -249,7 +248,7 @@ public class Lamppost : MonoBehaviour
                 {
                     _lightStage = (int)(_lightTimer / _maxLightTime);
                     SetLightSize();
-                    StartWiggle(0.7f);
+                    //StartWiggle(0.7f);
                 }
 
             }

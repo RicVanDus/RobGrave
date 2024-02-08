@@ -49,4 +49,11 @@ public class RG_Effects : MonoBehaviour
         
         _dirtFromShovel.Stop();
     }
+
+
+    [UsedImplicitly]
+    private void LamppostWiggle()
+    {
+        PlayerController.Instance.HitsLamppost();
+    }
 }
