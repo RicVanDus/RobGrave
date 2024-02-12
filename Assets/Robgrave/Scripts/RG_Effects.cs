@@ -9,6 +9,7 @@ public class RG_Effects : MonoBehaviour
     [Header("VFX")]
     [SerializeField] private VisualEffect _dirtFromShovel;
     [SerializeField] private GameObject _dirtOnShovel;
+    [SerializeField] private ParticleSystem _sparkFromShovel;
     
     // Start is called before the first frame update
     void Start()
@@ -55,5 +56,7 @@ public class RG_Effects : MonoBehaviour
     private void LamppostWiggle()
     {
         PlayerController.Instance.HitsLamppost();
+        _sparkFromShovel.Play();
+
     }
 }

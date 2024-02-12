@@ -644,6 +644,7 @@ public class PlayerController : MonoBehaviour
 
     public void HitsLamppost()
     {
+        Debug.Log("HIT LAMPPOST!");
         if (targetLamppost != null)
         {
             targetLamppost.StartWiggle(0.5f);

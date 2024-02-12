@@ -118,8 +118,10 @@ public class Lamppost : MonoBehaviour
                 if (!_playerInteracting)
                 {
                     _playerInteracting = true;
+                    PlayerController.Instance.targetLamppost = this;
                     PlayerController.Instance.RotateToObject(this.gameObject);
                     PlayerController.Instance.movementDisabled = true;
+                    PlayerController.Instance.IsHitting(true);
                 }
             }
             else
@@ -127,7 +129,9 @@ public class Lamppost : MonoBehaviour
                 if (_playerInteracting)
                 {
                     _playerInteracting = false;
-                    PlayerController.Instance.movementDisabled = false;                    
+                    PlayerController.Instance.movementDisabled = false;  
+                    PlayerController.Instance.targetLamppost = null;
+                    PlayerController.Instance.IsHitting(false);
                 }
                 TimerChange(false);
             }
