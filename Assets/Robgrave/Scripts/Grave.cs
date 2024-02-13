@@ -129,7 +129,7 @@ public class Grave : Interactable
             PlayerController.Instance.movementDisabled = true;
             PlayerController.Instance.IsDigging(true);
             
-            diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMult);
+            diggingProgress += (Time.deltaTime * PlayerController.Instance.digSpeedMult * 3f);
             if (defileProgress > 0f)
             {
                 defileProgress -= Time.deltaTime;
