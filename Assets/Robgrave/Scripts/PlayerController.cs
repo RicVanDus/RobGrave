@@ -588,8 +588,6 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = transform.position - obj.transform.position;
         Quaternion rot = Quaternion.LookRotation(dir);
         
-        
-        
         Vector3 newDir = rot.eulerAngles;
         newDir.y += 180f;
         

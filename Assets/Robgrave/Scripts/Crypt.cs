@@ -4,11 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-// TODO: make a traffic light - green is open and safe, yellow is enemy nearby at the exit, red is closed
-// Set a random crypt every time you teleport
-// Make every crypt look at enemy distance and set safe bool
-
-
 public class Crypt : MonoBehaviour
 {
     public Crypt[] linkedCrypts;

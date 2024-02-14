@@ -5,8 +5,10 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
+using Vector4 = UnityEngine.Vector4;
 
 public class Enemy : MonoBehaviour
 {
@@ -65,6 +67,9 @@ public class Enemy : MonoBehaviour
     private bool _blinkingGhost = false;
 
     private WaitForSeconds _wait05 = new(0.5f);
+
+    private int _suckUpProgressId;
+    private int _suckUpPosId;
     
     private void OnEnable()
     {
@@ -77,7 +82,13 @@ public class Enemy : MonoBehaviour
         PlayerController.Instance.GettingCaught -= PlayerIsCaught;
         PlayerController.Instance.Respawned -= PlayerRespawned;
     }
-    
+
+    private void Awake()
+    {
+        _suckUpPosId = Shader.PropertyToID("SuckingUpPosition");
+        _suckUpProgressId = Shader.PropertyToID("SuckingUpProgress");
+    }
+
     private void Start()
     {
        //_debugger = Instantiate<GameObject>(_debugSphere);
@@ -475,14 +486,39 @@ public class Enemy : MonoBehaviour
     public void CaughtPlayer()
     {
         //rotates to player, begins sucking up animation (set Vector3 pos of player)
+        Vector3 dir = transform.position - PlayerController.Instance.transform.position;
+        Quaternion rot = Quaternion.LookRotation(dir);
         
+        Vector3 newDir = rot.eulerAngles;
+        newDir.y += 180f;
+
+        transform.DORotate(newDir, 0.3f, RotateMode.Fast);
+        StartCoroutine(SuckedUp(PlayerController.Instance.transform.position));
     }
 
-    private IEnumerator SuckedUp()
+    private IEnumerator SuckedUp(Vector3 pos)
     {
         // adds to the mask of being sucked up, on complete trigger Player ghost shader (or just time it in the Player script)
+        bool suckDone = false;
+        float speed = 10f;
+        float suckUpProgress = 0f;
+        Vector4 posv4 = new Vector4(pos.x, pos.y, pos.z, 0f);
         
-        yield break;
+        _myMaterial.SetVector(_suckUpPosId, posv4);
+
+        do
+        {
+            suckUpProgress += Time.deltaTime * speed;
+
+            _myMaterial.SetFloat(_suckUpProgressId, suckUpProgress);
+            yield return null;
+
+            if (suckUpProgress > 1f)
+            {
+                suckDone = true;
+                Respawn();
+            }
+        } while (!suckDone);
     }
 
     private void Respawn()
