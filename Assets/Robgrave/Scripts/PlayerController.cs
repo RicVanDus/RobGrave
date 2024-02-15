@@ -559,13 +559,11 @@ public class PlayerController : MonoBehaviour
             {
                 score += (int)(_modAmount * 10);
                 _counter += (int)(_modAmount * 10);
-                CheckIfGoalAchieved();
             }
             while (_counter < preScore)
             {                
                 score += (int)_amountToScore;
                 _counter += (int)_amountToScore;
-                CheckIfGoalAchieved();
 
                 yield return _wait01;
             }
@@ -573,13 +571,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             score += preScore;
-            CheckIfGoalAchieved();
         }
+        
     }
 
     private void AddPreScoreToScoreDirectly(int preScore)
     {
         score += preScore;
+        CheckIfGoalAchieved();
         updateScore?.Invoke();
     }
 
@@ -871,6 +870,8 @@ public class PlayerController : MonoBehaviour
         {
             goalAchieved = false;
         }
+        
+        Debug.Log("Goal achieved: " + goalAchieved + " -- /" + GameManager.Instance.thisLevel.valuablesRequired );
         
         ChangingScore?.Invoke();
     }

@@ -40,7 +40,7 @@ public class ExitTrigger : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerController.Instance.ChangingScore += SetExitSignColor;
+        PlayerController.Instance.ChangingScore += SetExitSignColor;
         //Debug.Log(PlayerController.Instance.goalAchieved);
     }
 
