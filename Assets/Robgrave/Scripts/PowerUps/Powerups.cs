@@ -18,4 +18,6 @@ public class Powerups : ScriptableObject
     [Space] 
     public float duration;
     public float value;
+    [Space] 
+    public float chance;
 }

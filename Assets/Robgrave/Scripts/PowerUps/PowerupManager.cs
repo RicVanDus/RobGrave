@@ -12,7 +12,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private Powerups[] _powerups;
     private Powerups[] _availPowerups;
     private Powerups[] _powerupOptions;
-    
+
     /*
      * needs an array with powerups
      * needs another array with available powerups
@@ -33,7 +33,6 @@ public class PowerupManager : MonoBehaviour
         _availPowerups = _powerups;
     }
 
-
     private void PowerupValidation(Powerups powerup)
     {
         /*
@@ -43,7 +42,7 @@ public class PowerupManager : MonoBehaviour
          *
          * whenever the result is false we remove it from the available array
          */
-        
+
     }
 
     private void PowerupExecute(Powerups powerup)
@@ -51,8 +50,8 @@ public class PowerupManager : MonoBehaviour
         /*
          * this will be a long dumb method, covering all the types of powerups
          */
-        
-        
+
+
     }
 
     private void CreatePowerupOption(Powerups powerup, int index)
@@ -61,7 +60,12 @@ public class PowerupManager : MonoBehaviour
          * Creating a powerup from the prefab and then add that to the array
          */
     }
-    
+
+    private void PowerupChanceSet(Powerups powerup)
+    {
+
+    }
+
     /*
      * methods needed:
      * - animations
@@ -69,6 +73,4 @@ public class PowerupManager : MonoBehaviour
      * - wheel of fortune chance update
      * - spinning the wheel
      * */
-    
-    
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   type: 1
   name: Gold bars
   description: Worth a good amount of money
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 967601309f05af143b655100ac8d33d8, type: 3}
   duration: 0
   value: 1000
+  chance: 0
