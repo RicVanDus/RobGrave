@@ -17,7 +17,7 @@ MonoBehaviour:
   ghostSpawnType1: 0
   ghostSpawnType2: 0
   valuablesRequired: 1000
-  percentageGiftboxes: 0.2
+  percentageGiftboxes: 0.9
   graveType1: 2
   graveType2: 1
   timeBetweenLightning: 20

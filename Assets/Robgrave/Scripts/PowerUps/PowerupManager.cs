@@ -8,10 +8,14 @@ public class PowerupManager : MonoBehaviour
     public static PowerupManager Instance;
 
     [SerializeField] private GameObject _uiBase;
+    [SerializeField] private GameObject _uiAll;
+    [SerializeField] private GameObject _powerupBlock;
+    [SerializeField] private GameObject _chest;
 
     [SerializeField] private Powerups[] _powerups;
     private Powerups[] _availPowerups;
     private Powerups[] _powerupOptions;
+    private PowerupUIChest _powerupUIChest;
 
     /*
      * needs an array with powerups
@@ -30,9 +34,41 @@ public class PowerupManager : MonoBehaviour
 
     private void Start()
     {
+        _powerupUIChest = _chest.GetComponent<PowerupUIChest>();
         _availPowerups = _powerups;
     }
 
+    public void ChestOpen(int type)
+    {
+        _powerupUIChest.SetChest(type);
+        _uiAll.SetActive(true);
+        Time.timeScale = 0f;
+        
+        if (type == 0)
+        {
+            
+        } else if (type == 1)
+        {
+        }
+        else
+        {
+            
+        }
+        
+        
+        /*
+         * Sets the 3 powerups.
+         * Sets the chest type.
+         * Starts animations 
+         */
+    }
+
+    public void ChestClose()
+    {
+        Time.timeScale = 1f;
+        _uiAll.SetActive(false);
+    }
+    
     private void PowerupValidation(Powerups powerup)
     {
         /*
