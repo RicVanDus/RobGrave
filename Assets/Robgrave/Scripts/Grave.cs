@@ -22,6 +22,8 @@ public class Grave : Interactable
     public bool hasGiftbox;
 
     [SerializeField] private Text _depthNumber;
+    
+    [SerializeField] private GameObject _posIndicator;
 
     public Gravedirt _gravedirt;
 
@@ -42,8 +44,8 @@ public class Grave : Interactable
     private Color _currentGraveStoneColor;
 
     private WaitForSeconds _shortWait = new(0.1f);
-    
-    
+    private WaitForSeconds _shortWait2 = new(0.3f);
+
     protected override void Start()
     {
         SetGraveType(graveType);
@@ -52,6 +54,10 @@ public class Grave : Interactable
         _gravedirt = GetComponentInChildren<Gravedirt>();
         _coffinLid = _coffin.transform.GetChild(0).gameObject;
         _graveStone = transform.Find("gravestone").gameObject;
+        
+        _posIndicator.SetActive(false);
+
+        StartCoroutine(PosIndicator());
     }
 
     protected override void Update()
@@ -331,6 +337,32 @@ public class Grave : Interactable
         }
 
         return _giftType;
+    }
+
+    private IEnumerator PosIndicator()
+    {
+        float minDistance = 4f;
+
+        do
+        {
+            if (!graveIsDug && !PlayerController.Instance._canInteract)
+            {
+                if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < minDistance)
+                {
+                    _posIndicator.SetActive(true);
+                }
+                else
+                {
+                    _posIndicator.SetActive(false);
+                }
+            }
+            else
+            {
+                _posIndicator.SetActive(false);
+            }
+
+            yield return _shortWait2;
+        } while (true);
     }
 }
 

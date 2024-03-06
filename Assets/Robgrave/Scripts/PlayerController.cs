@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     [NonSerialized] public bool movementDisabled = false;
     [NonSerialized] public bool playerInteracting = false;
     private bool isInvulnerable = false;
-    private bool _canInteract;
+    public bool _canInteract = false;
     private bool _isCaught = false;
     private bool _isTeleporting = false;
 
