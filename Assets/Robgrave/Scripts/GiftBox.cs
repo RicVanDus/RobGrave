@@ -64,7 +64,7 @@ public class GiftBox : MonoBehaviour
                 }
                 else
                 {
-                    giftBoxData.Apply();
+                    PowerupManager.Instance.ChestOpen(giftBoxData.rarity.GetHashCode());
                     LootManager.Instance.ClearLootSpot(lootId);
                     Destroy(gameObject);                
                 }
