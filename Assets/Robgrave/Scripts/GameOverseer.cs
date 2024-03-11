@@ -225,10 +225,12 @@ public class GameOverseer : MonoBehaviour
     
     private void ShowPauseMenu()
     {
-       // _eventSystem.firstSelectedGameObject = _pauseMenu.defaultSelected;
-        DisableAllOverlays();
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
+        if (Time.timeScale > 0f)
+        {
+            DisableAllOverlays();
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;    
+        }
     }
     
     private void ShowExtracted()

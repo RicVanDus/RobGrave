@@ -14,10 +14,9 @@ public class Powerups : ScriptableObject
     [Space]
     public string name;
     public string description;
+    public string item;
     public Sprite icon;
     [Space] 
     public float duration;
     public float value;
-    [Space] 
-    public float chance;
 }

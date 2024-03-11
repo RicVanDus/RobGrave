@@ -50,24 +50,17 @@ public class GiftBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (giftBoxData.duration > 0f)
+            if (giftBoxData.giftType == GiftType.CryptKey)
             {
-                
+                GameManager.Instance.cryptKeyObtained?.Invoke();
+                UIMessages.Instance.CreateMessage("The crypt is open!", "A shortcut to another place", UIMessageType.Good ,MessageIcon.CryptKey);
+                Destroy(gameObject);
             }
             else
             {
-                if (giftBoxData.giftType == GiftType.CryptKey)
-                {
-                    GameManager.Instance.cryptKeyObtained?.Invoke();
-                    UIMessages.Instance.CreateMessage("The crypt is open!", "A shortcut to another place", UIMessageType.Good ,MessageIcon.CryptKey);
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    PowerupManager.Instance.ChestOpen(giftBoxData.rarity.GetHashCode());
-                    LootManager.Instance.ClearLootSpot(lootId);
-                    Destroy(gameObject);                
-                }
+                LootManager.Instance.ClearLootSpot(lootId);
+                Destroy(gameObject);
+                PowerupManager.Instance.ChestOpen(giftBoxData.rarity.GetHashCode());
             }
         }
     }

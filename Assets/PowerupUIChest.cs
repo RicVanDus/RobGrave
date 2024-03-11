@@ -13,21 +13,23 @@ public class PowerupUIChest : MonoBehaviour
 
     public void SetChest(int type)
     {
-        /*
         if (type == 0)
         {
-            _lid.GetComponent<Renderer>().material = _green;
-            _base.GetComponent<Renderer>().material = _green;
+            _lid.GetComponent<Renderer>().materials[0] = _green;
+            _base.GetComponent<Renderer>().materials[1] = _green;
         } else if (type == 1)
         {
-            _lid.GetComponent<Renderer>().material = _blue;
-            _base.GetComponent<Renderer>().material = _blue;            
+            _lid.GetComponent<Renderer>().materials[0] = _blue;
+            _base.GetComponent<Renderer>().materials[1] = _blue;            
         }
         else
         {
-            _lid.GetComponent<Renderer>().material = _purple;
-            _base.GetComponent<Renderer>().material = _purple;            
-        } */
+            _lid.GetComponent<Renderer>().materials[0] = _purple;
+            _base.GetComponent<Renderer>().materials[1] = _purple;            
+        }
+        
+        /* play animation */
     }
+    
     
 }

@@ -341,7 +341,7 @@ public class Grave : Interactable
 
     private IEnumerator PosIndicator()
     {
-        float minDistance = 4f;
+        float minDistance = 6f;
 
         do
         {

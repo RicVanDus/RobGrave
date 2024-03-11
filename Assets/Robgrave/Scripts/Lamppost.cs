@@ -18,6 +18,7 @@ public class Lamppost : MonoBehaviour
     [SerializeField] private Light _softSpotLight;
     [SerializeField] SphereCollider _collider;
     [SerializeField] private GameObject _UI;
+    [SerializeField] private GameObject _posIndicator;
 
     [SerializeField] private Color _highlightColor;
     
@@ -56,6 +57,7 @@ public class Lamppost : MonoBehaviour
     private Color _bulbColor = new Color(0.75f, 0.7f, 0.17f);
 
     private WaitForSeconds _wait01 = new (0.1f);
+    private WaitForSeconds _wait03 = new (0.3f);
 
     private Material[] _wiggleMats = new Material[7];
     private int _wiggleDeformId;
@@ -96,7 +98,10 @@ public class Lamppost : MonoBehaviour
         _baseTriggerSize = _collider.radius / 5;
         _baseSpotlightSize = _spotLight.range / 5;
         
+        _posIndicator.SetActive(false);
+        
         ToggleHighlight(false);
+        StartCoroutine(PosIndicator());
     }
 
     private void Update()
@@ -447,5 +452,31 @@ public class Lamppost : MonoBehaviour
         } while (_bWiggling);
         
         yield break;
+    }
+    
+    private IEnumerator PosIndicator()
+    {
+        float minDistance = 10f;
+
+        do
+        {
+            if (!_playerCanInteract && !PlayerController.Instance._canInteract && !_lightIsOn && !_lightIsflashing)
+            {
+                if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < minDistance)
+                {
+                    _posIndicator.SetActive(true);
+                }
+                else
+                {
+                    _posIndicator.SetActive(false);
+                }
+            }
+            else
+            {
+                _posIndicator.SetActive(false);
+            }
+
+            yield return _wait03;
+        } while (true);
     }
 }

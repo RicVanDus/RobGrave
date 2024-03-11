@@ -31,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 1459849705684158309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5648917, y: 1.5648917, z: 1.5648917}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5105270772960795451}
   m_Father: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   giftBoxData: {fileID: 11400000, guid: 8170c9ca7d0fb374aa8947bacf93bcd4, type: 2}
-  lootId: 1699
+  lootId: 2572
 --- !u!1 &3030355723382930995
 GameObject:
   m_ObjectHideFlags: 0
