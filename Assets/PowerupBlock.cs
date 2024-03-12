@@ -141,7 +141,12 @@ public class PowerupBlock : MonoBehaviour
         else
         {
             _chance += 10f;
+            if (_chance > 70f)
+            {
+                _button.interactable = false;
+            }
         }
+        
     }
 
     public void DecreaseChance()
@@ -165,7 +170,7 @@ public class PowerupBlock : MonoBehaviour
             btnDisabled = true;
             Vector3 toScale = _defaultBtnScale;
             toScale.y = 0f;
-            _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(UpdateType.Late).OnComplete(() =>
+            _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
             {
                 _button.interactable = false;
                 _button.enabled = false;
