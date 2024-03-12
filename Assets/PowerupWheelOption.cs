@@ -1,16 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PowerupWheelOption : MonoBehaviour
 {
-    void Start()
+    private Image wheelImg;
+    [SerializeField] private Image _wheelIcon;
+
+    private void Awake()
     {
-        
+        wheelImg = GetComponent<Image>();
     }
 
-    void Update()
+
+
+    public void SetImage(Color clr, Sprite icon)
     {
-        
+        _wheelIcon.sprite = icon;
+        wheelImg.color = clr;
     }
+
 }

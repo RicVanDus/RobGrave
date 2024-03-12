@@ -34,6 +34,9 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] public Color blueColor;
     [SerializeField] public Color purpleColor;
     [SerializeField] public Color greyColor;
+
+    private int chosenIndex;
+
     
     /*
      * needs an array with powerups
@@ -62,7 +65,8 @@ public class PowerupManager : MonoBehaviour
         _chestType = type;
         _uiAll.SetActive(true);
         Time.timeScale = 0f;
-        
+
+        chosenIndex = 3;
        
         // Make 3 arrays with the powerup rarities and check the blue/purple ones
         _powerupOptionsGreen.Clear();
@@ -206,13 +210,52 @@ public class PowerupManager : MonoBehaviour
          */
     }
 
-    private void PowerupChanceSet(Powerups powerup)
+    public void PowerupChanceSet(int blockIndex)
     {
         /*
          * increasing one of the powerupOptions, decreasing the chance of the others by the same amount, rotate graphics accordingly
-         *   
-         * 
+         * after 2 indexes have been adjusted, disable the button on index 3
+         * don't adjust the values negatively of the chosen 2 indices
+         * first time adjusting is to 50%, after that it's +10% up to 90%
+         * 25% - 25% / 60% - 20 - 20 / 70 - 15 - 15 / 80 - 10 - 10
          */
+
+        chosenIndex = blockIndex;
+
+        List<PowerupBlock> _powerupBlocks = new();
+        _powerupBlocks.Add(_powerupBlock1);
+        _powerupBlocks.Add(_powerupBlock2);
+        _powerupBlocks.Add(_powerupBlock3);
+
+        PowerupBlock chosenPowerupBlock = null;  
+
+        if (chosenIndex == 0)
+        {
+            chosenPowerupBlock = _powerupBlock1;
+        }
+        else if (chosenIndex == 1)
+        {
+            chosenPowerupBlock = _powerupBlock2;
+        }
+        else if (chosenIndex == 2)
+        {
+            chosenPowerupBlock = _powerupBlock3;
+        }
+
+        for (int i = 0; i < _powerupBlocks.Count; i++)
+        {
+            if (_powerupBlocks[i] == chosenPowerupBlock)
+            {
+                _powerupBlocks[i].IncreaseChance();
+            }
+            else
+            {
+                _powerupBlocks[i].DecreaseChance();
+                _powerupBlocks[i].HideButton();
+            }
+        }
+        
+        
     }
 
     /*
