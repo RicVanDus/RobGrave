@@ -10,26 +10,35 @@ public class PowerupUIChest : MonoBehaviour
     [SerializeField] private GameObject _lid;
     [SerializeField] private GameObject _base;
     
-
     public void SetChest(int type)
     {
+        Material newMat;
+
+        Renderer rendererBase = _base.GetComponent<Renderer>();
+        Renderer rendererLid = _lid.GetComponent<Renderer>();
+        
+        // SET MATERIAL
         if (type == 0)
         {
-            _lid.GetComponent<Renderer>().materials[0] = _green;
-            _base.GetComponent<Renderer>().materials[1] = _green;
+            newMat = _green;
         } else if (type == 1)
         {
-            _lid.GetComponent<Renderer>().materials[0] = _blue;
-            _base.GetComponent<Renderer>().materials[1] = _blue;            
+            newMat = _blue;
         }
         else
         {
-            _lid.GetComponent<Renderer>().materials[0] = _purple;
-            _base.GetComponent<Renderer>().materials[1] = _purple;            
+            newMat = _purple;
         }
-        
+
+        Material[] matsBase = rendererBase.materials;
+        Material[] matsLid = rendererLid.materials;
+
+        matsBase[1] = newMat;
+        matsLid[0] = newMat;
+
+        rendererBase.materials = matsBase;
+        rendererLid.materials = matsLid;
+
         /* play animation */
     }
-    
-    
 }
