@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wheelIcon: {fileID: 631887468}
 --- !u!1 &138616804
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wheelIcon: {fileID: 866264399}
 --- !u!1 &145814027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,6 +1387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wheelIcon: {fileID: 0}
 --- !u!1 &757885987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2529,7 @@ MonoBehaviour:
   _button: {fileID: 383151230}
   _buttonText: {fileID: 1911020824}
   _spotLight: {fileID: 1876517835}
+  _spinWheelBtn: {fileID: 1554015841}
   powerupBlockIndex: 1
   _powerup: {fileID: 0}
   _chance: 0
@@ -2734,6 +2738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wheelIcon: {fileID: 1629310716}
 --- !u!1 &1494401830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3564,6 +3569,7 @@ MonoBehaviour:
   _button: {fileID: 782947332}
   _buttonText: {fileID: 1026730646}
   _spotLight: {fileID: 1494401833}
+  _spinWheelBtn: {fileID: 1554015841}
   powerupBlockIndex: 2
   _powerup: {fileID: 0}
   _chance: 0
@@ -3888,7 +3894,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: -1019605457720828314, guid: f85ffdd0e2a363746a0e665da223aa75,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!1 &1817763953
@@ -5475,6 +5481,7 @@ MonoBehaviour:
   _button: {fileID: 1387959409}
   _buttonText: {fileID: 2038145103}
   _spotLight: {fileID: 2011628643}
+  _spinWheelBtn: {fileID: 1554015841}
   powerupBlockIndex: 0
   _powerup: {fileID: 0}
   _chance: 0

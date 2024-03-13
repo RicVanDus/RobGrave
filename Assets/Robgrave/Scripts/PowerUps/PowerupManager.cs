@@ -25,6 +25,7 @@ public class PowerupManager : MonoBehaviour
     private List<Powerups> _powerupOptionsBlue = new();
     private List<Powerups> _powerupOptionsPurple = new();
     private PowerupUIChest _powerupUIChest;
+    public List<PowerupBlock> powerupBlocks = new();
 
     private int _chestType;
     private Powerups _chosenPowerup;
@@ -57,6 +58,10 @@ public class PowerupManager : MonoBehaviour
     {
         _powerupUIChest = _chest.GetComponent<PowerupUIChest>();
         _uiAll.SetActive(false);
+        
+        powerupBlocks.Add(_powerupBlock1);
+        powerupBlocks.Add(_powerupBlock2);
+        powerupBlocks.Add(_powerupBlock3);
     }
 
     public void ChestOpen(int type)
@@ -222,11 +227,6 @@ public class PowerupManager : MonoBehaviour
 
         chosenIndex = blockIndex;
 
-        List<PowerupBlock> _powerupBlocks = new();
-        _powerupBlocks.Add(_powerupBlock1);
-        _powerupBlocks.Add(_powerupBlock2);
-        _powerupBlocks.Add(_powerupBlock3);
-
         PowerupBlock chosenPowerupBlock = null;  
 
         if (chosenIndex == 0)
@@ -242,20 +242,18 @@ public class PowerupManager : MonoBehaviour
             chosenPowerupBlock = _powerupBlock3;
         }
 
-        for (int i = 0; i < _powerupBlocks.Count; i++)
+        for (int i = 0; i < powerupBlocks.Count; i++)
         {
-            if (_powerupBlocks[i] == chosenPowerupBlock)
+            if (powerupBlocks[i] == chosenPowerupBlock)
             {
-                _powerupBlocks[i].IncreaseChance();
+                powerupBlocks[i].IncreaseChance();
             }
             else
             {
-                _powerupBlocks[i].DecreaseChance();
-                _powerupBlocks[i].HideButton();
+                powerupBlocks[i].DecreaseChance();
+                powerupBlocks[i].HideButton();
             }
         }
-        
-        
     }
 
     /*
@@ -273,6 +271,4 @@ public class PowerupManager : MonoBehaviour
         PowerupExecute(_chosenPowerup);
         _chosenPowerup = null;
     }
-    
-    
 }
