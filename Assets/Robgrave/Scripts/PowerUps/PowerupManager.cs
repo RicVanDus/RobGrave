@@ -19,6 +19,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private PowerupBlock _powerupBlock3;
     
     [SerializeField] private Button _button;
+    [SerializeField] private GameObject _wheel;
 
     [SerializeField] private Powerups[] _powerups;
     private List<Powerups> _powerupOptionsGreen = new();
@@ -37,7 +38,6 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] public Color greyColor;
 
     private int chosenIndex;
-
     
     /*
      * needs an array with powerups
@@ -62,6 +62,8 @@ public class PowerupManager : MonoBehaviour
         powerupBlocks.Add(_powerupBlock1);
         powerupBlocks.Add(_powerupBlock2);
         powerupBlocks.Add(_powerupBlock3);
+
+        _button.interactable = false;
     }
 
     public void ChestOpen(int type)
@@ -109,6 +111,8 @@ public class PowerupManager : MonoBehaviour
          * Sets the 3 powerups.
          * Starts animations 
          */
+
+        StartCoroutine(StartAnimation());
     }
 
     private void PowerupValidation(Powerups powerup)
@@ -270,5 +274,25 @@ public class PowerupManager : MonoBehaviour
         _uiAll.SetActive(false);
         PowerupExecute(_chosenPowerup);
         _chosenPowerup = null;
+    }
+
+    private IEnumerator StartAnimation()
+    {
+        float pauseTime = 0.7f;
+
+        for (int i = 0; i < powerupBlocks.Count; i++)
+        {
+            powerupBlocks[i].AnimateButtonUp();
+            yield return new WaitForSecondsRealtime(pauseTime);
+        }
+        
+        yield return new WaitForSecondsRealtime(pauseTime);
+        
+        for (int i = 0; i < powerupBlocks.Count; i++)
+        {
+            powerupBlocks[i].EnableButton(true);
+        }
+
+        _button.interactable = true;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class PowerupBlock : MonoBehaviour
     public int powerupBlockIndex;
     public Powerups _powerup;
     public float _chance;
+    public float _newChance;
 
     private Color _greenColor;
     private Color _blueColor;
@@ -32,14 +34,16 @@ public class PowerupBlock : MonoBehaviour
 
     private Vector3 _defaultBtnScale;
 
+    private Vector3 _defaultPos;
+    private Vector3 _downPos;
+
     private bool btnDisabled = false;
+
+    private float _wheelFill;
+    private float _updateDur = 0.6f;
     
     void Start()
     {
-        _chance = 100f / 3;
-        _defaultBtnScale = _button.transform.localScale;
-        _button.interactable = false;
-
         if (powerupBlockIndex == 0)
         {
             _colorMult = Vector4.one * 0.8f;
@@ -53,18 +57,34 @@ public class PowerupBlock : MonoBehaviour
         _blueColor = PowerupManager.Instance.blueColor * _colorMult;
         _purpleColor = PowerupManager.Instance.purpleColor * _colorMult;
         _greyColor = PowerupManager.Instance.greyColor * _colorMult;
+        
+        //start out of frame
+        _defaultPos = transform.localPosition;
+        _downPos = _defaultPos;
+        _downPos.y -= 40f;
+        _defaultBtnScale = _button.transform.localScale;
     }
+
+    private void Update()
+    {
+        _wheelOption.fill = _chance / 100f;
+    }
+
 
     public void SetPowerup(Powerups powerup)
     {
+        _wheelOption.fill = _chance / 100f;
+        _chance = 100f / 3;
+        transform.localPosition = _downPos;
+        
+        _button.interactable = false;
+        btnDisabled = true;
         
         if (powerup != null)
         {
             _powerup = powerup;
             Color clr = Color.yellow;
 
-            _button.interactable = true;
-            _button.enabled = true;
             _button.transform.localScale = _defaultBtnScale;
             btnDisabled = false;
 
@@ -91,7 +111,6 @@ public class PowerupBlock : MonoBehaviour
             
             _description.text = powerup.description;
             _icon.sprite = powerup.icon;
-            _button.interactable = true;
             _iconBg.GetComponent<Renderer>().material.SetColor("_BaseColor", clr);
             _iconBg.GetComponent<Renderer>().material.SetColor("_EmissionColor", clr);
             
@@ -106,6 +125,24 @@ public class PowerupBlock : MonoBehaviour
                 case "shovel" :
                     itemDescription = "dig dig dig";
                     break;
+                case "cherries" :
+                    itemDescription = "regain 1 heart";
+                    break;
+                case "lightningstrike" :
+                    itemDescription = "ghosts are visible\n(+" + powerup.duration + "s)";
+                    break;
+                case "fullmoon" :
+                    itemDescription = "ghosts are slower\n(+" + powerup.duration + "s)";
+                    break;                
+                case "goldbars" :
+                    itemDescription = "$" + powerup.value;
+                    break; 
+                case "moneystack" :
+                    itemDescription = "+" + powerup.value + "% valuables\n(+" + powerup.duration + "s)";
+                    break; 
+                case "energydrink" :
+                    itemDescription = "+" + powerup.value + "% speed boost\n(+" + powerup.duration + "s)";
+                    break;
                 default :
                     itemDescription = "n/a";
                     break;
@@ -113,9 +150,7 @@ public class PowerupBlock : MonoBehaviour
 
             _valueAmount.text = itemDescription;
             _wheelOption.SetImage(clr, powerup.icon);
-            _wheelOption.fill = _chance / 100f;
             _wheelOption.optionIndex = powerupBlockIndex;
-            SetWheelOptionRotation();
         }
         else
         {
@@ -129,6 +164,8 @@ public class PowerupBlock : MonoBehaviour
             _spotLight.enabled = false;
             _wheelOption.SetImage(clr, _icon.sprite);
         }
+
+        
     }
     
     public void SetChance()
@@ -158,11 +195,19 @@ public class PowerupBlock : MonoBehaviour
     {
         if (_chance == 100f / 3)
         {
-            _chance = 50f;
+            _wheelOption.updatePosition = true;
+            DOTween.To(()=> _chance, x=> _chance = x, 50f, _updateDur).SetUpdate(true).OnComplete(() =>
+            {
+                _wheelOption.updatePosition = false;
+            });
         }
         else
         {
-            _chance += 10f;
+            _wheelOption.updatePosition = true;
+            DOTween.To(()=> _chance, x=> _chance = x, _chance+10f, _updateDur).SetUpdate(true).OnComplete(() =>
+            {
+                _wheelOption.updatePosition = false;
+            });
             if (_chance > 70f)
             {
                 _button.interactable = false;
@@ -175,20 +220,29 @@ public class PowerupBlock : MonoBehaviour
                 });                
             }
         }
-        _wheelOption.fill = _chance / 100f;
+        
+        
+        
     }
 
     public void DecreaseChance()
     {
         if (_chance == 100f / 3)
         {
-            _chance = 25f;
+            _wheelOption.updatePosition = true;
+            DOTween.To(()=> _chance, x=> _chance = x, 25f, _updateDur).SetUpdate(true).OnComplete(() =>
+            {
+                _wheelOption.updatePosition = false;
+            });
         }
         else
         {
-            _chance -= 5f;
+            _wheelOption.updatePosition = true;
+            DOTween.To(()=> _chance, x=> _chance = x, _chance-5f, _updateDur).SetUpdate(true).OnComplete(() =>
+            {
+                _wheelOption.updatePosition = false;
+            });
         }
-        _wheelOption.fill = _chance / 100f;
     }
 
     public void HideButton()
@@ -207,16 +261,19 @@ public class PowerupBlock : MonoBehaviour
         }
     }
 
-    private void SetWheelOptionRotation()
+    public void EnableButton(bool toggle)
     {
-        if (powerupBlockIndex == 1)
-        {
-            
-        }
-        else if (powerupBlockIndex == 2)
-        {
-            
-        }
+        _button.interactable = toggle;
+        btnDisabled = !toggle;
         
+        if (toggle && powerupBlockIndex == 0)
+        {
+            _button.Select();
+        }
+    }
+
+    public void AnimateButtonUp()
+    {
+        transform.DOLocalMove(_defaultPos, 0.6f).SetEase(Ease.OutBounce).SetUpdate(true);
     }
 }

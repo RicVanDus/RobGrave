@@ -29,24 +29,25 @@ public class PowerupWheelOption : MonoBehaviour
     private void Start()
     {
         _iconScale = _wheelIcon.transform.localScale;
+
     }
 
     private void Update()
     {
         // check if we going to update the position (set by powerupblock)
-        //  3] rotate 240-270 +30 degrees   0.3333 -> 0.25
-        //  2] 120 - 180 ?    +60 degrees   0.3333 -> 0.25
-        //
-        
+
         wheelImg.fillAmount = fill;
         PlaceIcon();
-        RotateWheelOption();
+        RotateWheelOption();            
     }
 
     public void SetImage(Color clr, Sprite icon)
     {
         _wheelIcon.GetComponent<Image>().sprite = icon;
         wheelImg.color = clr;
+        wheelImg.fillAmount = fill;
+        PlaceIcon();
+        RotateWheelOption();
     }
 
     private void PlaceIcon()

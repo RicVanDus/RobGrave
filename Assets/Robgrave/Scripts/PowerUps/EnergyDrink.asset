@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   name: Energy Drink
-  description: Boosts running, hitting and digging.
+  description: Gives you wings.
   item: energydrink
   icon: {fileID: 21300000, guid: 79fa987669ef8454dbf2d26545706f7c, type: 3}
-  duration: 60
+  duration: 40
   value: 10

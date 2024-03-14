@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   name: Moneystack
-  description: More valuables with the some effort.
+  description: More valuables, same effort.
   item: moneystack
   icon: {fileID: 21300000, guid: f4052cd62b266ac4bac923d7db180338, type: 3}
   duration: 60
