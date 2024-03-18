@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -20,6 +21,7 @@ public class PowerupManager : MonoBehaviour
     
     [SerializeField] private Button _button;
     [SerializeField] private GameObject _wheel;
+    [SerializeField] private AnimationCurve _spinCurve = new();
 
     [SerializeField] private Powerups[] _powerups;
     private List<Powerups> _powerupOptionsGreen = new();
@@ -38,6 +40,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] public Color greyColor;
 
     private int chosenIndex;
+    private bool _wheelIsSpinning;
     
     /*
      * needs an array with powerups
@@ -64,6 +67,32 @@ public class PowerupManager : MonoBehaviour
         powerupBlocks.Add(_powerupBlock3);
 
         _button.interactable = false;
+    }
+
+    private void Update()
+    {
+        if (_wheelIsSpinning)
+        {
+            // if its more than option.rotation && less than option.rotation + 360*fill then JIPPIE.
+            for (int i = 0; i < powerupBlocks.Count; i++)
+            {
+                //Debug.Log("WHEEL :" + _wheel.transform.localEulerAngles.y);
+
+                var wheelRot = 360f - _wheel.transform.localEulerAngles.y;
+                
+                if (wheelRot > powerupBlocks[i]._wheelOption.transform.localEulerAngles.z
+                    && wheelRot < powerupBlocks[i]._wheelOption.transform.localEulerAngles.z +
+                    (360f * powerupBlocks[i]._wheelOption.fill))
+                {
+                    powerupBlocks[i].chosen = true;
+                    Debug.Log(powerupBlocks[i].name + " is CHOSEN!!!");
+                }
+                else
+                {
+                    powerupBlocks[i].chosen = false;
+                }
+            }
+        }
     }
 
     public void ChestOpen(int type)
@@ -267,8 +296,36 @@ public class PowerupManager : MonoBehaviour
      * - wheel of fortune chance update
      * - spinning the wheel
      * */
+
+
+    public void SpinWheel()
+    {
+        Vector3 rotateTo = new Vector3(0f, 0f, Random.Range(0f, 360f));
+        // how many extra rotations before stopping
+        rotateTo.z += 7 * 360f;
+        
+        // no more chance adding
+        for (int i = 0; i < powerupBlocks.Count; i++)
+        {
+            powerupBlocks[i].HideButton();
+        }
+
+        _wheelIsSpinning = true;
+        _wheel.transform.DOLocalRotate(rotateTo, 4f, RotateMode.LocalAxisAdd).SetEase(_spinCurve).SetUpdate(true)
+            .OnComplete(
+                () =>
+                {
+                    _wheelIsSpinning = false;
+                });
+    }
+
+    private IEnumerator WheelStopped()
+    {
+        yield return new WaitForSecondsRealtime(3f);
+        ChestClose();
+    }
     
-    public void ChestClose()
+    private void ChestClose()
     {
         Time.timeScale = 1f;
         _uiAll.SetActive(false);

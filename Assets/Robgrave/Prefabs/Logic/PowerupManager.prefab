@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76892213}
-  m_LocalRotation: {x: 0, y: -0, z: 0.8673315, w: -0.4977309}
+  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.017}
   m_LocalScale: {x: 0.018, y: 0.018, z: 0.018}
   m_ConstrainProportionsScale: 1
@@ -34,7 +34,7 @@ RectTransform:
   - {fileID: 631887467}
   m_Father: {fileID: 8900450494642455260}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 239.7}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.33333334
+  m_FillAmount: 0.25
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -90,7 +90,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelIcon: {fileID: 631887468}
+  _wheelIcon: {fileID: 631887466}
+  fill: 0
+  rotationZ: 0
+  updatePosition: 0
+  optionIndex: 0
 --- !u!1 &138616804
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +304,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.3333333
+  m_FillAmount: 0.5
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -317,7 +321,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelIcon: {fileID: 866264399}
+  _wheelIcon: {fileID: 866264397}
+  fill: 0
+  rotationZ: 0
+  updatePosition: 0
+  optionIndex: 0
 --- !u!1 &145814027
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +525,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d5c3eff9e715b844b76f939a87c6a63, type: 2}
+  - {fileID: 2100000, guid: e644f155bdf20b241a5b1f7a3bf8e024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1324,17 +1332,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631887466}
-  m_LocalRotation: {x: 0.49999955, y: 0.86602575, z: -0.0000006182461, w: 0.00000005755478}
+  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.27309978, y: 0.2730998, z: 0.03413749}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 76892214}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25.7, y: 0}
+  m_AnchoredPosition: {x: 17.7, y: -21.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &631887469
@@ -1388,6 +1396,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wheelIcon: {fileID: 0}
+  fill: 0
+  rotationZ: 0
+  updatePosition: 0
+  optionIndex: 0
 --- !u!1 &757885987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,17 +1696,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866264397}
-  m_LocalRotation: {x: -1, y: -0.0000005960464, z: 0.00000035896696, w: 0.0000005364418}
+  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 9.055515}
   m_LocalScale: {x: 0.27309987, y: 0.27309984, z: 0.03413749}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 138797942}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26.166428, y: -14.277654}
+  m_AnchoredPosition: {x: 10, y: -30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &866264400
@@ -2533,6 +2545,7 @@ MonoBehaviour:
   powerupBlockIndex: 1
   _powerup: {fileID: 0}
   _chance: 0
+  _newChance: 0
 --- !u!1 &1432373333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,7 +2687,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475991498}
-  m_LocalRotation: {x: -0, y: -0, z: 0.86602545, w: 0.49999994}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.01700093}
   m_LocalScale: {x: 0.018000001, y: 0.017999997, z: 0.018000001}
   m_ConstrainProportionsScale: 1
@@ -2682,7 +2695,7 @@ RectTransform:
   - {fileID: 1629310715}
   m_Father: {fileID: 8900450494642455260}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.000007867813, y: -0.0000009536743}
@@ -2721,7 +2734,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.3333333
+  m_FillAmount: 0.25
   m_FillClockwise: 0
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2738,7 +2751,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2153ea66793f4f74bb63a19b4d375b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wheelIcon: {fileID: 1629310716}
+  _wheelIcon: {fileID: 1629310714}
+  fill: 0
+  rotationZ: 0
+  updatePosition: 0
+  optionIndex: 0
 --- !u!1 &1494401830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3114,7 +3131,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6168524799861342371}
         m_TargetAssemblyTypeName: PowerupManager, Assembly-CSharp
-        m_MethodName: ChestClose
+        m_MethodName: SpinWheel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3399,7 +3416,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d5c3eff9e715b844b76f939a87c6a63, type: 2}
+  - {fileID: 2100000, guid: e644f155bdf20b241a5b1f7a3bf8e024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3460,17 +3477,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629310714}
-  m_LocalRotation: {x: -0.5000005, y: 0.86602515, z: -0.00000025927918, w: 0.0000005641941}
+  m_LocalRotation: {x: 0.0017452018, y: 0.9999985, z: 0, w: -0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.27309987, y: 0.27309984, z: 0.03413749}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1475991499}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 180.2}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.165386, y: -13.118219}
+  m_AnchoredPosition: {x: 21.165386, y: -23.76}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1629310717
@@ -3573,6 +3590,7 @@ MonoBehaviour:
   powerupBlockIndex: 2
   _powerup: {fileID: 0}
   _chance: 0
+  _newChance: 0
 --- !u!1 &1702586316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3636,7 +3654,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d5c3eff9e715b844b76f939a87c6a63, type: 2}
+  - {fileID: 2100000, guid: e644f155bdf20b241a5b1f7a3bf8e024, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5485,6 +5503,7 @@ MonoBehaviour:
   powerupBlockIndex: 0
   _powerup: {fileID: 0}
   _chance: 0
+  _newChance: 0
 --- !u!1 &2715671265416367573
 GameObject:
   m_ObjectHideFlags: 0
@@ -5841,6 +5860,7 @@ MonoBehaviour:
   _powerupBlock2: {fileID: 1418055969}
   _powerupBlock3: {fileID: 1636577256}
   _button: {fileID: 1554015841}
+  _wheel: {fileID: 1918935536853321580}
   _powerups:
   - {fileID: 11400000, guid: c4e89d13dc1467c489259160dbe2557a, type: 2}
   - {fileID: 11400000, guid: 2c8c60c53eb5e5f48a555386e4c5559a, type: 2}
@@ -5850,6 +5870,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 37360e1ba8906cc47a8dddd859b7e017, type: 2}
   - {fileID: 11400000, guid: ceeee61c8ff99044ca83d8c6c448ec07, type: 2}
   - {fileID: 11400000, guid: eb89fc3366a22d44780657edfa7a8dd7, type: 2}
+  powerupBlocks: []
   greenColor: {r: 0.12082933, g: 0.6981132, b: 0, a: 1}
   blueColor: {r: 0, g: 0.33849382, b: 1, a: 1}
   purpleColor: {r: 0.7264151, g: 0, b: 0.6670016, a: 1}
@@ -6316,6 +6337,12 @@ PrefabInstance:
 --- !u!4 &543450652041619490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a72f7a9a9b9062548b7a2d2dfe5846b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1700286409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1918935536853321580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7304436499542685531, guid: a72f7a9a9b9062548b7a2d2dfe5846b0,
     type: 3}
   m_PrefabInstance: {fileID: 1700286409}
   m_PrefabAsset: {fileID: 0}

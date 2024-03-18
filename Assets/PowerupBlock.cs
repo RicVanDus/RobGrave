@@ -19,8 +19,8 @@ public class PowerupBlock : MonoBehaviour
     [SerializeField] private TMP_Text _buttonText;
     [SerializeField] private Light _spotLight;
     [SerializeField] private Button _spinWheelBtn;
-
-
+    [SerializeField] private GameObject _blockMaterial;
+    
     public int powerupBlockIndex;
     public Powerups _powerup;
     public float _chance;
@@ -31,6 +31,7 @@ public class PowerupBlock : MonoBehaviour
     private Color _purpleColor;
     private Color _greyColor;
     private Vector4 _colorMult = Vector4.one;
+    private Material _blockMat;
 
     private Vector3 _defaultBtnScale;
 
@@ -41,7 +42,12 @@ public class PowerupBlock : MonoBehaviour
 
     private float _wheelFill;
     private float _updateDur = 0.6f;
-    
+    public bool wheelSpinning;
+
+    private bool isHighlighted = false;
+    public bool chosen;
+
+
     void Start()
     {
         if (powerupBlockIndex == 0)
@@ -63,11 +69,23 @@ public class PowerupBlock : MonoBehaviour
         _downPos = _defaultPos;
         _downPos.y -= 40f;
         _defaultBtnScale = _button.transform.localScale;
+
+        _blockMat = _blockMaterial.gameObject.GetComponent<Renderer>().material;
+
     }
 
     private void Update()
     {
         _wheelOption.fill = _chance / 100f;
+
+        if (chosen)
+        {
+            HighLightBlock(true);
+        }
+        else
+        {
+            HighLightBlock(false);
+        }
     }
 
 
@@ -275,5 +293,19 @@ public class PowerupBlock : MonoBehaviour
     public void AnimateButtonUp()
     {
         transform.DOLocalMove(_defaultPos, 0.6f).SetEase(Ease.OutBounce).SetUpdate(true);
+    }
+
+    public void HighLightBlock(bool toggle)
+    {
+       if (!isHighlighted && toggle)
+       { 
+           _blockMat.SetColor("_EmissionColor", Color.yellow * 0.03f);
+            isHighlighted = true;
+       }
+       else if (isHighlighted && !toggle)
+       {
+            _blockMat.SetColor("_EmissionColor", Color.black);
+            isHighlighted = false;
+       }
     }
 }
