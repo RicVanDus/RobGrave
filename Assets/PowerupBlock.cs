@@ -295,11 +295,16 @@ public class PowerupBlock : MonoBehaviour
         transform.DOLocalMove(_defaultPos, 0.6f).SetEase(Ease.OutBounce).SetUpdate(true);
     }
 
+    public void AnimateButtonDown()
+    {
+        transform.DOLocalMove(_downPos, 0.6f).SetEase(Ease.InBounce).SetUpdate(true);
+    }
+    
     public void HighLightBlock(bool toggle)
     {
        if (!isHighlighted && toggle)
        { 
-           _blockMat.SetColor("_EmissionColor", Color.yellow * 0.03f);
+           _blockMat.SetColor("_EmissionColor", Color.yellow * 0.02f);
             isHighlighted = true;
        }
        else if (isHighlighted && !toggle)

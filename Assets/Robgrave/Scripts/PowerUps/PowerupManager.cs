@@ -18,9 +18,10 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private PowerupBlock _powerupBlock1;
     [SerializeField] private PowerupBlock _powerupBlock2;
     [SerializeField] private PowerupBlock _powerupBlock3;
-    
+
     [SerializeField] private Button _button;
     [SerializeField] private GameObject _wheel;
+    [SerializeField] private GameObject _wheelTurn;
     [SerializeField] private AnimationCurve _spinCurve = new();
 
     [SerializeField] private Powerups[] _powerups;
@@ -29,19 +30,21 @@ public class PowerupManager : MonoBehaviour
     private List<Powerups> _powerupOptionsPurple = new();
     private PowerupUIChest _powerupUIChest;
     public List<PowerupBlock> powerupBlocks = new();
-
+    
+    private Vector3 _wheelDefaultPos;
+    private Vector3 _wheelOffPos;
+    
     private int _chestType;
     private Powerups _chosenPowerup;
 
-    [Header("Colors")] 
-    [SerializeField] public Color greenColor;
+    [Header("Colors")] [SerializeField] public Color greenColor;
     [SerializeField] public Color blueColor;
     [SerializeField] public Color purpleColor;
     [SerializeField] public Color greyColor;
 
     private int chosenIndex;
     private bool _wheelIsSpinning;
-    
+
     /*
      * needs an array with powerups
      * needs another array with available powerups
@@ -61,12 +64,16 @@ public class PowerupManager : MonoBehaviour
     {
         _powerupUIChest = _chest.GetComponent<PowerupUIChest>();
         _uiAll.SetActive(false);
-        
+
         powerupBlocks.Add(_powerupBlock1);
         powerupBlocks.Add(_powerupBlock2);
         powerupBlocks.Add(_powerupBlock3);
 
         _button.interactable = false;
+        _wheelDefaultPos = _wheel.transform.localPosition;
+        _wheelOffPos = _wheelDefaultPos;
+        _wheelOffPos.x += 40f;
+        _wheel.transform.localPosition = _wheelOffPos;
     }
 
     private void Update()
@@ -76,16 +83,14 @@ public class PowerupManager : MonoBehaviour
             // if its more than option.rotation && less than option.rotation + 360*fill then JIPPIE.
             for (int i = 0; i < powerupBlocks.Count; i++)
             {
-                //Debug.Log("WHEEL :" + _wheel.transform.localEulerAngles.y);
 
-                var wheelRot = 360f - _wheel.transform.localEulerAngles.y;
-                
+                var wheelRot = 360f - _wheelTurn.transform.localEulerAngles.y;
+
                 if (wheelRot > powerupBlocks[i]._wheelOption.transform.localEulerAngles.z
                     && wheelRot < powerupBlocks[i]._wheelOption.transform.localEulerAngles.z +
                     (360f * powerupBlocks[i]._wheelOption.fill))
                 {
                     powerupBlocks[i].chosen = true;
-                    Debug.Log(powerupBlocks[i].name + " is CHOSEN!!!");
                 }
                 else
                 {
@@ -103,12 +108,12 @@ public class PowerupManager : MonoBehaviour
         Time.timeScale = 0f;
 
         chosenIndex = 3;
-       
+
         // Make 3 arrays with the powerup rarities and check the blue/purple ones
         _powerupOptionsGreen.Clear();
         _powerupOptionsBlue.Clear();
         _powerupOptionsPurple.Clear();
-        
+
         /* Check for valid options [ TODO ] */
 
         for (int i = 0; i < _powerups.Length; i++)
@@ -126,7 +131,7 @@ public class PowerupManager : MonoBehaviour
                 _powerupOptionsPurple.Add(_powerups[i]);
             }
         }
-        
+
         /*
          * depending on type, it looks for a certain rarity.
          * Then checks if that option is available. If not, it will go to the rarity type below.
@@ -135,7 +140,7 @@ public class PowerupManager : MonoBehaviour
         CreatePowerupOption(0);
         CreatePowerupOption(1);
         CreatePowerupOption(2);
-        
+
         /*
          * Sets the 3 powerups.
          * Starts animations 
@@ -154,7 +159,7 @@ public class PowerupManager : MonoBehaviour
          * whenever the result is false we remove it from the available array
          */
     }
-    
+
     private void CreatePowerupOption(int index)
     {
         /*
@@ -174,7 +179,8 @@ public class PowerupManager : MonoBehaviour
                 int rndIndex = Random.Range(0, _powerupOptionsPurple.Count);
                 chosenPowerup = _powerupOptionsPurple[rndIndex];
                 _powerupOptionsPurple.Remove(chosenPowerup);
-            } else if (rndNr > 90f && _powerupOptionsBlue.Count > 0)
+            }
+            else if (rndNr > 90f && _powerupOptionsBlue.Count > 0)
             {
                 int rndIndex = Random.Range(0, _powerupOptionsBlue.Count);
                 chosenPowerup = _powerupOptionsBlue[rndIndex];
@@ -186,7 +192,7 @@ public class PowerupManager : MonoBehaviour
                 chosenPowerup = _powerupOptionsGreen[rndIndex];
                 _powerupOptionsGreen.Remove(chosenPowerup);
             }
-        } 
+        }
         else if (_chestType == 1)
         {
             if (rndNr > 95f && _powerupOptionsPurple.Count > 0)
@@ -194,7 +200,8 @@ public class PowerupManager : MonoBehaviour
                 int rndIndex = Random.Range(0, _powerupOptionsPurple.Count);
                 chosenPowerup = _powerupOptionsPurple[rndIndex];
                 _powerupOptionsPurple.Remove(chosenPowerup);
-            } else if (rndNr > 10f && _powerupOptionsBlue.Count > 0)
+            }
+            else if (rndNr > 10f && _powerupOptionsBlue.Count > 0)
             {
                 int rndIndex = Random.Range(0, _powerupOptionsBlue.Count);
                 chosenPowerup = _powerupOptionsBlue[rndIndex];
@@ -214,7 +221,8 @@ public class PowerupManager : MonoBehaviour
                 int rndIndex = Random.Range(0, _powerupOptionsGreen.Count);
                 chosenPowerup = _powerupOptionsGreen[rndIndex];
                 _powerupOptionsGreen.Remove(chosenPowerup);
-            } else if (rndNr > 10f && _powerupOptionsBlue.Count > 0)
+            }
+            else if (rndNr > 10f && _powerupOptionsBlue.Count > 0)
             {
                 int rndIndex = Random.Range(0, _powerupOptionsBlue.Count);
                 chosenPowerup = _powerupOptionsBlue[rndIndex];
@@ -231,7 +239,8 @@ public class PowerupManager : MonoBehaviour
         if (index == 0)
         {
             _powerupBlock1.SetPowerup(chosenPowerup);
-        } else if (index == 1)
+        }
+        else if (index == 1)
         {
             _powerupBlock2.SetPowerup(chosenPowerup);
         }
@@ -260,7 +269,7 @@ public class PowerupManager : MonoBehaviour
 
         chosenIndex = blockIndex;
 
-        PowerupBlock chosenPowerupBlock = null;  
+        PowerupBlock chosenPowerupBlock = null;
 
         if (chosenIndex == 0)
         {
@@ -300,10 +309,12 @@ public class PowerupManager : MonoBehaviour
 
     public void SpinWheel()
     {
+        HideWheelButton();
+
         Vector3 rotateTo = new Vector3(0f, 0f, Random.Range(0f, 360f));
         // how many extra rotations before stopping
         rotateTo.z += 7 * 360f;
-        
+
         // no more chance adding
         for (int i = 0; i < powerupBlocks.Count; i++)
         {
@@ -311,20 +322,36 @@ public class PowerupManager : MonoBehaviour
         }
 
         _wheelIsSpinning = true;
-        _wheel.transform.DOLocalRotate(rotateTo, 4f, RotateMode.LocalAxisAdd).SetEase(_spinCurve).SetUpdate(true)
+        _wheelTurn.transform.DOLocalRotate(rotateTo, 4f, RotateMode.LocalAxisAdd).SetEase(_spinCurve).SetUpdate(true)
             .OnComplete(
                 () =>
                 {
                     _wheelIsSpinning = false;
+                    StartCoroutine(WheelStopped());
                 });
     }
 
     private IEnumerator WheelStopped()
     {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        for (int i = 0; i < powerupBlocks.Count; i++)
+        {
+            if (!powerupBlocks[i].chosen)
+            {
+                powerupBlocks[i].AnimateButtonDown();
+            }
+            else
+            {
+                powerupBlocks[i].HighLightBlock(false);
+            }
+        }
+
         yield return new WaitForSecondsRealtime(3f);
+
         ChestClose();
     }
-    
+
     private void ChestClose()
     {
         Time.timeScale = 1f;
@@ -336,6 +363,8 @@ public class PowerupManager : MonoBehaviour
     private IEnumerator StartAnimation()
     {
         float pauseTime = 0.7f;
+        
+        yield return new WaitForSecondsRealtime(1f);
 
         for (int i = 0; i < powerupBlocks.Count; i++)
         {
@@ -343,13 +372,27 @@ public class PowerupManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(pauseTime);
         }
         
-        yield return new WaitForSecondsRealtime(pauseTime);
+        _wheel.transform.DOLocalMove(_wheelDefaultPos, 0.7f).SetUpdate(true).SetEase(Ease.OutBounce);
         
+        yield return new WaitForSecondsRealtime(pauseTime);
+
         for (int i = 0; i < powerupBlocks.Count; i++)
         {
             powerupBlocks[i].EnableButton(true);
         }
 
         _button.interactable = true;
+    }
+
+    public void HideWheelButton()
+    {
+        _button.interactable = false;
+        _button.enabled = true;
+        Vector3 toScale = _button.transform.localScale;
+        toScale.y = 0f;
+        _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
+        {
+            _button.enabled = false;
+        });
     }
 }
