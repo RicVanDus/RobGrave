@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,15 @@ public class PowerupUIChest : MonoBehaviour
     [SerializeField] private Material _purple;
     [SerializeField] private GameObject _lid;
     [SerializeField] private GameObject _base;
+
+    private Animator _animator;
     
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
+
     public void SetChest(int type)
     {
         Material newMat;
@@ -40,5 +49,10 @@ public class PowerupUIChest : MonoBehaviour
         rendererLid.materials = matsLid;
 
         /* play animation */
+        _animator.Play("big_chest_open");
+    }
+
+    private void Update()
+    {
     }
 }
