@@ -15,7 +15,7 @@ public class PowerupBlock : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private GameObject _iconBg;
     [SerializeField] public PowerupWheelOption _wheelOption;
-    [SerializeField] private Button _button;
+    [SerializeField] public Button button;
     [SerializeField] private TMP_Text _buttonText;
     [SerializeField] private Light _spotLight;
     [SerializeField] private Button _spinWheelBtn;
@@ -46,8 +46,7 @@ public class PowerupBlock : MonoBehaviour
 
     private bool isHighlighted = false;
     public bool chosen;
-
-
+    
     void Start()
     {
         if (powerupBlockIndex == 0)
@@ -68,7 +67,7 @@ public class PowerupBlock : MonoBehaviour
         _defaultPos = transform.localPosition;
         _downPos = _defaultPos;
         _downPos.y -= 40f;
-        _defaultBtnScale = _button.transform.localScale;
+        _defaultBtnScale = button.transform.localScale;
 
         _blockMat = _blockMaterial.gameObject.GetComponent<Renderer>().material;
 
@@ -94,17 +93,21 @@ public class PowerupBlock : MonoBehaviour
         _wheelOption.fill = _chance / 100f;
         _chance = 100f / 3;
         transform.localPosition = _downPos;
+        HighLightBlock(false);
         
-        _button.interactable = false;
+        button.interactable = false;
+        button.enabled = true;
         btnDisabled = true;
+        
+        _blockMat.SetColor("_EmissionColor", Color.black);
+        isHighlighted = false;
         
         if (powerup != null)
         {
             _powerup = powerup;
             Color clr = Color.yellow;
 
-            _button.transform.localScale = _defaultBtnScale;
-            btnDisabled = false;
+            button.transform.localScale = _defaultBtnScale;
 
             switch (powerup.type)
             {
@@ -173,7 +176,9 @@ public class PowerupBlock : MonoBehaviour
         else
         {
             Color clr = _greyColor;
-            _button.interactable = false;
+            button.interactable = false;
+            button.enabled = false;
+            btnDisabled = true;
             
             _name.text = "";
             _description.text = "";
@@ -182,8 +187,6 @@ public class PowerupBlock : MonoBehaviour
             _spotLight.enabled = false;
             _wheelOption.SetImage(clr, _icon.sprite);
         }
-
-        
     }
     
     public void SetChance()
@@ -194,15 +197,15 @@ public class PowerupBlock : MonoBehaviour
             Vector3 toScale = _defaultBtnScale;
             toScale *= 0.75f;
         
-            _button.interactable = false;
+            button.interactable = false;
             btnDisabled = true;
 
-            _button.transform.DOScale(toScale, 0.2f).SetUpdate(true).OnComplete(() =>
+            button.transform.DOScale(toScale, 0.2f).SetUpdate(true).OnComplete(() =>
             {
-                _button.transform.DOScale(_defaultBtnScale, 0.4f).SetUpdate(true).OnComplete(() =>
+                button.transform.DOScale(_defaultBtnScale, 0.4f).SetUpdate(true).OnComplete(() =>
                 {
-                    _button.interactable = true;
-                    _button.Select();
+                    button.interactable = true;
+                    button.Select();
                     btnDisabled = false;
                 });
             });            
@@ -228,19 +231,16 @@ public class PowerupBlock : MonoBehaviour
             });
             if (_chance > 70f)
             {
-                _button.interactable = false;
+                button.interactable = false;
                 Vector3 toScale = _defaultBtnScale;
                 toScale.y = 0f;
-                _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
+                button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
                 {
-                    _button.enabled = false;
+                    button.enabled = false;
                     _spinWheelBtn.Select();
                 });                
             }
         }
-        
-        
-        
     }
 
     public void DecreaseChance()
@@ -267,27 +267,22 @@ public class PowerupBlock : MonoBehaviour
     {
         if (!btnDisabled)
         {
-            _button.interactable = false;
-            _button.enabled = true;
+            button.interactable = false;
+            button.enabled = true;
             btnDisabled = true;
             Vector3 toScale = _defaultBtnScale;
             toScale.y = 0f;
-            _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
+            button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
             {
-                _button.enabled = false;
+                button.enabled = false;
             });
         }
     }
 
     public void EnableButton(bool toggle)
     {
-        _button.interactable = toggle;
+        button.interactable = toggle;
         btnDisabled = !toggle;
-        
-        if (toggle && powerupBlockIndex == 0)
-        {
-            _button.Select();
-        }
     }
 
     public void AnimateButtonUp()

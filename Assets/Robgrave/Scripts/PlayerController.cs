@@ -12,14 +12,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Attributes")]
     public float moveSpeed = 10.0f;
-    [NonSerialized] public float moveSpeedMult = 1.0f;
     public float grip = 10.0f;
     public float rotationSpeed = 3.0f;
-    [NonSerialized] public float digSpeedMult = 1.0f;
-    [NonSerialized] public float hitSpeedMult = 1.0f;
     public float flashLightReach = 10f;
-    [NonSerialized] public float flashLightReachMult = 1f;
-    [NonSerialized] public float scoreMultiplierAdd = 0f;
     public float invulnerableTime = 3f;
     public int currentLives = 3;
     public int maxLives = 3;
@@ -28,6 +23,26 @@ public class PlayerController : MonoBehaviour
     private int _scoreMultiplier = 0;
     [SerializeField] private LayerMask _flashlightHits;
     private int _scorePickupCounter = 0;
+    
+    // Powerups
+    [NonSerialized] public float digSpeedMult = 1.0f;
+    [NonSerialized] public float hitSpeedMult = 1.0f;
+    [NonSerialized] public float flashLightReachMult = 1f;
+    [NonSerialized] public float moveSpeedMult = 1.0f;
+    
+    [NonSerialized] public float scoreMultiplierAdd = 0f;
+    
+    [NonSerialized] public float _moneyStackTime;
+    private float _moneyStackTimer;
+    private bool _moneyStackActive;
+
+    [NonSerialized] public float _lightningStrikeTime;
+    private float _lightningStrikeTimer;
+    private bool _lightningStrikeActive;
+    
+    [NonSerialized] public float _speedBoostTime;
+    private float _speedBoostTimer;
+    private bool _speedBoostActive;
 
     [Header("Camera")]
     public Camera cam;
@@ -250,6 +265,18 @@ public class PlayerController : MonoBehaviour
         _playerPosV4.w = 0f;
         Shader.SetGlobalVector(_playerPosId, _playerPosV4);
         
+        //POWERUP TIMERS
+        if (_speedBoostActive)
+        {
+            // SPEEDBOOST
+            _speedBoostTimer += Time.deltaTime;
+            if (_speedBoostTimer > _speedBoostTime)
+            {
+                _speedBoostTimer = 0f;
+                _speedBoostTime = 0f;
+                _speedBoostActive = false;
+            }
+        }
     }
 
     private void FixedUpdate()

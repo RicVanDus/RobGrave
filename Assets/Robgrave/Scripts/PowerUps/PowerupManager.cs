@@ -14,6 +14,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private GameObject _uiAll;
     [SerializeField] private GameObject _powerupBlock;
     [SerializeField] private GameObject _chest;
+    [SerializeField] private GameObject _powerupBg;
 
     [SerializeField] private PowerupBlock _powerupBlock1;
     [SerializeField] private PowerupBlock _powerupBlock2;
@@ -32,7 +33,9 @@ public class PowerupManager : MonoBehaviour
     public List<PowerupBlock> powerupBlocks = new();
     
     private Vector3 _wheelDefaultPos;
+    private Vector3 _wheelTurnDefaultRot;
     private Vector3 _wheelOffPos;
+    private Vector3 _defBtnScale;
     
     private int _chestType;
     private Powerups _chosenPowerup;
@@ -73,7 +76,9 @@ public class PowerupManager : MonoBehaviour
         _wheelDefaultPos = _wheel.transform.localPosition;
         _wheelOffPos = _wheelDefaultPos;
         _wheelOffPos.x += 40f;
-        _wheel.transform.localPosition = _wheelOffPos;
+
+        _defBtnScale = _button.transform.localScale;
+        _wheelTurnDefaultRot = _wheelTurn.transform.localEulerAngles;
     }
 
     private void Update()
@@ -102,10 +107,20 @@ public class PowerupManager : MonoBehaviour
 
     public void ChestOpen(int type)
     {
+        _button.interactable = false;
+        _button.enabled = true;
+        _button.transform.localScale = _defBtnScale;
+        _wheel.transform.localPosition = _wheelOffPos;
+        _wheelTurn.transform.localEulerAngles = _wheelTurnDefaultRot;
+        
         _powerupUIChest.SetChest(type);
         _chestType = type;
         _uiAll.SetActive(true);
         Time.timeScale = 0f;
+
+        Vector3 bgDefPos = _powerupBg.transform.localPosition;
+        var bgNewPos = bgDefPos;
+        bgNewPos.x = -55f;
 
         chosenIndex = 3;
 
@@ -137,6 +152,7 @@ public class PowerupManager : MonoBehaviour
          * Then checks if that option is available. If not, it will go to the rarity type below.
          * Random index, setting the option and remove item from array.
          */
+
         CreatePowerupOption(0);
         CreatePowerupOption(1);
         CreatePowerupOption(2);
@@ -145,7 +161,8 @@ public class PowerupManager : MonoBehaviour
          * Sets the 3 powerups.
          * Starts animations 
          */
-
+        _powerupBg.transform.localPosition = bgNewPos;
+        _powerupBg.transform.DOLocalMove(bgDefPos, 0.4f).SetEase(Ease.OutSine).SetUpdate(true);
         StartCoroutine(StartAnimation());
     }
 
@@ -255,6 +272,14 @@ public class PowerupManager : MonoBehaviour
         /*
          * this will be a long dumb method, covering all the types of powerups
          */
+
+        switch (powerup.item)
+        {
+            case "test" :
+                break;
+            default :
+                break;
+        }
     }
 
     public void PowerupChanceSet(int blockIndex)
@@ -305,8 +330,7 @@ public class PowerupManager : MonoBehaviour
      * - wheel of fortune chance update
      * - spinning the wheel
      * */
-
-
+    
     public void SpinWheel()
     {
         HideWheelButton();
@@ -363,6 +387,7 @@ public class PowerupManager : MonoBehaviour
     private IEnumerator StartAnimation()
     {
         float pauseTime = 0.7f;
+        bool setFocus = false;
         
         yield return new WaitForSecondsRealtime(1f);
 
@@ -379,6 +404,11 @@ public class PowerupManager : MonoBehaviour
         for (int i = 0; i < powerupBlocks.Count; i++)
         {
             powerupBlocks[i].EnableButton(true);
+            if (!setFocus && powerupBlocks[i] != null)
+            {
+                powerupBlocks[i].button.Select();
+                setFocus = true;
+            }
         }
 
         _button.interactable = true;
@@ -388,7 +418,7 @@ public class PowerupManager : MonoBehaviour
     {
         _button.interactable = false;
         _button.enabled = true;
-        Vector3 toScale = _button.transform.localScale;
+        Vector3 toScale = _defBtnScale;
         toScale.y = 0f;
         _button.transform.DOScale(toScale, 0.7f).SetEase(Ease.InBounce).SetUpdate(true).OnComplete(() =>
         {
