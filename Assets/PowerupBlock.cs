@@ -99,8 +99,7 @@ public class PowerupBlock : MonoBehaviour
         button.enabled = true;
         btnDisabled = true;
         
-        _blockMat.SetColor("_EmissionColor", Color.black);
-        isHighlighted = false;
+        //chosen = false;
         
         if (powerup != null)
         {
@@ -168,7 +167,6 @@ public class PowerupBlock : MonoBehaviour
                     itemDescription = "n/a";
                     break;
             }
-
             _valueAmount.text = itemDescription;
             _wheelOption.SetImage(clr, powerup.icon);
             _wheelOption.optionIndex = powerupBlockIndex;

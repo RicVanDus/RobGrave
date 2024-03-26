@@ -16,6 +16,7 @@ public class GiftBox : MonoBehaviour
     private float physicsDisableTime = 3f;
     
     private bool _visible = false;
+    public int boxType = 0;  
     
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,7 @@ public class GiftBox : MonoBehaviour
             {
                 LootManager.Instance.ClearLootSpot(lootId);
                 Destroy(gameObject);
-                PowerupManager.Instance.ChestOpen(giftBoxData.rarity.GetHashCode());
+                PowerupManager.Instance.ChestOpen(boxType);
             }
         }
     }

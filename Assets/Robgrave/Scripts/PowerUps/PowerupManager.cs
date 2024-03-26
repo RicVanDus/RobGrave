@@ -245,12 +245,24 @@ public class PowerupManager : MonoBehaviour
                 chosenPowerup = _powerupOptionsBlue[rndIndex];
                 _powerupOptionsBlue.Remove(chosenPowerup);
             }
-            else
+            else if (_powerupOptionsPurple.Count > 0)
             {
                 int rndIndex = Random.Range(0, _powerupOptionsPurple.Count);
                 chosenPowerup = _powerupOptionsPurple[rndIndex];
                 _powerupOptionsPurple.Remove(chosenPowerup);
             }
+            else if (_powerupOptionsBlue.Count > 0)
+            {
+                int rndIndex = Random.Range(0, _powerupOptionsBlue.Count);
+                chosenPowerup = _powerupOptionsBlue[rndIndex];
+                _powerupOptionsBlue.Remove(chosenPowerup);
+            }
+            else
+            {
+                int rndIndex = Random.Range(0, _powerupOptionsGreen.Count);
+                chosenPowerup = _powerupOptionsGreen[rndIndex];
+                _powerupOptionsGreen.Remove(chosenPowerup);
+            }            
         }
 
         if (index == 0)
@@ -280,6 +292,8 @@ public class PowerupManager : MonoBehaviour
             default :
                 break;
         }
+        
+        UIMessages.Instance.CreateMessage(powerup.name, powerup.description, UIMessageType.Good, MessageIcon.BlueGhost);
     }
 
     public void PowerupChanceSet(int blockIndex)
@@ -367,7 +381,8 @@ public class PowerupManager : MonoBehaviour
             }
             else
             {
-                powerupBlocks[i].HighLightBlock(false);
+                _chosenPowerup = powerupBlocks[i]._powerup;
+                powerupBlocks[i].chosen = false;
             }
         }
 
