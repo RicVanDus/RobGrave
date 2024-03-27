@@ -9,6 +9,8 @@ public class LootManager : MonoBehaviour
 
     public GameObject debugObject;
     public GameObject debugObject2;
+    
+    public Camera UICam;
 
     static public int _rows = 117;
     static public int _columns = 69;
@@ -34,6 +36,8 @@ public class LootManager : MonoBehaviour
     [SerializeField] private GameObject _blueGiftbox;
     [SerializeField] private GameObject _purpleGiftbox;
     [SerializeField] private GameObject _cryptKey;
+    
+    
     
     private void Awake()
     {
@@ -405,7 +409,7 @@ public class LootManager : MonoBehaviour
         Quaternion _spawnRot = Quaternion.identity;
         Vector3 _spawnRotEuler = _spawnRot.eulerAngles;
         _spawnRotEuler.y = Random.Range(0f, 360f);
-        _spawnRotEuler.x = Random.Range(2f, 20f);
+        //_spawnRotEuler.x = Random.Range(2f, 20f);
         _spawnRot  = Quaternion.Euler(_spawnRotEuler);
         
         GameObject _prefab = _greenGiftbox;

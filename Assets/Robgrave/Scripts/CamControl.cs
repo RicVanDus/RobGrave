@@ -9,7 +9,8 @@ public class CamControl : MonoBehaviour
     
     public Transform target;
     public float camSpeed = 10.0f;
-
+    
+    
     [SerializeField] private Transform CameraBounds;
 
     private Vector2 CamBoundsX;

@@ -108,7 +108,6 @@ public class PowerupManager : MonoBehaviour
     public void ChestOpen(int type)
     {
         _button.interactable = false;
-        _button.enabled = true;
         _button.transform.localScale = _defBtnScale;
         _wheel.transform.localPosition = _wheelOffPos;
         _wheelTurn.transform.localEulerAngles = _wheelTurnDefaultRot;
@@ -293,7 +292,7 @@ public class PowerupManager : MonoBehaviour
                 break;
         }
         
-        UIMessages.Instance.CreateMessage(powerup.name, powerup.description, UIMessageType.Good, MessageIcon.BlueGhost);
+        UIMessages.Instance.CreateMessage(powerup.name, powerup.description, UIMessageType.Good, powerup.icon);
     }
 
     public void PowerupChanceSet(int blockIndex)
@@ -404,15 +403,16 @@ public class PowerupManager : MonoBehaviour
         float pauseTime = 0.7f;
         bool setFocus = false;
         
-        yield return new WaitForSecondsRealtime(1f);
-
         for (int i = 0; i < powerupBlocks.Count; i++)
         {
-            powerupBlocks[i].AnimateButtonUp();
             yield return new WaitForSecondsRealtime(pauseTime);
+            powerupBlocks[i].AnimateButtonUp();
         }
         
-        _wheel.transform.DOLocalMove(_wheelDefaultPos, 0.7f).SetUpdate(true).SetEase(Ease.OutBounce);
+        _wheel.transform.DOLocalMove(_wheelDefaultPos, 0.7f).SetUpdate(true).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            _button.enabled = true;
+        });
         
         yield return new WaitForSecondsRealtime(pauseTime);
 

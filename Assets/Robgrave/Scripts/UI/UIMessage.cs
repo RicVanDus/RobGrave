@@ -11,6 +11,7 @@ public class UIMessage : MonoBehaviour
     public string titleText;
     public string subText;
     public UIMessageType type;
+    public Sprite iconSprite;
 
     private float _messageTimer;
 
@@ -84,6 +85,11 @@ public class UIMessage : MonoBehaviour
             default :
                 iconTexture = UIMessages.Instance.icons[0];
                 break;
+        }
+
+        if (iconSprite)
+        {
+            iconTexture = iconSprite.texture;
         }
         
         mat.SetTexture("_EmissionMap", iconTexture);

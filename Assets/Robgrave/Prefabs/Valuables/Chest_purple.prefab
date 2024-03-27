@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   giftBoxData: {fileID: 11400000, guid: 8170c9ca7d0fb374aa8947bacf93bcd4, type: 2}
+  _chestMesh: {fileID: 2009259493259485907}
   lootId: 0
   boxType: 2
 --- !u!1 &4238390427443561001
@@ -5050,6 +5051,12 @@ PrefabInstance:
 --- !u!4 &1200634199927715945 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f6165c551036b444884f400dee1543b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1667241213832273794}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2009259493259485907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f6165c551036b444884f400dee1543b1,
     type: 3}
   m_PrefabInstance: {fileID: 1667241213832273794}
   m_PrefabAsset: {fileID: 0}

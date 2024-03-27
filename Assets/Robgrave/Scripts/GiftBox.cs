@@ -7,16 +7,18 @@ public class GiftBox : MonoBehaviour
 {
     public GiftBoxTemplate giftBoxData;
 
+    [SerializeField] private GameObject _chestMesh;
+
     private Material _material;
     public int lootId;
     private Rigidbody _rigidbody;
 
     private bool _physicsEnabled = true;
     private float physicsDisableTimer = 0f;
-    private float physicsDisableTime = 3f;
+    private float physicsDisableTime = 2f;
     
     private bool _visible = false;
-    public int boxType = 0;  
+    public int boxType = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -24,15 +26,17 @@ public class GiftBox : MonoBehaviour
         _material = GetComponent<Renderer>().material;
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         _rigidbody = gameObject.GetComponent<Rigidbody>();
+        _chestMesh.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!_visible && transform.position.y < 3f && giftBoxData.giftType != GiftType.CryptKey)
+        if (!_visible && transform.position.y < 2f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
             _visible = true;
+            _chestMesh.SetActive(true);
         }
         
         if (_visible) {
@@ -45,6 +49,8 @@ public class GiftBox : MonoBehaviour
                 _rigidbody.isKinematic = true;
             }
         }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
