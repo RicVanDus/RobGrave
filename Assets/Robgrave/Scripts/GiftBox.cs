@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class GiftBox : MonoBehaviour
 {
@@ -19,17 +20,26 @@ public class GiftBox : MonoBehaviour
     
     private bool _visible = false;
     public int boxType = 0;
-    
-    // Start is called before the first frame update
+
+    private Camera _uiCam;
+
+    private bool _iconVisible;
+    private Vector3 _iconRot;
+
+    private void Awake()
+    {
+        _iconRot = new Vector3(90f, 0f, 0f);
+    }
+
     void Start()
     {
         _material = GetComponent<Renderer>().material;
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _chestMesh.SetActive(false);
+        _uiCam = LootManager.Instance.UICam;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!_visible && transform.position.y < 2f)
@@ -49,8 +59,6 @@ public class GiftBox : MonoBehaviour
                 _rigidbody.isKinematic = true;
             }
         }
-
-        
     }
 
     private void OnTriggerEnter(Collider other)

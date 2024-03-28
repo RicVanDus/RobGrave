@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   name: Cherries
-  description: Regain a live.
+  description: Regain a lost  live.
   item: cherries
   icon: {fileID: 21300000, guid: 0e04c8921bb33af4a822e0ec63e42890, type: 3}
   duration: 0
