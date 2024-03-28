@@ -37,7 +37,7 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_visible && transform.position.y < 1f)
+        if (!_visible && transform.position.y < 3f)
         {
             this.gameObject.GetComponent<MeshRenderer>().enabled = true;
             _visible = true;

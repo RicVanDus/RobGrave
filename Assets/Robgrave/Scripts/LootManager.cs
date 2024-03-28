@@ -278,7 +278,7 @@ public class LootManager : MonoBehaviour
     private void SpawnLootMesh(ValuableTemplate valuable, Vector3 position, int id)
     {
         Vector3 _newPosition = position;
-        _newPosition.y = Random.Range(7f, 10f);
+        _newPosition.y = Random.Range(5f, 9f);
 
         Vector3 _newRotationEuler = new Vector3();
 
