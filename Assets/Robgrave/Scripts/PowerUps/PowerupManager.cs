@@ -47,7 +47,22 @@ public class PowerupManager : MonoBehaviour
 
     private int chosenIndex;
     private bool _wheelIsSpinning;
+    
+    private WaitForSeconds _wait1s = new (1f);
 
+
+    /// <summary>
+    /// POWERUP VARS
+    /// </summary>
+    ///
+
+    private bool _energyDrinkActive = false;
+    private float _energyDrinkTime = 0f;
+    private float _energyDrinkTimer = 0f;
+    private float _energyDrinkValue;
+    
+    
+    
     /*
      * needs an array with powerups
      * needs another array with available powerups
@@ -79,6 +94,8 @@ public class PowerupManager : MonoBehaviour
 
         _defBtnScale = _button.transform.localScale;
         _wheelTurnDefaultRot = _wheelTurn.transform.localEulerAngles;
+        
+        StartCoroutine(SoftTick());
     }
 
     private void Update()
@@ -278,22 +295,7 @@ public class PowerupManager : MonoBehaviour
         }
     }
 
-    private void PowerupExecute(Powerups powerup)
-    {
-        /*
-         * this will be a long dumb method, covering all the types of powerups
-         */
 
-        switch (powerup.item)
-        {
-            case "test" :
-                break;
-            default :
-                break;
-        }
-        
-        UIMessages.Instance.CreateMessage(powerup.name, powerup.description, UIMessageType.Good, powerup.icon);
-    }
 
     public void PowerupChanceSet(int blockIndex)
     {
@@ -440,4 +442,63 @@ public class PowerupManager : MonoBehaviour
             _button.enabled = false;
         });
     }
+    
+    private void PowerupExecute(Powerups powerup)
+    {
+        /*
+         * this will be a long dumb method, covering all the types of powerups
+         */
+
+        switch (powerup.item)
+        {
+            case "energydrink" :
+                if (!_energyDrinkActive)
+                {
+                    _energyDrinkActive = true;
+                    // add icon to the left and add it to the array
+                }
+                _energyDrinkTime += powerup.duration;
+                _energyDrinkValue += powerup.value / 100f;
+                PlayerController.Instance.moveSpeedMult += powerup.value / 100f;
+                
+                
+                break;
+            default :
+                break;
+        }
+        
+        UIMessages.Instance.CreateMessage(powerup.name, powerup.description, UIMessageType.Good, powerup.icon);
+    }    
+
+    // THIS IS ALL POWERUPS STUFF
+    // All the timers, all the UI timer stuff. It's just a 1 second update, so not that precise, but noone cares. At least I don't.
+    private IEnumerator SoftTick()
+    {
+        do
+        {
+            if (_energyDrinkActive)
+            {
+                _energyDrinkTimer += 1f;
+                // fill: _energyDrinkTimer / _energyDrinkTime;
+
+                if (_energyDrinkTimer >= _energyDrinkTime)
+                {
+                    _energyDrinkTime = 0f;
+                    _energyDrinkTimer = 0f;
+                    PlayerController.Instance.moveSpeedMult -= _energyDrinkValue;
+                    _energyDrinkValue = 0f;                 
+
+                    _energyDrinkActive = false;
+                }
+            }
+
+            yield return _wait1s;
+        } while (true);
+    }
+
+    private void AddIcon()
+    {
+        
+    }
+    
 }
