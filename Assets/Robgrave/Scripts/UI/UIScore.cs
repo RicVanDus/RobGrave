@@ -135,9 +135,6 @@ public class UIScore : MonoBehaviour
         Vector3 rot = Vector3.zero;
         rot.x += 36f * amount;
 
-        Debug.Log("Rotating X: " + 36f * amount + " || Score: " + PlayerController.Instance.score );
-
-        
         Sequence seq = DOTween.Sequence();
 
         seq.SetDelay(0.5f);

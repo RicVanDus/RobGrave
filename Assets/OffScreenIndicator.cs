@@ -71,7 +71,6 @@ public class OffScreenIndicator : MonoBehaviour
                 
                 // Set the rotation of the canvas
                 _cursorCanvas.transform.localEulerAngles = new Vector3(0f, 0f, angle+90f);
-                Debug.Log(angle);
             }
         }
         else

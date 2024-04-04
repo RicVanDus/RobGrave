@@ -54,15 +54,18 @@ public class PowerupManager : MonoBehaviour
     /// <summary>
     /// POWERUP VARS
     /// </summary>
-    ///
+
+    private List<PowerupIcon> _activePowerups = new();
+
+    [SerializeField] private Transform _powerupIconParent;
+    [SerializeField] private GameObject _powerUpIconPrefab; 
 
     private bool _energyDrinkActive = false;
     private float _energyDrinkTime = 0f;
     private float _energyDrinkTimer = 0f;
     private float _energyDrinkValue;
-    
-    
-    
+    private PowerupIcon _energyDrinkIcon;
+
     /*
      * needs an array with powerups
      * needs another array with available powerups
@@ -352,7 +355,7 @@ public class PowerupManager : MonoBehaviour
 
         Vector3 rotateTo = new Vector3(0f, 0f, Random.Range(0f, 360f));
         // how many extra rotations before stopping
-        rotateTo.z += 7 * 360f;
+        rotateTo.z += 5 * 360f *-1;
 
         // no more chance adding
         for (int i = 0; i < powerupBlocks.Count; i++)
@@ -455,12 +458,13 @@ public class PowerupManager : MonoBehaviour
                 if (!_energyDrinkActive)
                 {
                     _energyDrinkActive = true;
-                    // add icon to the left and add it to the array
+                    _energyDrinkIcon = AddIcon(powerup);
                 }
                 _energyDrinkTime += powerup.duration;
                 _energyDrinkValue += powerup.value / 100f;
                 PlayerController.Instance.moveSpeedMult += powerup.value / 100f;
-                
+                PlayerController.Instance.digSpeedMult += powerup.value / 100f;
+                PlayerController.Instance.hitSpeedMult += powerup.value / 100f;
                 
                 break;
             default :
@@ -479,16 +483,19 @@ public class PowerupManager : MonoBehaviour
             if (_energyDrinkActive)
             {
                 _energyDrinkTimer += 1f;
-                // fill: _energyDrinkTimer / _energyDrinkTime;
+                _energyDrinkIcon._fill =  1f - _energyDrinkTimer / _energyDrinkTime;
 
                 if (_energyDrinkTimer >= _energyDrinkTime)
                 {
                     _energyDrinkTime = 0f;
                     _energyDrinkTimer = 0f;
                     PlayerController.Instance.moveSpeedMult -= _energyDrinkValue;
+                    PlayerController.Instance.digSpeedMult -= _energyDrinkValue;
+                    PlayerController.Instance.hitSpeedMult -= _energyDrinkValue;                    
                     _energyDrinkValue = 0f;                 
 
                     _energyDrinkActive = false;
+                    RemoveIcon(_energyDrinkIcon);
                 }
             }
 
@@ -496,9 +503,59 @@ public class PowerupManager : MonoBehaviour
         } while (true);
     }
 
-    private void AddIcon()
+    private PowerupIcon AddIcon(Powerups powerup)
     {
+        var prefab = Instantiate(_powerUpIconPrefab, _powerupIconParent);
+        var newIcon = prefab.GetComponent<PowerupIcon>();
         
+        newIcon.SetPowerup(powerup);
+        Debug.Log("THIS IS THE ICON: " + newIcon._powerup.name);
+        _activePowerups.Add(newIcon);
+        
+        RefreshIcons();
+
+        return newIcon;
+    }
+
+    private void RemoveIcon(PowerupIcon icon)
+    {
+        _activePowerups.Remove(icon);
+        Destroy(icon.gameObject);
+        RefreshIcons();
     }
     
+    private void RefreshIcons()
+    {
+        int iconIndex = 0;
+        for (int i = 0; i < _activePowerups.Count; i++)
+        {
+            if (_activePowerups[i]._powerup.type == PowerupType.purple)
+            {
+                Vector3 currentPos = _activePowerups[i].gameObject.transform.localPosition;
+                currentPos.y = 2.2f * iconIndex;
+                _activePowerups[i].gameObject.transform.localPosition = currentPos;
+                iconIndex++;
+            }
+        }
+        for (int i = 0; i < _activePowerups.Count; i++)
+        {
+            if (_activePowerups[i]._powerup.type == PowerupType.blue)
+            {
+                Vector3 currentPos = _activePowerups[i].gameObject.transform.localPosition;
+                currentPos.y = 2.2f * iconIndex;
+                _activePowerups[i].gameObject.transform.localPosition = currentPos;
+                iconIndex++;
+            }
+        } 
+        for (int i = 0; i < _activePowerups.Count; i++)
+        {
+            if (_activePowerups[i]._powerup.type == PowerupType.green)
+            {
+                Vector3 currentPos = _activePowerups[i].gameObject.transform.localPosition;
+                currentPos.y = 2.2f * iconIndex;
+                _activePowerups[i].gameObject.transform.localPosition = currentPos;
+                iconIndex++;
+            }
+        }         
+    }
 }
