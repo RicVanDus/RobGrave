@@ -135,11 +135,11 @@ public class UIScore : MonoBehaviour
         Vector3 rot = Vector3.zero;
         rot.x += 36f * amount;
 
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
-        seq.SetDelay(0.5f);
+        seq.SetDelay(0.2f);
         seq.Delay();
-        seq.Append( NrRotator.transform.DOLocalRotate(rot, 2f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBounce));
+        seq.Append( NrRotator.transform.DOLocalRotate(rot, 1f, RotateMode.LocalAxisAdd).SetEase(Ease.OutBounce)).SetUpdate(true);
 
         seq.Play();
     }

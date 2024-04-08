@@ -532,7 +532,6 @@ public class PlayerController : MonoBehaviour
             if (scoreAddingTimer >= scoreAddingTime)
             {
                 AddPreScoreToScoreDirectly(preScore);
-                preScore = 0;
                 _scorePickupCounter = 0;
                 _scoreMultiplier = 0;
             }
@@ -540,7 +539,6 @@ public class PlayerController : MonoBehaviour
         else if (preScore < 0)
         {
             AddPreScoreToScoreDirectly(preScore);
-            preScore = 0;
         }
     }
 
@@ -572,12 +570,12 @@ public class PlayerController : MonoBehaviour
         {
             score += preScore;
         }
-        
     }
 
-    private void AddPreScoreToScoreDirectly(int preScore)
+    public void AddPreScoreToScoreDirectly(int customPreScore)
     {
-        score += preScore;
+        score += customPreScore;
+        preScore = 0;
         CheckIfGoalAchieved();
         updateScore?.Invoke();
     }
@@ -871,7 +869,6 @@ public class PlayerController : MonoBehaviour
             goalAchieved = false;
         }
         
-        Debug.Log("Goal achieved: " + goalAchieved + " -- /" + GameManager.Instance.thisLevel.valuablesRequired );
         
         ChangingScore?.Invoke();
     }

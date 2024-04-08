@@ -251,7 +251,7 @@ public class Lamppost : MonoBehaviour
             
             if (_lightStage < 3)
             {
-                _lightTimer += Time.deltaTime;
+                _lightTimer += Time.deltaTime * PlayerController.Instance.hitSpeedMult;
 
                 if (_lightStage < (int)(_lightTimer / _maxLightTime))
                 {
@@ -263,7 +263,7 @@ public class Lamppost : MonoBehaviour
             }
             else
             {
-                _lightTimer += Time.deltaTime;
+                _lightTimer += Time.deltaTime * PlayerController.Instance.hitSpeedMult;;
                 if (_lightTimer >= _maxLightTime * _maxLightStages)
                 {
                     _lightTimer = _maxLightTime * _maxLightStages;

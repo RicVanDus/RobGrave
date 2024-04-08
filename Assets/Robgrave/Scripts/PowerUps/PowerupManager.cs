@@ -390,7 +390,7 @@ public class PowerupManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1.5f);
 
         ChestClose();
     }
@@ -557,5 +557,10 @@ public class PowerupManager : MonoBehaviour
                 iconIndex++;
             }
         }         
+    }
+
+    public void SelectWheelButton()
+    {
+        _button.Select();
     }
 }

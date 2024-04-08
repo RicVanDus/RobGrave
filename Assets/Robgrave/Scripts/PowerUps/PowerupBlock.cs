@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = DG.Tweening.Sequence;
 
 public class PowerupBlock : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PowerupBlock : MonoBehaviour
     [SerializeField] public PowerupWheelOption _wheelOption;
     [SerializeField] public Button button;
     [SerializeField] private TMP_Text _buttonText;
+    [SerializeField] private TMP_Text _buttonPrice;
     [SerializeField] private Light _spotLight;
     [SerializeField] private Button _spinWheelBtn;
     [SerializeField] private GameObject _blockMaterial;
@@ -46,6 +48,9 @@ public class PowerupBlock : MonoBehaviour
 
     private bool isHighlighted = false;
     public bool chosen;
+
+    private int _clicked = 0;
+    private int _price = 0;
     
     void Start()
     {
@@ -70,7 +75,7 @@ public class PowerupBlock : MonoBehaviour
         _defaultBtnScale = button.transform.localScale;
 
         _blockMat = _blockMaterial.gameObject.GetComponent<Renderer>().material;
-
+        SetPrice();
     }
 
     private void Update()
@@ -92,12 +97,15 @@ public class PowerupBlock : MonoBehaviour
     {
         _wheelOption.fill = _chance / 100f;
         _chance = 100f / 3;
+        _price = 0;
+        _clicked = 0;
         transform.localPosition = _downPos;
         HighLightBlock(false);
         
         button.interactable = false;
         button.enabled = true;
         btnDisabled = true;
+        SetPrice();
         
         //chosen = false;
         
@@ -191,6 +199,8 @@ public class PowerupBlock : MonoBehaviour
     {
         if (!btnDisabled)
         {
+            _clicked++;
+            PlayerController.Instance.AddPreScoreToScoreDirectly(-_price);
             PowerupManager.Instance.PowerupChanceSet(powerupBlockIndex);
             Vector3 toScale = _defaultBtnScale;
             toScale *= 0.75f;
@@ -198,15 +208,39 @@ public class PowerupBlock : MonoBehaviour
             button.interactable = false;
             btnDisabled = true;
 
-            button.transform.DOScale(toScale, 0.2f).SetUpdate(true).OnComplete(() =>
+            if (_clicked ! > 4)
             {
-                button.transform.DOScale(_defaultBtnScale, 0.4f).SetUpdate(true).OnComplete(() =>
+                button.transform.DOScale(toScale, 0.2f).SetUpdate(true).OnComplete(() =>
                 {
-                    button.interactable = true;
-                    button.Select();
-                    btnDisabled = false;
+                    Sequence seq = DOTween.Sequence().SetUpdate(true);
+                
+                    seq.SetDelay(0.3f);
+                    seq.Delay();
+
+                    seq.Append(button.transform.DOScale(_defaultBtnScale, 0.2f)).SetUpdate(true).OnComplete(() =>
+                    {
+                        _price = CalculatePrice();
+                        SetPrice();
+
+                        if (_price > PlayerController.Instance.score || _clicked > 4)
+                        {
+                            PowerupManager.Instance.SelectWheelButton();
+                        }
+                        else
+                        {
+                            button.interactable = true;
+                            button.Select();
+                            btnDisabled = false;
+                        }
+                    });
+                
+                    seq.SetDelay(0.3f);
+                    seq.Delay();
+                
+                    seq.Play();
                 });
-            });            
+            }
+
         }
     }
 
@@ -305,5 +339,36 @@ public class PowerupBlock : MonoBehaviour
             _blockMat.SetColor("_EmissionColor", Color.black);
             isHighlighted = false;
        }
+    }
+
+    private int CalculatePrice()
+    {
+        // depends on level valuables req, rarity and how many times pressed
+        // level req: 1000 / 40 - 30 - 20 -(*1 * hitamount)
+        // green: 25 
+        // blue 50
+        // purple: 75
+
+        float sub = 20f;
+
+        if (_powerup.type == PowerupType.green)
+        {
+            sub = 40f;
+        }
+        else if (_powerup.type == PowerupType.blue)
+        {
+            sub = 30f;
+        }
+
+        sub -= 1 * _clicked;
+
+        var price = (int)(GameOverseer.Instance.thisLevel.valuablesRequired / sub);
+
+        return price;
+    }
+
+    private void SetPrice()
+    {
+        _buttonPrice.text = "$" + _price;
     }
 }

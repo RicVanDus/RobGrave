@@ -73,6 +73,7 @@ public class GiftBox : MonoBehaviour
             }
             else
             {
+                PlayerController.Instance.AddPreScoreToScoreDirectly(PlayerController.Instance.preScore);
                 LootManager.Instance.ClearLootSpot(lootId);
                 Destroy(gameObject);
                 PowerupManager.Instance.ChestOpen(boxType);
