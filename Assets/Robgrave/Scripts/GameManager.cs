@@ -346,17 +346,26 @@ public class GameManager : MonoBehaviour
     {
         bool _assigned = false;
         
+        int attempts1 = 0;
+        
         do
         {
+            attempts1++;
             int rndIndex = Random.Range(0, graves.Length);
 
             Grave thisGrave = graves[rndIndex].GetComponent<Grave>();
 
-            if (!thisGrave.hasGiftbox)
+            if (!thisGrave.hasGiftbox && thisGrave.canHaveKey)
             {
                 cryptKeyGrave = thisGrave;
                 birdGraves[2] = thisGrave;
                 _assigned = true;
+            }
+
+            if (attempts1 > 500)
+            {
+                Debug.LogError("FAILED TO ASSIGN CRYPT KEY TO GRAVE");
+                return;
             }
 
         } while (!_assigned);
@@ -364,9 +373,12 @@ public class GameManager : MonoBehaviour
         //assign other birdgraves with a certain minimal distance to the last
         _assigned = false;
         int birdGraveInd = 2;
+        int attempts = 0;
         
         do
         {
+            attempts++;
+            
             int rndIndex = Random.Range(0, graves.Length);
             
             Grave thisGrave = graves[rndIndex].GetComponent<Grave>();
@@ -374,12 +386,12 @@ public class GameManager : MonoBehaviour
             float distance =
                 Vector3.Distance(thisGrave.transform.position, birdGraves[birdGraveInd].transform.position); 
 
-            if (distance > 40f)
+            if (distance > 40f && thisGrave.canHaveKey)
             {
                 birdGraveInd--;
                 birdGraves[birdGraveInd] = thisGrave;
 
-                if (birdGraveInd == 0)
+                if (birdGraveInd == 0 || attempts > 500)
                 {
                     _assigned = true;
                 } 

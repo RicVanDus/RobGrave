@@ -12,6 +12,8 @@ public class WishingWell : MonoBehaviour
 
     private bool _playerPays = false;
     
+    // needs to check if giftbox is picked up before giving the option to pay for the next one 
+    
     private void Update()
     {
         
@@ -22,3 +24,4 @@ public class WishingWell : MonoBehaviour
         
     }
 }
+

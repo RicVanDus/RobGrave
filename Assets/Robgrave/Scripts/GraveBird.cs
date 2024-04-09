@@ -20,6 +20,7 @@ public class GraveBird : MonoBehaviour
     private bool _startingPosSet = false;
     private bool _birdIsDone = false;
     private bool _birdIsFlying = false;
+    private bool _birdIsLanding = false;
 
     private Vector3 _target;
     private Vector3 _velocity;
@@ -69,6 +70,7 @@ public class GraveBird : MonoBehaviour
     {
         _target = target.position;
         _anim.SetBool("TakingOff", true);
+        _anim.SetBool("Landing", false);        
         _birdIsFlying = true;
 
         Vector3 dir = transform.position - _target;
@@ -95,6 +97,7 @@ public class GraveBird : MonoBehaviour
         {
             _birdIsFlying = false;
             _anim.SetBool("TakingOff", false);
+            _anim.SetBool("Landing", true);
         }
 
         //calculate velocity?
@@ -102,7 +105,6 @@ public class GraveBird : MonoBehaviour
         var velocity = posDif.magnitude;
         
         _anim.SetFloat("Velocity", velocity);
-        Debug.Log("SPEED bird: " + velocity);
     } 
     
     // coroutine checks for changes in current target & changes in last target. 
@@ -127,7 +129,5 @@ public class GraveBird : MonoBehaviour
             yield return _softTick;
         } while (!_birdIsDone);
     }
-    
-    
     
 }

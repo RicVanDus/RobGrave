@@ -20,7 +20,8 @@ public class Grave : Interactable
     public float defileProgress = 0f;
     public int valuables;
     public bool hasGiftbox;
-
+    public bool canHaveKey;
+    
     [SerializeField] private Text _depthNumber;
     
     [SerializeField] private GameObject _posIndicator;
@@ -40,7 +41,7 @@ public class Grave : Interactable
     [SerializeField] private GameObject _graveExplosion;
     [SerializeField] private Transform _graveExplosionPos;
     [NonSerialized] public Transform birdPos;
-
+    
     private Color _currentGraveStoneColor;
 
     private WaitForSeconds _shortWait = new(0.1f);
@@ -365,5 +366,3 @@ public class Grave : Interactable
         } while (true);
     }
 }
-
-

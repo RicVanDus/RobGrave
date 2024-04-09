@@ -22,7 +22,6 @@ public class Pickup : MonoBehaviour
     private bool _noLight;
     private bool _visible = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -34,7 +33,6 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!_visible && transform.position.y < 3f)
