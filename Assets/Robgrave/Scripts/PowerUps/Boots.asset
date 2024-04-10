@@ -15,7 +15,8 @@ MonoBehaviour:
   type: 2
   name: Boots
   description: New footwear, specialized in graveyard running.
+  technical: 
   item: boots
   icon: {fileID: 21300000, guid: 0661d371796ff794d86c8cbb1779a91f, type: 3}
   duration: 0
-  value: 0
+  value: 5

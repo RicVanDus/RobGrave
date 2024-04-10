@@ -14,6 +14,7 @@ public class Powerups : ScriptableObject
     [Space]
     public string name;
     public string description;
+    [SerializeField, TextArea] public string technical;
     public string item;
     public Sprite icon;
     [Space] 

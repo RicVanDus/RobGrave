@@ -46,16 +46,14 @@ public class OffScreenIndicator : MonoBehaviour
 
         if (ClampVector3(viewportPos) != viewportPos)
         {
-
             if (!_iconVisible)
-            {
                 IconVisible(true);
-            }
+            
             Vector3 iconPos = viewportPos;
             float iconPadding = 0.05f;
         
             iconPos.x = Mathf.Clamp(iconPos.x, 0f + _screenPadding, 1f - _screenPadding);
-            iconPos.y = Mathf.Clamp(iconPos.y, 0f + _screenPadding * _uiCam.aspect, 1f - _screenPadding * _uiCam.aspect);
+            iconPos.y = Mathf.Clamp(iconPos.y, 0f + _screenPadding * _uiCam.aspect/2, 1f - _screenPadding * _uiCam.aspect/2);
 
             Vector3 iconWorldPos =  _uiCam.ViewportToWorldPoint(iconPos);
             
@@ -76,9 +74,7 @@ public class OffScreenIndicator : MonoBehaviour
         else
         {
             if (_iconVisible)
-            {
                 IconVisible(false);
-            }
         }
     }
 
@@ -97,9 +93,8 @@ public class OffScreenIndicator : MonoBehaviour
     {
         _indicator.SetActive(toggle);
         _iconVisible = toggle;
+        
         if (_cursor)
-        {
             _cursorCanvas.SetActive(true);
-        }
     }    
 }

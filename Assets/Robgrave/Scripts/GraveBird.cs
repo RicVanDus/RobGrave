@@ -129,5 +129,4 @@ public class GraveBird : MonoBehaviour
             yield return _softTick;
         } while (!_birdIsDone);
     }
-    
 }

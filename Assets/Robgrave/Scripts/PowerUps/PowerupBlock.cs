@@ -55,13 +55,9 @@ public class PowerupBlock : MonoBehaviour
     void Start()
     {
         if (powerupBlockIndex == 0)
-        {
             _colorMult = Vector4.one * 0.8f;
-        }
         else if (powerupBlockIndex == 2)
-        {
             _colorMult = Vector4.one * 1.2f;
-        }
 
         _greenColor = PowerupManager.Instance.greenColor * _colorMult;
         _blueColor = PowerupManager.Instance.blueColor * _colorMult;
@@ -83,16 +79,11 @@ public class PowerupBlock : MonoBehaviour
         _wheelOption.fill = _chance / 100f;
 
         if (chosen)
-        {
             HighLightBlock(true);
-        }
         else
-        {
             HighLightBlock(false);
-        }
     }
-
-
+    
     public void SetPowerup(Powerups powerup)
     {
         _wheelOption.fill = _chance / 100f;
@@ -175,6 +166,14 @@ public class PowerupBlock : MonoBehaviour
                     itemDescription = "n/a";
                     break;
             }
+
+            var valueString = powerup.value.ToString();
+            var durationString = powerup.duration.ToString();
+            var technicalReplace1 = powerup.technical.Replace("#v", valueString);
+            var technicalReplace2 = technicalReplace1.Replace("#d", durationString).ToString();
+
+            itemDescription = technicalReplace2;
+                
             _valueAmount.text = itemDescription;
             _wheelOption.SetImage(clr, powerup.icon);
             _wheelOption.optionIndex = powerupBlockIndex;

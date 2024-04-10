@@ -15,6 +15,9 @@ MonoBehaviour:
   type: 0
   name: Lightning Strike
   description: A big blast from the sky.
+  technical: 'Ghosts are visible
+
+    (+#d seconds)'
   item: lightningstrike
   icon: {fileID: 21300000, guid: 344ae49cdb5d4d5489c62373a0a00890, type: 3}
   duration: 60

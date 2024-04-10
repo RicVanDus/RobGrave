@@ -59,10 +59,13 @@ Material:
     - _BorderSize: 0.00085
     - _CastShadows: 1
     - _Color2Contrast: 2.54
+    - _Color3Contrast: 1.79
+    - _Color3NoiseScale: 0.64
     - _ColorNoiseScale: 9.36
     - _Cull: 2
     - _DstBlend: 10
     - _NoiseSize: 10000
+    - _NormalStrength: 0.15
     - _QueueControl: 0
     - _QueueOffset: -4
     - _ReceiveShadows: 1
@@ -73,6 +76,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 2
     m_Colors:
-    - _Color: {r: 0.10493054, g: 0.16981128, b: 0.12185595, a: 1}
+    - _Color: {r: 0.105882354, g: 0.16862746, b: 0.13561761, a: 1}
     - _Color2: {r: 0.16978216, g: 0.23584905, b: 0.15908685, a: 1}
+    - _Color3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

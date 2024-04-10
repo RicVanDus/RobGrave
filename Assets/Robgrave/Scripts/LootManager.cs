@@ -37,15 +37,12 @@ public class LootManager : MonoBehaviour
     [SerializeField] private GameObject _purpleGiftbox;
     [SerializeField] private GameObject _cryptKey;
     
-    
-    
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
-
     }
 
     void Start()
@@ -367,7 +364,6 @@ public class LootManager : MonoBehaviour
             debugObjects.Add(_debugObject);
         }
     }
-    
     
     public void ClearDebugObjects()
     {

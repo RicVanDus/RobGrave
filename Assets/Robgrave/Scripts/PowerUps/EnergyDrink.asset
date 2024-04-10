@@ -15,6 +15,9 @@ MonoBehaviour:
   type: 0
   name: Energy Drink
   description: Gives you wings.
+  technical: '+#v% overall speed boost
+
+    (+#d seconds)'
   item: energydrink
   icon: {fileID: 21300000, guid: 79fa987669ef8454dbf2d26545706f7c, type: 3}
   duration: 40
