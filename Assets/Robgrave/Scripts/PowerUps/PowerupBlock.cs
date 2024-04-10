@@ -207,7 +207,7 @@ public class PowerupBlock : MonoBehaviour
             button.interactable = false;
             btnDisabled = true;
 
-            if (_clicked ! > 4)
+            if (_clicked < 4)
             {
                 button.transform.DOScale(toScale, 0.2f).SetUpdate(true).OnComplete(() =>
                 {
@@ -223,10 +223,12 @@ public class PowerupBlock : MonoBehaviour
 
                         if (_price > PlayerController.Instance.score || _clicked > 4)
                         {
-                            PowerupManager.Instance.SelectWheelButton();
+                            
+                            _spinWheelBtn.Select();
                         }
                         else
                         {
+                            Debug.Log("DUM DUM DUM");
                             button.interactable = true;
                             button.Select();
                             btnDisabled = false;
@@ -239,7 +241,10 @@ public class PowerupBlock : MonoBehaviour
                     seq.Play();
                 });
             }
-
+        }
+        else
+        {
+            _spinWheelBtn.Select();
         }
     }
 
@@ -260,6 +265,7 @@ public class PowerupBlock : MonoBehaviour
             {
                 _wheelOption.updatePosition = false;
             });
+            //maybe remove this part?
             if (_chance > 70f)
             {
                 button.interactable = false;
@@ -296,6 +302,7 @@ public class PowerupBlock : MonoBehaviour
 
     public void HideButton()
     {
+        
         if (!btnDisabled)
         {
             button.interactable = false;
