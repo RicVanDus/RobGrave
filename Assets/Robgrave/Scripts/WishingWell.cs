@@ -34,7 +34,7 @@ public class WishingWell : MonoBehaviour
     {
         if (_playerCanInteract)
         {
-            if (PlayerController.Instance._interacting && !_onCooldown)
+            if (PlayerController.Instance._interacting && !_onCooldown && !_wellIsDry)
             {
                 _payingProgress += Time.deltaTime;
                 Debug.Log(_payingProgress);
@@ -74,6 +74,7 @@ public class WishingWell : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _playerCanInteract = true;
+            //show UI
         }
     }
 
@@ -82,6 +83,7 @@ public class WishingWell : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _playerCanInteract = false;
+            //hide UI
         }
     }
 
