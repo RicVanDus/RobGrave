@@ -304,38 +304,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Grave"))
+        if (other.CompareTag("Grave") || other.CompareTag("Exit") || other.CompareTag("Lamppost") || other.CompareTag("Well"))
         {
             _canInteract = true;
         }
-
-        if (other.CompareTag("Exit"))
-        {
-            _canInteract = true;
-        }
-        
-        if (other.CompareTag("Lamppost"))
-        {
-            _canInteract = true;
-        }        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Grave"))
+        if (other.CompareTag("Grave") || other.CompareTag("Exit") || other.CompareTag("Lamppost") || other.CompareTag("Well"))
         {
             _canInteract = false;
         }
 
-        if (other.CompareTag("Exit"))
-        {
-            _canInteract = false;
-        }
-
-        if (other.CompareTag("Lamppost"))
-        {
-            _canInteract = false;
-        }
     }
 
     public void EnemyHitsPlayer(int enemyType)

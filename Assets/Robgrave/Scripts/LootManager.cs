@@ -415,6 +415,9 @@ public class LootManager : MonoBehaviour
             case 1 :
                 _prefab = _cryptKey;
                 break;
+            case 2 :
+                _prefab = _greenGiftbox;
+                break;            
             case 3 :
                 _prefab = _blueGiftbox;
                 break;

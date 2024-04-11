@@ -33,8 +33,6 @@ public class GiftBox : MonoBehaviour
 
     void Start()
     {
-        _material = GetComponent<Renderer>().material;
-        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         _rigidbody = gameObject.GetComponent<Rigidbody>();
         _chestMesh.SetActive(false);
         _uiCam = LootManager.Instance.UICam;
@@ -44,7 +42,6 @@ public class GiftBox : MonoBehaviour
     {
         if (!_visible && transform.position.y < 2f)
         {
-            this.gameObject.GetComponent<MeshRenderer>().enabled = true;
             _visible = true;
             _chestMesh.SetActive(true);
         }

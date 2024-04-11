@@ -9,6 +9,7 @@ TagManager:
   - LightCollider
   - Exit
   - Lamppost
+  - Well
   layers:
   - Default
   - TransparentFX

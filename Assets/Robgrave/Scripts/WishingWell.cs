@@ -11,7 +11,12 @@ public class WishingWell : MonoBehaviour
     private int _giftBoxesSpawned = 0;
 
     private float _payingProgress = 0f;
+    private float _payTime = 3f;
+    private float _cooldownTime = 30f;
+    private float _cooldownTimer = 0f;
 
+    private bool _onCooldown = false;
+    
     private bool _playerPays = false;
     private bool _playerCanInteract = false;
     private bool _wellIsDry = false;
@@ -27,12 +32,57 @@ public class WishingWell : MonoBehaviour
 
     private void Update()
     {
-        
+        if (_playerCanInteract)
+        {
+            if (PlayerController.Instance._interacting && !_onCooldown)
+            {
+                _payingProgress += Time.deltaTime;
+                Debug.Log(_payingProgress);
+                if (_payingProgress > _payTime)
+                {
+                    _giftBoxesSpawned++;
+                    LootManager.Instance.SpawnGiftBox(_giftBoxesSpawned+1, true, 0);
+                    
+                    if (_giftBoxesSpawned > 4)
+                    {
+                        _wellIsDry = true;
+                    }
+
+                    _payingProgress = 0f;
+                    _onCooldown = true;
+                }
+            }
+        }
+        else
+        {
+            _payingProgress -= Time.deltaTime;
+            _payingProgress = Mathf.Clamp(_payingProgress, 0f, 10f);
+        }
+
+        if (_onCooldown)
+        {
+            _cooldownTimer += Time.deltaTime;
+            if (_cooldownTimer > _cooldownTime)
+            {
+                _onCooldown = false;
+            }
+        }
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            _playerCanInteract = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _playerCanInteract = false;
+        }
     }
 
     private IEnumerator PosIndicator()

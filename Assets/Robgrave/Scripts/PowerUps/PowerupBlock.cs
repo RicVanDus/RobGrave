@@ -167,12 +167,20 @@ public class PowerupBlock : MonoBehaviour
                     break;
             }
 
-            var valueString = powerup.value.ToString();
-            var durationString = powerup.duration.ToString();
-            var technicalReplace1 = powerup.technical.Replace("#v", valueString);
-            var technicalReplace2 = technicalReplace1.Replace("#d", durationString).ToString();
-
-            itemDescription = technicalReplace2;
+            if (powerup.technical != null)
+            {
+                var valueString = powerup.value.ToString();
+                var durationString = powerup.duration.ToString();
+                
+                var technicalReplace1 = powerup.technical.Replace("#v", valueString);
+                var technicalReplace2 = technicalReplace1.Replace("#d", durationString).ToString();
+                
+                itemDescription = technicalReplace2;
+            }
+            else
+            {
+                itemDescription = "n/a";
+            }
                 
             _valueAmount.text = itemDescription;
             _wheelOption.SetImage(clr, powerup.icon);

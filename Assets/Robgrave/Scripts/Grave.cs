@@ -88,7 +88,7 @@ public class Grave : Interactable
             playerIsDigging = true;
             if (_rotatedPlayer == false)
             {
-                RotatePlayer();    
+                RotatePlayer();
             }
         }
         else

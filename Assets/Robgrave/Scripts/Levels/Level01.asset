@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level01
   m_EditorClassIdentifier: 
   level: 1
-  ghostSpawnType0: 3
+  ghostSpawnType0: 0
   ghostSpawnType1: 0
   ghostSpawnType2: 0
   valuablesRequired: 1000

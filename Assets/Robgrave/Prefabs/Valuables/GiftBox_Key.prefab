@@ -49,7 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   giftBoxData: {fileID: 11400000, guid: 034d48d07b8e0ab4c9f0f181338fdebf, type: 2}
+  _chestMesh: {fileID: 5560683167700736116}
   lootId: 0
+  boxType: 0
 --- !u!65 &4763431112880457142
 BoxCollider:
   m_ObjectHideFlags: 0
