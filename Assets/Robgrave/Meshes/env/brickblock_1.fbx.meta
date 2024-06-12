@@ -3,7 +3,27 @@ guid: 9f49430638441ee419ac59d85b9f0195
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brick_01.001
+    second: {fileID: 2100000, guid: e6bec221a695d894d85414c099b929e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brick_02
+    second: {fileID: 2100000, guid: e6bec221a695d894d85414c099b929e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brick_03.001
+    second: {fileID: 2100000, guid: e6bec221a695d894d85414c099b929e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: morter
+    second: {fileID: 2100000, guid: f28cd2c69944aa945bcdc922ca3d96d6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

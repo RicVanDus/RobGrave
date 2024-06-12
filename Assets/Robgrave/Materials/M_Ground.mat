@@ -61,10 +61,12 @@ Material:
     - _Color2Contrast: 2.54
     - _Color3Contrast: 1.79
     - _Color3NoiseScale: 0.64
-    - _ColorNoiseScale: 9.36
+    - _ColorNoiseScale: 3133.16
     - _Cull: 2
     - _DstBlend: 10
-    - _NoiseSize: 10000
+    - _MudOpacity: 0.66
+    - _MudSize: 350
+    - _NoiseSize: 8789
     - _NormalStrength: 0.15
     - _QueueControl: 0
     - _QueueOffset: -4
@@ -76,7 +78,8 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 2
     m_Colors:
-    - _Color: {r: 0.12068351, g: 0.2264151, b: 0.17354931, a: 1}
-    - _Color2: {r: 0.16978216, g: 0.23584905, b: 0.15908685, a: 1}
-    - _Color3: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.07956566, g: 0.11320752, b: 0.08300795, a: 1}
+    - _Color2: {r: 0.21337666, g: 0.3301887, b: 0.23284534, a: 1}
+    - _Color3: {r: 0.3726415, g: 1, b: 0.5226995, a: 0}
+    - _MudColor: {r: 0.14150941, g: 0.0727572, b: 0.0727572, a: 0}
   m_BuildTextureStacks: []

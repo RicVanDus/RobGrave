@@ -49,10 +49,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _Buldge_Height: 38.4
+    - _ColorVariationStrength: 12.2
+    - _ColorVariationTiling: 2.67
     - _Dirt_Noise_Scale: 29.56
     - _Dirt_Noise_Strength: 0.00287
+    - _NoiseSize: 32.2
+    - _OverallColorMultiply: 0.82
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.11320752, g: 0.06810139, b: 0.02830188, a: 0}
+    - _Color: {r: 0.11320752, g: 0.06461372, b: 0.022961903, a: 0}
   m_BuildTextureStacks: []
