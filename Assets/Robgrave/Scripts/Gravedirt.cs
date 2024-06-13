@@ -23,7 +23,7 @@ public class Gravedirt : MonoBehaviour
         _buldgeHeight = 30f;
 
         _dirtColorDefault = graveDirt.GetColor(_colorId);
-        _dirtColorInteract = _dirtColorDefault * 1.35f;
+        _dirtColorInteract = _dirtColorDefault * 1.25f;
     }
 
     // Update is called once per frame
