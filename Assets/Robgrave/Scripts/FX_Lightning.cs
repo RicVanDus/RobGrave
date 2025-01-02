@@ -39,6 +39,7 @@ public class FX_Lightning : MonoBehaviour
         {
             StartCoroutine(ShowLightning(5));
             _lightningTimer = 0f;
+            _lightningTime = GameManager.Instance.thisLevel.timeBetweenLightning;
         }
         
         //Debug.Log("Lightning Timer: " + _lightningTimer + " / " + _lightningTime);
