@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject GraveUI2;
     public GameObject GraveUI3;
     public GameObject ButtonPrompt;
+    public FloatingIcons FloatingIcons;
 
     [Header("Misc objects")] 
     public GameObject steppingStone;
