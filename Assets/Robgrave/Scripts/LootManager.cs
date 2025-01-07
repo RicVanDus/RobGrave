@@ -11,6 +11,9 @@ public class LootManager : MonoBehaviour
     public GameObject debugObject2;
     
     public Camera UICam;
+    public Camera UICam_Overlay;
+
+    public Transform UI_PowerupIcons; 
 
     static public int _rows = 117;
     static public int _columns = 69;

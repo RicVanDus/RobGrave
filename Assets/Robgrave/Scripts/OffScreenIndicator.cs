@@ -39,7 +39,7 @@ public class OffScreenIndicator : MonoBehaviour
         _cursorCanvas.transform.eulerAngles = _iconRot;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // checks item pos in viewport
         var viewportPos = _uiCam.WorldToViewportPoint(_target.position);
