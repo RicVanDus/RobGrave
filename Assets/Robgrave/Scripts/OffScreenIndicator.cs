@@ -8,6 +8,7 @@ using Image = UnityEngine.UI.Image;
 // Off screen indicator that shows up whenever object moves out of view
 //
 // Custom icon to show. Size variable. Cursor pointing at object. Padding variable. 
+// Talks to a OffscreenIndicatorManager script: adds to a list when out of view, removes itself when in view.
 
 public class OffScreenIndicator : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class OffScreenIndicator : MonoBehaviour
     [SerializeField] private Sprite _icon;
     [SerializeField] private float _screenPadding;
     [SerializeField] private bool _cursor;
+
+    [SerializeField] private FloatingIcons _floatingIcons;
 
     private Camera _uiCam;
     private bool _iconVisible;
@@ -41,6 +44,9 @@ public class OffScreenIndicator : MonoBehaviour
 
     void Update()
     {
+        
+        
+        /*
         // checks item pos in viewport
         var viewportPos = _uiCam.WorldToViewportPoint(_target.position);
 
@@ -76,6 +82,7 @@ public class OffScreenIndicator : MonoBehaviour
             if (_iconVisible)
                 IconVisible(false);
         }
+        */
     }
 
     private Vector3 ClampVector3(Vector3 screenPos)
