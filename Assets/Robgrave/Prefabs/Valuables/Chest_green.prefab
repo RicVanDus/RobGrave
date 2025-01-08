@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1766260166695483912}
   - component: {fileID: 1766260166695483913}
   - component: {fileID: 1766260166695483914}
+  - component: {fileID: 8397353729880558964}
   m_Layer: 0
   m_Name: Chest_green
   m_TagString: Untagged
@@ -145,8 +146,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   giftBoxData: {fileID: 11400000, guid: 8170c9ca7d0fb374aa8947bacf93bcd4, type: 2}
   _chestMesh: {fileID: 5589600544348127617}
-  lootId: 2360
+  lootId: 376
   boxType: 0
+--- !u!114 &8397353729880558964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459849705684158309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475db2e02c47d3346af73e8785afddf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageIcon: {fileID: 21300000, guid: a853313c8dc7cb94c8c205595fae4ce2, type: 3}
+  IconSize: 0.8
+  IconTarget: {fileID: 0}
 --- !u!1 &3030355723382930995
 GameObject:
   m_ObjectHideFlags: 0

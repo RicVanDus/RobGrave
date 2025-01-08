@@ -9,9 +9,9 @@ using Image = UnityEngine.UI.Image;
 public class OffScreenIndicator : MonoBehaviour
 {
     [NonSerialized] public GameObject _parentObj;
-    public Sprite IconImage;
-    public float Size = 1f;
-    public bool bIsAnOffScreenIndicator;
+    public Sprite ImageIcon;
+    public float IconSize = 1f;
+    public GameObject IconTarget;
 
     private Image _imageComponent;
     private RectTransform _rectTransform;
@@ -19,39 +19,43 @@ public class OffScreenIndicator : MonoBehaviour
     private Camera _mainCam;
     private WaitForSeconds _wait03 = new(0.3f);
 
+    private bool bIndicatorSet = false;
+
+    private float timer;
+    private bool bChecking;    
+    
+
     void Start()
     {
         _mainCam = PlayerController.Instance.cam;
-        StartCoroutine("CheckIfInFrame");
+        IconTarget = gameObject;
     }
 
     void Update()
     {
+        timer += Time.deltaTime;
 
-    }
-
-    public void Initialize()
-    {
-        _imageComponent = GetComponent<Image>();
-        _rectTransform = GetComponent<RectTransform>();
-
-        _imageComponent.sprite = IconImage;
-
-        _rectTransform.localScale = Vector3.one * Size;
+        if (timer > 3f && !bChecking)
+        {
+            StartCoroutine("CheckIfInFrame");
+            bChecking = true;
+        }
     }
 
     private IEnumerator CheckIfInFrame()
     {
         while (true)
         {
-
             // check if position is within viewport
             Vector3 objViewportPos = _mainCam.WorldToViewportPoint(transform.position);
 
-
             if (objViewportPos.x < 0f || objViewportPos.x > 1f || objViewportPos.y < 0f || objViewportPos.y > 1f)
             {
-                Debug.Log("OUT OF FRAME!!!!!!!!");
+                if (!bIndicatorSet)
+                {
+                    GameManager.Instance.FloatingIcons.AddOffScreenIndicator(this);
+                    bIndicatorSet = true;    
+                }
             }
             yield return _wait03;
         }

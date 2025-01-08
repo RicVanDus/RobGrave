@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1766260166695483912}
   - component: {fileID: 1766260166695483913}
   - component: {fileID: 1766260166695483914}
+  - component: {fileID: 8277543910113581409}
   m_Layer: 0
   m_Name: Chest_blue
   m_TagString: Untagged
@@ -147,6 +148,21 @@ MonoBehaviour:
   _chestMesh: {fileID: 1934302008203941348}
   lootId: 0
   boxType: 1
+--- !u!114 &8277543910113581409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459849705684158309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475db2e02c47d3346af73e8785afddf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageIcon: {fileID: 21300000, guid: eda86c890ff093049b44d48b4e19d423, type: 3}
+  IconSize: 0.9
+  IconTarget: {fileID: 0}
 --- !u!1 &8417283925069075344
 GameObject:
   m_ObjectHideFlags: 0

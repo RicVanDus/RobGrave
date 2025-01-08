@@ -12,8 +12,6 @@ using UnityEngine.UIElements;
 public class FloatingIcons : MonoBehaviour
 {
     [SerializeField] 
-    private RectTransform _testImage;
-    
     private Camera _mainCam;
 
     [NonSerialized] 
@@ -28,6 +26,8 @@ public class FloatingIcons : MonoBehaviour
     private GameObject _floatingIconPrefab;
 
     private Vector3 _playerPos;
+
+    public float IconScreenPadding = 0.02f;
     
     void Start()
     {
@@ -36,30 +36,29 @@ public class FloatingIcons : MonoBehaviour
 
     void Update()
     {
-        Vector3 _playerPos = PlayerController.Instance.transform.position;
-
-        Vector3 playerPosScreen = _mainCam.WorldToScreenPoint(_playerPos);
-
-        float posX = playerPosScreen.x - (Screen.width / 2f);
-        float posY = playerPosScreen.y - (Screen.height / 2f);
-
-        Vector3 newPos = new Vector3(posX, posY, 0f);
         
-        _testImage.SetLocalPositionAndRotation(newPos, Quaternion.identity);
     }
     
     //Add to list and instantiate
-    private void AddFloatingIcon(FloatingIcon floatingIcon)
+    public void AddFloatingIcon(FloatingIcon floatingIcon)
     {
         
     }
     
     //Add to list and instantiate this + dir.indicator
-    private void AddOffScreenIndicator(FloatingIcon floatingIcon)
+    public void AddOffScreenIndicator(OffScreenIndicator offScreenIndicator)
     {
-        var newFloatingIcon = Instantiate(_floatingIconPrefab, gameObject.transform);
-        
+        GameObject newOffscreenIndicator = Instantiate(_floatingIconPrefab, gameObject.transform);
 
+        FloatingIcon newFloatingIcon = newOffscreenIndicator.GetComponent<FloatingIcon>();
+        newFloatingIcon.ImageIcon = offScreenIndicator.ImageIcon;
+        newFloatingIcon.IconSize = offScreenIndicator.IconSize;
+        newFloatingIcon.Target = offScreenIndicator.gameObject;
+        
+        newFloatingIcon.Initialize();
+        
+        offScreenIndicators.Add(newOffscreenIndicator);
     }
+    
     
 }
