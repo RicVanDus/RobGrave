@@ -57,6 +57,14 @@ public class FloatingIcon : MonoBehaviour
 
         Vector3 playerPosScreen = _mainCam.WorldToViewportPoint(playerPos);
         Vector3 targetPosScreen = _mainCam.WorldToViewportPoint(targetPos);
+
+        Debug.Log(targetPosScreen);
+        
+        // if it is in view, delete it and reset Indicator component
+        if ((targetPosScreen.x > 0f && targetPosScreen.x < 1f) && (targetPosScreen.y > 0f && targetPosScreen.y < 1f))
+        {
+            GameManager.Instance.FloatingIcons.RemoveOffScreenIndicator(gameObject);
+        }
         
         // clamp and add screenpadding
         targetPosScreen.x = Mathf.Clamp(targetPosScreen.x, _iconScreenPadding, 1f - _iconScreenPadding);
@@ -68,11 +76,11 @@ public class FloatingIcon : MonoBehaviour
         float targetPosX = targetPosScreen.x * Screen.width - (Screen.width / 2f);
         float targetPosY = targetPosScreen.y * Screen.height - (Screen.height / 2f);
         
-        
 
         Vector3 newImagePos = new Vector3(targetPosX, targetPosY, 0f);
         
         _rectTransform.SetLocalPositionAndRotation(newImagePos, Quaternion.identity);
+
     }
 
 }

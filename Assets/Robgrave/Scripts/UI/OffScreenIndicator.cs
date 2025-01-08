@@ -19,7 +19,8 @@ public class OffScreenIndicator : MonoBehaviour
     private Camera _mainCam;
     private WaitForSeconds _wait03 = new(0.3f);
 
-    private bool bIndicatorSet = false;
+    [NonSerialized]
+    public bool bIndicatorSet = false;
 
     private float timer;
     private bool bChecking;    

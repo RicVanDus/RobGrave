@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 // HOLDS A LIST OF FLOATING ICONS / OFFSCREENINDICATORS
 // Can toggle visibility
@@ -14,9 +15,7 @@ public class FloatingIcons : MonoBehaviour
     [SerializeField] 
     private Camera _mainCam;
 
-    [NonSerialized] 
     public List<GameObject> floatingIcons = new List<GameObject>();
-    [NonSerialized]
     public List<GameObject> offScreenIndicators = new List<GameObject>();
 
     [SerializeField] 
@@ -58,6 +57,13 @@ public class FloatingIcons : MonoBehaviour
         newFloatingIcon.Initialize();
         
         offScreenIndicators.Add(newOffscreenIndicator);
+    }
+
+    public void RemoveOffScreenIndicator(GameObject offScreenIndicator)
+    {
+        offScreenIndicators.Remove(offScreenIndicator);
+        offScreenIndicator.GetComponent<FloatingIcon>().Target.GetComponent<OffScreenIndicator>().bIndicatorSet = false;
+        Destroy(offScreenIndicator);
     }
     
     
