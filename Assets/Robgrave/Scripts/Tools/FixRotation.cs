@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
+
 [ExecuteAlways]
 public class FixRotation : MonoBehaviour
 {
@@ -79,3 +81,4 @@ public class FixRotationEditor : Editor
     }
 }
 
+#endif
