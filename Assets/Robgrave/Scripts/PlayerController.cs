@@ -789,7 +789,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 oldscale = _flashLightCone.transform.localScale;
         Vector3 newscale = oldscale;
-        newscale.z = Math.Clamp(_flashlightHitDistance * 1.3f, 0f, flashLightReach);
+        newscale.z = Math.Clamp(_flashlightHitDistance / 3f, 0f, flashLightReach);
         _flashLightCone.transform.localScale = newscale;
     }
 
